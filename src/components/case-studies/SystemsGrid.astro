@@ -107,6 +107,19 @@ const systems = [
     label: "Profile + Rankings",
     note: "Google Business Profile / rankings",
   },
+  /*
+    NOT IN THE COPY DOCUMENT. Added on request; this description is written
+    here rather than taken from the brief, so it needs the client's own
+    wording before launch.
+  */
+  {
+    id: "reputation",
+    name: "Reputation System",
+    desc: "Asks for a review at the moment a customer is happiest, then keeps the requests going automatically instead of whenever someone remembers.",
+    label: "Review Requests",
+    note: "reputation / review request automation and review dashboard",
+    needsCopy: true,
+  },
 ];
 ---
 
@@ -162,6 +175,9 @@ const systems = [
             <div class="card__text">
               <h3 class="card__name">{s.name}</h3>
               <p class="card__desc">{s.desc}</p>
+              {s.needsCopy && (
+                <p class="card__flag mono">Copy not yet confirmed</p>
+              )}
             </div>
           </article>
         ))
@@ -301,6 +317,19 @@ const systems = [
     font-size: 14px;
     line-height: 1.62;
     color: var(--ink-body);
+  }
+
+  /* Marks copy written here rather than taken from the brief. */
+  .card__flag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 3px 8px;
+    border: 1px dashed var(--card-line);
+    border-radius: 6px;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
   }
 
   .systems__note {

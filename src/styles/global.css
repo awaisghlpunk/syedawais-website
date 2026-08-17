@@ -310,27 +310,36 @@ svg {
   across the seam into the neighbouring section — this is what carries the
   eye from one section to the next.
 */
+/*
+  `circle closest-side`, never a bare `circle`. A bare circle defaults to
+  farthest-corner, so in a box wider than it is tall it is still part-opaque
+  when it reaches the top and bottom edges and clips square, drawing a
+  visible horizontal line across the section. closest-side pins the radius
+  to the nearest edge, so the glow always ends on nothing.
+
+  Box heights are set to hold the intended radius rather than crop it.
+*/
 .sbg__glow {
   position: absolute;
   width: var(--glow-w, 620px);
-  height: var(--glow-h, 460px);
+  height: var(--glow-h, 560px);
   left: var(--glow-x, 78%);
   top: var(--glow-y, 88%);
   transform: translate(-50%, -50%);
   background: radial-gradient(
-    circle,
+    circle closest-side,
     rgba(198, 255, 61, var(--glow-a, 0.075)) 0%,
     rgba(198, 255, 61, 0.02) 42%,
-    transparent 72%
+    transparent 100%
   );
 }
 
 .sbg__glow--blue {
   background: radial-gradient(
-    circle,
+    circle closest-side,
     rgba(88, 120, 255, var(--glow-a, 0.09)) 0%,
     rgba(88, 120, 255, 0.025) 42%,
-    transparent 72%
+    transparent 100%
   );
 }
 
@@ -342,15 +351,15 @@ svg {
 .sbg__puff {
   position: absolute;
   width: var(--puff-w, 620px);
-  height: var(--puff-h, 340px);
+  height: var(--puff-h, 500px);
   left: var(--puff-x, 30%);
   top: var(--puff-y, 20%);
   transform: translate(-50%, -50%);
   background: radial-gradient(
-    circle,
+    circle closest-side,
     rgba(198, 255, 61, var(--puff-a, 0.16)) 0%,
     rgba(198, 255, 61, 0.05) 38%,
-    transparent 70%
+    transparent 100%
   );
   pointer-events: none;
 }
@@ -495,10 +504,10 @@ svg {
 .section--light .sbg__glow,
 .section--light .sbg__glow--blue {
   background: radial-gradient(
-    circle,
+    circle closest-side,
     rgba(96, 132, 20, 0.13) 0%,
     rgba(96, 132, 20, 0.04) 45%,
-    transparent 74%
+    transparent 100%
   );
 }
 

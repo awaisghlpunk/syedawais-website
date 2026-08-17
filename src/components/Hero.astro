@@ -130,11 +130,19 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 560px;
-    height: 300px;
+    /*
+      Same glow as the mockup, 225px radius fading to nothing, but the box
+      is tall enough to hold it. The mockup used a bare `circle`, which
+      defaults to farthest-corner: in a 560x300 box that circle was still
+      part-opaque when it hit the top and bottom edges, so it clipped square
+      and drew a visible horizontal line. `closest-side` pins the radius to
+      the nearest edge, so the glow always ends on nothing.
+    */
+    height: 450px;
     background: radial-gradient(
-      circle,
+      circle closest-side,
       rgba(198, 255, 61, 0.2) 0%,
-      transparent 70%
+      transparent 100%
     );
     pointer-events: none;
   }

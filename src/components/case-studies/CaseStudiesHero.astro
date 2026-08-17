@@ -86,11 +86,12 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 620px;
-    height: 340px;
+    /* Tall enough to contain the 250px glow rather than clipping it. */
+    height: 500px;
     background: radial-gradient(
-      circle,
+      circle closest-side,
       rgba(198, 255, 61, 0.18) 0%,
-      transparent 70%
+      transparent 100%
     );
     pointer-events: none;
     animation: cheroGlow 8s ease-in-out infinite alternate;
