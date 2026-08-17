@@ -52,20 +52,12 @@ const steps = [
     opacity and masked so it dissolves before it reaches the copy.
   */}
   <span class="watermark" aria-hidden="true">
-    <svg viewBox="0 0 120 116">
+    {/* Mark only, no wordmark: at watermark scale the lettering read as
+        stray text rather than as branding. */}
+    <svg viewBox="0 0 120 84">
       <path d="M32 26 47 44h-8v32H25V44h-8Z" fill="#FBBC05"></path>
       <path d="M60 40 75 58h-8v18H53V58h-8Z" fill="#4285F4"></path>
       <path d="M88 18l15 18h-8v40H81V36h-8Z" fill="#34A853"></path>
-      <text
-        x="60"
-        y="106"
-        text-anchor="middle"
-        font-family="'Space Grotesk', sans-serif"
-        font-weight="500"
-        font-size="15.5"
-        letter-spacing="0"
-        fill="#E8EAF2">GoHighLevel</text
-      >
     </svg>
   </span>
 
@@ -113,8 +105,8 @@ const steps = [
     right: -70px;
     /* The section clips its overflow, and the tilt drops the outer corner
        further down, so the wordmark needs clearance from the edge. */
-    bottom: 54px;
-    width: 620px;
+    bottom: 30px;
+    width: 700px;
     z-index: 1;
     opacity: 0.2;
     pointer-events: none;
@@ -145,7 +137,7 @@ const steps = [
 
   @media (max-width: 900px) {
     .watermark {
-      width: 430px;
+      width: 480px;
       right: -56px;
       bottom: 22px;
     }
@@ -153,7 +145,7 @@ const steps = [
 
   @media (max-width: 560px) {
     .watermark {
-      width: 310px;
+      width: 340px;
       right: -46px;
       bottom: 16px;
       opacity: 0.16;

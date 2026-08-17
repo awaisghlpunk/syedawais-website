@@ -28,16 +28,25 @@ const stages = [
 ];
 
 /*
-  Five contacts, each offset a fifth of the loop from the next. A stage
-  window is under 20% of the cycle wide, so a 20% spacing guarantees no two
-  cards ever occupy the same stage and overlap each other.
+  Six contacts across three vertical lanes, so a stage can hold one, two or
+  three people at once and the board keeps changing shape as they advance.
+
+  The overlap rule is per lane: two cards can only collide if they share a
+  lane AND a stage. Each lane holds two contacts exactly half a loop apart,
+  and a contact occupies a stage for well under half the loop, so a
+  collision is impossible by construction.
+
+  Easings differ so the hops do not all feel identical: some snap across,
+  some glide. Easing changes how a card travels, not when it sits in a
+  stage, so it cannot break the spacing guarantee.
 */
 const contacts = [
-  { initials: "RC", name: "Ryan Carter", delay: 0 },
-  { initials: "MB", name: "Megan Brooks", delay: -2.4 },
-  { initials: "DE", name: "Derek Ellis", delay: -4.8 },
-  { initials: "NT", name: "Nicole Turner", delay: -7.2 },
-  { initials: "BH", name: "Brandon Hayes", delay: -9.6 },
+  { initials: "RC", name: "Ryan Carter", delay: 0, lane: 0, ease: "cubic-bezier(.5,0,.2,1)" },
+  { initials: "MB", name: "Megan Brooks", delay: -2, lane: 1, ease: "cubic-bezier(.65,0,.35,1)" },
+  { initials: "DE", name: "Derek Ellis", delay: -4, lane: 2, ease: "cubic-bezier(.33,0,.15,1)" },
+  { initials: "NT", name: "Nicole Turner", delay: -6, lane: 0, ease: "cubic-bezier(.7,0,.3,1)" },
+  { initials: "BH", name: "Brandon Hayes", delay: -8, lane: 1, ease: "cubic-bezier(.45,0,.25,1)" },
+  { initials: "SW", name: "Sara Whitman", delay: -10, lane: 2, ease: "cubic-bezier(.6,0,.2,1)" },
 ];
 
 /*
@@ -169,7 +178,10 @@ const messages = [
     <div class="lp__movers" aria-hidden="true">
       {
         contacts.map((c) => (
-          <span class="lp__contact" style={`animation-delay:${c.delay}s`}>
+          <span
+            class="lp__contact"
+            style={`animation-delay:${c.delay}s;animation-timing-function:${c.ease};--lane:${c.lane}`}
+          >
             <span class="lp__avatar mono">{c.initials}</span>
             {c.name}
           </span>
@@ -420,8 +432,9 @@ const messages = [
     gap: 9px;
   }
 
+  /* Deep enough for three stacked lanes of contact cards. */
   .lp__stage {
-    padding: 11px 13px 44px;
+    padding: 11px 13px 102px;
     border: 1px solid var(--card-line);
     border-radius: 9px;
     background: rgba(255, 255, 255, 0.03);
@@ -460,12 +473,13 @@ const messages = [
   */
   .lp__contact {
     position: absolute;
-    bottom: 10px;
+    /* Lane 0 sits at the base of the card, each lane stacking above it. */
+    bottom: calc(9px + var(--lane, 0) * 30px);
     width: calc((100% - 27px) / 4 - 16px);
     display: flex;
     align-items: center;
     gap: 7px;
-    padding: 5px 8px;
+    padding: 4px 8px;
     border: 1px solid rgba(198, 255, 61, 0.4);
     border-radius: 7px;
     background: rgba(198, 255, 61, 0.12);
@@ -473,18 +487,18 @@ const messages = [
     color: var(--ink);
     white-space: nowrap;
     overflow: hidden;
-    animation: lp-contact 12s ease-in-out infinite;
+    animation: lp-contact 12s infinite;
   }
 
   .lp__avatar {
     flex: none;
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
     border-radius: 50%;
     background: var(--accent);
     color: var(--accent-ink);
-    font-size: 9px;
-    line-height: 18px;
+    font-size: 8.5px;
+    line-height: 17px;
     text-align: center;
   }
 
