@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import SiteHeader from "../components/SiteHeader.astro";
 
 interface Props {
   title: string;
@@ -7,6 +8,9 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+
+// Trailing slash is stripped so "/services/" and "/services" both match.
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
 ---
 
 <!doctype html>
@@ -37,13 +41,27 @@ const { title, description } = Astro.props;
   </head>
 
   <body>
-    <slot />
+    <SiteHeader path={path} />
+    <main id="main">
+      <slot />
+    </main>
 
     {/*
       Reveal + marquee-duration wiring. Inline and un-bundled on purpose: a
       deferred module could leave revealed content hidden if it loads slowly.
     */}
     <script is:inline>
+      // Header surface appears once the page leaves the very top.
+      (function () {
+        var hdr = document.querySelector("[data-header]");
+        if (!hdr) return;
+        var sync = function () {
+          hdr.classList.toggle("is-stuck", window.scrollY > 12);
+        };
+        sync();
+        window.addEventListener("scroll", sync, { passive: true });
+      })();
+
       (function () {
         var nodes = document.querySelectorAll("[data-reveal]");
         var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

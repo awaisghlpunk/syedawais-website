@@ -12,17 +12,8 @@
   <div class="hero__glow"></div>
 
   <div class="hero__content">
-    <div class="topbar">
-      <div class="topbar__brand">The Break-Proof Build System</div>
-      <div class="topbar__right">
-        <div class="badge-scarcity">
-          <span class="badge-scarcity__dot"></span>
-          Only 3 build slots this month
-        </div>
-        <a href="#book" class="btn-ghost">Book a call →</a>
-      </div>
-    </div>
-
+    {/* The brand, scarcity badge and Book a call moved into the shared site
+        header, which now spans both pages. */}
     <div class="hero__body">
       <div class="kicker-pill">
         <span class="kicker-pill__dot"></span>
@@ -151,59 +142,10 @@
     position: relative;
   }
 
-  /* Top bar */
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 48px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .topbar__brand {
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    color: #9a9cac;
-    text-transform: uppercase;
-  }
-  .topbar__right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .badge-scarcity {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: #c6ff3d;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-    color: #0b0c14;
-  }
-  .badge-scarcity__dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #0b0c14;
-  }
-  .btn-ghost {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #ffffff;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 9px 18px;
-    border-radius: 20px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  /* Hero body */
+  /* Hero body. Top padding clears the fixed header, which the hero
+     gradient now runs behind. */
   .hero__body {
-    padding: 72px 40px 24px;
+    padding: 148px 40px 24px;
     text-align: center;
   }
   .kicker-pill {
@@ -342,14 +284,8 @@
   }
 
   @media (max-width: 640px) {
-    .topbar {
-      flex-direction: column;
-      gap: 14px;
-      align-items: flex-start;
-      padding: 18px 24px;
-    }
     .hero__body {
-      padding: 48px 24px 16px;
+      padding: 116px 24px 16px;
     }
     .proof-strip {
       gap: 32px;
@@ -379,7 +315,6 @@
   }
 
   .btn-primary,
-  .btn-ghost,
   .btn-link,
   .contact-bubble {
     transition:
@@ -394,7 +329,6 @@
     box-shadow: 0 12px 30px -10px rgba(198, 255, 61, 0.5);
   }
 
-  .btn-ghost:hover,
   .contact-bubble:hover {
     border-color: rgba(198, 255, 61, 0.5);
     background: rgba(198, 255, 61, 0.07);

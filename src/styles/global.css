@@ -52,7 +52,8 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 32px;
+  /* Clears the fixed header so anchor targets are not hidden under it. */
+  scroll-padding-top: 96px;
   -webkit-text-size-adjust: 100%;
 }
 

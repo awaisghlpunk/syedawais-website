@@ -3,6 +3,8 @@
   Services hero. Shares the Home hero's gradient, grid and glow so the two
   pages read as one site, but the layout is left-aligned rather than centred
   so the page does not look like a second copy of Home.
+
+  Nav and the Book a call button live in the shared site header.
 */
 ---
 
@@ -12,17 +14,6 @@
   <div class="shero__glow"></div>
 
   <div class="shero__content">
-    <div class="topbar">
-      <a class="topbar__brand" href="/">The Break-Proof Build System</a>
-      <div class="topbar__right">
-        <nav class="topbar__nav">
-          <a href="/">Home</a>
-          <a href="/services" aria-current="page">Services</a>
-        </nav>
-        <a href="#book" class="btn-ghost">Book a call →</a>
-      </div>
-    </div>
-
     <div class="shell shero__body">
       <p class="kicker" data-reveal>What we build</p>
 
@@ -132,83 +123,9 @@
     position: relative;
   }
 
-  /* Top bar, matching the Home hero with page nav added. */
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 18px;
-    padding: 20px 48px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .topbar__brand {
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    color: #9a9cac;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: color 0.25s var(--ease);
-  }
-
-  .topbar__brand:hover {
-    color: var(--ink);
-  }
-
-  .topbar__right {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-  }
-
-  .topbar__nav {
-    display: flex;
-    gap: 20px;
-  }
-
-  .topbar__nav a {
-    font-size: 13.5px;
-    color: var(--ink-mute);
-    text-decoration: none;
-    padding-bottom: 3px;
-    border-bottom: 1px solid transparent;
-    transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
-  }
-
-  .topbar__nav a:hover {
-    color: var(--ink);
-  }
-
-  .topbar__nav a[aria-current="page"] {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-  }
-
-  .btn-ghost {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #ffffff;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 9px 18px;
-    border-radius: 20px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-    transition: background 0.25s var(--ease), border-color 0.25s var(--ease),
-      transform 0.25s var(--ease);
-  }
-
-  .btn-ghost:hover {
-    border-color: rgba(198, 255, 61, 0.5);
-    background: rgba(198, 255, 61, 0.07);
-    transform: translateY(-2px);
-  }
-
+  /* Top padding clears the fixed header. */
   .shero__body {
-    padding-top: 104px;
+    padding-top: 172px;
     padding-bottom: 108px;
   }
 
@@ -251,28 +168,17 @@
     margin-top: 38px;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 940px) {
+    /* The header wraps to two rows once the burger appears. */
     .shero__body {
-      padding-top: 72px;
+      padding-top: 150px;
       padding-bottom: 76px;
     }
   }
 
   @media (max-width: 640px) {
-    .topbar {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 18px 24px;
-    }
-
-    .topbar__right {
-      flex-wrap: wrap;
-      gap: 14px;
-    }
-
     .shero__body {
-      padding-top: 52px;
+      padding-top: 132px;
       padding-bottom: 56px;
     }
 
