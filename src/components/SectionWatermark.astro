@@ -18,8 +18,8 @@ interface Props {
 const {
   id,
   side = "left",
-  width = "560px",
-  opacity = "0.13",
+  width = "820px",
+  opacity = "0.14",
   /* Sunk into the corner: at a shallower offset it crowded the section CTA
      that sits at the bottom left of these sections. */
   bottom = "-30px",
@@ -123,13 +123,13 @@ const origin = side === "left" ? "0% 100%" : "100% 100%";
 
   @media (max-width: 900px) {
     .wm {
-      width: 380px !important;
+      width: 520px !important;
     }
   }
 
   @media (max-width: 640px) {
     .wm {
-      width: 280px !important;
+      width: 360px !important;
       opacity: 0.12 !important;
     }
   }
