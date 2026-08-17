@@ -4,6 +4,8 @@
   Quotes are intentionally left as placeholder bracket text; real ones are
   still outstanding and nothing here should read as a genuine client quote.
 */
+import SectionBg from "./SectionBg.astro";
+
 const quotes = [
   "[Client quote about a specific result and reliability]",
   "[Client quote about communication and follow-through]",
@@ -12,7 +14,16 @@ const quotes = [
 ---
 
 <section class="section" id="testimonials">
-  <div class="tex tex-diag" style="--tex-pos: 95% 8%; --tex-size: 280px;"></div>
+  <SectionBg
+    pattern="diag"
+    glow="blue"
+    glowX="86%"
+    glowY="100%"
+    glowW="660px"
+    glowH="480px"
+    scrimPos="40% 34%"
+    scrimH="70%"
+  />
 
   <div class="shell">
     <p class="kicker" data-reveal>What clients say</p>
@@ -98,8 +109,8 @@ const quotes = [
 
   .quote__text {
     margin: 0;
-    font-size: 16px;
-    line-height: 1.7;
+    font-size: 16.5px;
+    line-height: 1.72;
     color: var(--ink-soft);
     min-height: 96px;
   }

@@ -1,0 +1,56 @@
+---
+/*
+  Layered section background: full-bleed pattern → scrim → seam feather →
+  accent glow. The scrim repaints the section colour behind the reading
+  column, which is what lets the pattern run edge to edge without ever
+  sitting behind a headline.
+
+  `glowY` is normally set above 100% or below 0% so the glow straddles a
+  section edge and bleeds into the neighbouring section.
+*/
+interface Props {
+  pattern: "grid" | "dots" | "diag" | "rings";
+  glow?: "lime" | "blue";
+  glowX?: string;
+  glowY?: string;
+  glowW?: string;
+  glowH?: string;
+  glowA?: string;
+  scrimPos?: string;
+  scrimW?: string;
+  scrimH?: string;
+  patternOpacity?: string;
+}
+
+const {
+  pattern,
+  glow = "lime",
+  glowX = "80%",
+  glowY = "96%",
+  glowW = "620px",
+  glowH = "460px",
+  glowA = "0.075",
+  scrimPos = "38% 44%",
+  scrimW = "76%",
+  scrimH = "68%",
+  patternOpacity = "1",
+} = Astro.props;
+
+const scrimStyle = `--scrim-pos:${scrimPos};--scrim-w:${scrimW};--scrim-h:${scrimH};`;
+const glowStyle = `--glow-x:${glowX};--glow-y:${glowY};--glow-w:${glowW};--glow-h:${glowH};--glow-a:${glowA};`;
+---
+
+<div class="sbg" aria-hidden="true">
+  <div
+    class={`sbg__pattern sbg__pattern--${pattern}`}
+    style={`opacity:${patternOpacity}`}
+  >
+  </div>
+  <div class="sbg__scrim" style={scrimStyle}></div>
+  <div class="sbg__feather"></div>
+  <div
+    class={`sbg__glow${glow === "blue" ? " sbg__glow--blue" : ""}`}
+    style={glowStyle}
+  >
+  </div>
+</div>

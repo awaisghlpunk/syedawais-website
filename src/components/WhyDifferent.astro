@@ -1,5 +1,7 @@
 ---
 /* Why This System Is Different — plain checklist, deliberately no cards. */
+import SectionBg from "./SectionBg.astro";
+
 const points = [
   "Tested against real, messy data before you ever see it — not a clean demo that only works once, on purpose.",
   "Error handling on every automation. If something fails, you get an alert — it doesn't just fail silently into a lead you'll never know you lost.",
@@ -9,7 +11,16 @@ const points = [
 ---
 
 <section class="section section--alt" id="different">
-  <div class="tex tex-dots" style="--tex-pos: 96% 94%; --tex-size: 200px;"></div>
+  <SectionBg
+    pattern="dots"
+    glow="blue"
+    glowX="14%"
+    glowY="100%"
+    glowW="660px"
+    glowH="480px"
+    scrimPos="46% 44%"
+    scrimW="86%"
+  />
 
   <div class="shell">
     <div class="different">

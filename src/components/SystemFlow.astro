@@ -1,5 +1,7 @@
 ---
 /* The System — horizontal connected timeline, circle nodes on a shared rail. */
+import SectionBg from "./SectionBg.astro";
+
 const steps = [
   {
     label: "Meta Ads",
@@ -25,7 +27,15 @@ const steps = [
 ---
 
 <section class="section" id="how">
-  <div class="tex tex-diag" style="--tex-pos: 94% 8%; --tex-size: 290px;"></div>
+  <SectionBg
+    pattern="diag"
+    glow="blue"
+    glowX="16%"
+    glowY="102%"
+    glowW="700px"
+    glowH="500px"
+    scrimPos="42% 46%"
+  />
 
   <div class="shell">
     <p class="kicker" data-reveal>The Break-Proof Build System</p>
@@ -178,9 +188,9 @@ const steps = [
   }
 
   .step__body {
-    font-size: 15px;
-    line-height: 1.68;
-    color: var(--ink-mute);
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--ink-body);
   }
 
   /* Connector lines must disappear the moment the grid wraps. */

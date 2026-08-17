@@ -3,6 +3,8 @@
   Case Studies — alternating left/right rows, text + stat box, order flipping
   each row. Every figure below is drawn from the verified data set.
 */
+import SectionBg from "./SectionBg.astro";
+
 const studies = [
   {
     id: "hainan-corporate-services-group",
@@ -61,7 +63,17 @@ const studies = [
 ---
 
 <section class="section" id="case-studies">
-  <div class="tex tex-glow" style="--tex-pos: 93% 11%; --tex-size: 360px;"></div>
+  <SectionBg
+    pattern="rings"
+    glow="lime"
+    glowX="88%"
+    glowY="-2%"
+    glowW="760px"
+    glowH="560px"
+    glowA="0.09"
+    scrimPos="36% 30%"
+    scrimH="76%"
+  />
 
   <div class="shell">
     <p class="kicker" data-reveal>Real systems, real results</p>
@@ -155,9 +167,9 @@ const studies = [
   }
 
   .case__body {
-    font-size: 16px;
-    line-height: 1.72;
-    color: var(--ink-mute);
+    font-size: 16.5px;
+    line-height: 1.74;
+    color: var(--ink-body);
     max-width: 62ch;
   }
 

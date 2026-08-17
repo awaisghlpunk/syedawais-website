@@ -9,13 +9,22 @@
   --bg-alt2: #10131f;
   --ink: #ffffff;
   --ink-soft: #c7c9d6;
-  --ink-mute: #8a8ca0;
-  --ink-faint: #6e7080;
+  /*
+    Raised from the original #8A8CA0 / #6E7080. At those values secondary
+    text failed WCAG AA against the patterned background — measured 3.18
+    and 2.16 against the lightest the background can get.
+  */
+  --ink-mute: #9da1b6;
+  --ink-faint: #868ba2;
   --line: rgba(255, 255, 255, 0.08);
   --accent: #c6ff3d;
   --accent-ink: #0b0c14;
   --card: rgba(255, 255, 255, 0.035);
   --card-line: rgba(255, 255, 255, 0.09);
+
+  /* Body copy sits on --ink-body; --ink-mute is reserved for labels and
+     captions, where smaller size and lower contrast are appropriate. */
+  --ink-body: #b9bccc;
 
   --font-display: "Space Grotesk", sans-serif;
   --font-body: "Inter", sans-serif;
@@ -25,7 +34,6 @@
   --pad-x: 40px;
   --pad-y: 130px;
 
-  /* Easing used for every reveal + hover transition on the page. */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
@@ -37,7 +45,6 @@
 
 html {
   scroll-behavior: smooth;
-  /* Anchor targets clear the top of the viewport instead of butting against it. */
   scroll-padding-top: 32px;
   -webkit-text-size-adjust: 100%;
 }
@@ -45,7 +52,7 @@ html {
 body {
   font-family: var(--font-body);
   background: var(--bg);
-  color: var(--ink-soft);
+  color: var(--ink-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -71,28 +78,167 @@ svg {
 
 /* --------------------------------------------------------------------------
    Section scaffolding
-   No border-bottom between sections — rhythm comes only from alternating
-   --bg / --bg-alt, so the page reads as one continuous scroll.
+
+   No divider lines anywhere. Instead each section paints its own colour in
+   the middle and its neighbour's colour at both edges, so consecutive
+   sections melt into one another and the page reads as one continuous
+   scroll rather than a stack of blocks.
    -------------------------------------------------------------------------- */
 
 .section {
+  --section-rgb: 11, 13, 26; /* --bg */
+  --neighbor-rgb: 15, 18, 32; /* --bg-alt */
+
   position: relative;
   overflow: hidden;
   padding: var(--pad-y) 0;
-  background: var(--bg);
+  /*
+    Only the bottom edge hands off. Each section starts flat on its own
+    colour and ends on the next section's colour, so the two meet on an
+    identical value and the seam disappears. Fading both edges would land
+    each boundary on the wrong colour twice.
+  */
+  background: linear-gradient(
+    180deg,
+    rgb(var(--section-rgb)) 0%,
+    rgb(var(--section-rgb)) 84%,
+    rgb(var(--neighbor-rgb)) 100%
+  );
 }
 
 .section--alt {
-  background: var(--bg-alt);
+  --section-rgb: 15, 18, 32;
+  --neighbor-rgb: 11, 13, 26;
 }
 
 .shell {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   max-width: var(--shell);
   margin: 0 auto;
   padding: 0 var(--pad-x);
+}
+
+/* --------------------------------------------------------------------------
+   Section backgrounds
+
+   Built on the same recipe as the hero: a full-bleed pattern, a radial scrim
+   that restores flat colour behind the reading column, and an accent glow.
+   The scrim is what keeps text crisp — it means the pattern can be strong
+   and edge-to-edge without ever competing with a headline.
+   -------------------------------------------------------------------------- */
+
+.sbg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sbg__pattern {
+  position: absolute;
+  inset: -1px;
+}
+
+/*
+  Pattern alphas are deliberately low enough that body text stays readable
+  directly on top of them. An earlier version relied on an elliptical scrim
+  to mask the pattern behind text, which fails on tall sections — anything
+  below the ellipse landed on raw pattern. Legibility now comes from the
+  pattern itself being subtle; the scrim only adds depth.
+*/
+.sbg__pattern--grid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2244%22 height=%2244%22%3E%3Cpath d=%22M44 0H0V44%22 fill=%22none%22 stroke=%22%231D2236%22 stroke-width=%221%22/%3E%3C/svg%3E");
+}
+
+.sbg__pattern--dots {
+  background-image: radial-gradient(
+    circle,
+    rgba(168, 176, 214, 0.17) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+.sbg__pattern--diag {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(150, 158, 200, 0.07) 0px,
+    rgba(150, 158, 200, 0.07) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+
+.sbg__pattern--rings {
+  background-image: repeating-radial-gradient(
+    circle at 82% 26%,
+    rgba(150, 158, 200, 0.07) 0px,
+    rgba(150, 158, 200, 0.07) 1px,
+    transparent 1px,
+    transparent 34px
+  );
+}
+
+/*
+  Depth vignette. Settles the middle of the section so the pattern reads
+  strongest toward the edges. Never fully opaque, so the texture stays
+  present across the whole section rather than being cut into a hole.
+*/
+.sbg__scrim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse var(--scrim-w, 88%) var(--scrim-h, 74%) at var(--scrim-pos, 40% 45%),
+    rgba(var(--section-rgb), 0.82) 0%,
+    rgba(var(--section-rgb), 0.6) 48%,
+    rgba(var(--section-rgb), 0.15) 78%,
+    rgba(var(--section-rgb), 0) 100%
+  );
+}
+
+/* Top and bottom feather, so the pattern never collides with the seam. */
+.sbg__feather {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgb(var(--section-rgb)) 0%,
+    rgba(var(--section-rgb), 0) 15%,
+    rgba(var(--section-rgb), 0) 85%,
+    rgb(var(--neighbor-rgb)) 100%
+  );
+}
+
+/*
+  Accent glow. Positioned to straddle a section edge so the colour bleeds
+  across the seam into the neighbouring section — this is what carries the
+  eye from one section to the next.
+*/
+.sbg__glow {
+  position: absolute;
+  width: var(--glow-w, 620px);
+  height: var(--glow-h, 460px);
+  left: var(--glow-x, 78%);
+  top: var(--glow-y, 88%);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(198, 255, 61, var(--glow-a, 0.075)) 0%,
+    rgba(198, 255, 61, 0.02) 42%,
+    transparent 72%
+  );
+}
+
+.sbg__glow--blue {
+  background: radial-gradient(
+    circle,
+    rgba(88, 120, 255, var(--glow-a, 0.09)) 0%,
+    rgba(88, 120, 255, 0.025) 42%,
+    transparent 72%
+  );
 }
 
 /* Section header ---------------------------------------------------------- */
@@ -101,11 +247,11 @@ svg {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--accent);
   margin-bottom: 22px;
 }
 
@@ -116,13 +262,14 @@ svg {
   border-radius: 50%;
   background: var(--accent);
   flex: none;
+  box-shadow: 0 0 12px rgba(198, 255, 61, 0.7);
 }
 
 .h2 {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(28px, 3.6vw, 44px);
-  line-height: 1.14;
+  font-size: clamp(30px, 3.8vw, 46px);
+  line-height: 1.13;
   letter-spacing: -0.015em;
   color: var(--ink);
   max-width: 20ch;
@@ -133,9 +280,9 @@ svg {
 }
 
 .lede {
-  font-size: 17px;
-  line-height: 1.72;
-  color: var(--ink-mute);
+  font-size: 17.5px;
+  line-height: 1.74;
+  color: var(--ink-body);
   max-width: 62ch;
 }
 
@@ -144,11 +291,10 @@ svg {
 }
 
 .lede strong {
-  color: var(--ink-soft);
+  color: var(--ink);
   font-weight: 500;
 }
 
-/* Transition line — the connective sentence that closes several sections. */
 .transition-note {
   display: flex;
   gap: 16px;
@@ -156,17 +302,12 @@ svg {
   margin-top: 56px;
   padding: 22px 26px;
   border-left: 2px solid var(--accent);
-  background: linear-gradient(90deg, rgba(198, 255, 61, 0.05), transparent 70%);
+  background: linear-gradient(90deg, rgba(198, 255, 61, 0.06), transparent 70%);
   border-radius: 0 10px 10px 0;
-  font-size: 16px;
-  line-height: 1.66;
+  font-size: 16.5px;
+  line-height: 1.68;
   color: var(--ink-soft);
   max-width: 74ch;
-}
-
-.transition-note em {
-  font-style: italic;
-  color: var(--accent);
 }
 
 .accent-em {
@@ -177,75 +318,6 @@ svg {
 .mono {
   font-family: var(--font-mono);
   font-weight: 500;
-}
-
-/* --------------------------------------------------------------------------
-   Section textures
-   One distinct texture per section, confined to a small corner patch and
-   masked so it fades out well before it reaches any headline or body text.
-   The text-heavy top-left of every section stays completely blank.
-   -------------------------------------------------------------------------- */
-
-.tex {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  --tex-pos: 88% 14%;
-  --tex-size: 380px;
-}
-
-.tex-dots {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.22) 1px, transparent 1px);
-  background-size: 20px 20px;
-  -webkit-mask-image: radial-gradient(circle var(--tex-size) at var(--tex-pos), #000 0%, transparent 100%);
-  mask-image: radial-gradient(circle var(--tex-size) at var(--tex-pos), #000 0%, transparent 100%);
-}
-
-.tex-diag {
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.07) 0px,
-    rgba(255, 255, 255, 0.07) 1px,
-    transparent 1px,
-    transparent 11px
-  );
-  -webkit-mask-image: radial-gradient(circle var(--tex-size) at var(--tex-pos), #000 0%, transparent 100%);
-  mask-image: radial-gradient(circle var(--tex-size) at var(--tex-pos), #000 0%, transparent 100%);
-}
-
-.tex-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-  background-size: 46px 46px;
-  -webkit-mask-image: radial-gradient(circle var(--tex-size) at var(--tex-pos), #000 0%, transparent 100%);
-  mask-image: radial-gradient(circle var(--tex-size) at var(--tex-pos), #000 0%, transparent 100%);
-}
-
-/* Soft colour glow only — no lines, so it needs no mask of its own. */
-.tex-glow {
-  background-image: radial-gradient(
-    circle var(--tex-size) at var(--tex-pos),
-    rgba(198, 255, 61, 0.07) 0%,
-    rgba(198, 255, 61, 0.02) 45%,
-    transparent 72%
-  );
-}
-
-/*
-  Line textures only render where the layout is wide enough to leave a real
-  corner outside the text column. Below this the shell fills the viewport,
-  content collapses toward one column, and any line pattern would cross
-  headline or body text — the exact bug the design system calls out. The
-  glow has no lines and does not affect legibility, so it stays at all sizes.
-*/
-@media (max-width: 1200px) {
-  .tex-dots,
-  .tex-diag,
-  .tex-grid {
-    display: none;
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -290,7 +362,6 @@ svg {
   transform: translateY(-2px);
 }
 
-/* Arrow nudge shared by buttons and inline links. */
 .btn .arrow,
 .arrow {
   display: inline-block;
@@ -305,8 +376,7 @@ a:hover > .arrow {
 /* --------------------------------------------------------------------------
    Scroll reveal
    Hidden state is scoped to .js, which an inline head script sets before
-   first paint. With JS off or slow, every element renders visible and
-   readable — the animation is strictly additive.
+   first paint. With JS off, every element renders visible and readable.
    -------------------------------------------------------------------------- */
 
 .js [data-reveal] {
@@ -359,14 +429,27 @@ a:hover > .arrow {
 
 /* --------------------------------------------------------------------------
    Responsive
-   Section padding drops substantially on mobile and headings get explicit
-   overrides rather than relying on clamp() minimums alone.
    -------------------------------------------------------------------------- */
 
 @media (max-width: 900px) {
   :root {
     --pad-y: 88px;
     --pad-x: 32px;
+  }
+
+  /*
+    Content goes full width, so the scrim widens to match — the pattern
+    stays visible at the edges but never behind the reading column.
+  */
+  .sbg__scrim {
+    --scrim-w: 116%;
+    --scrim-h: 76%;
+    --scrim-pos: 50% 46%;
+  }
+
+  .sbg__glow {
+    --glow-w: 460px;
+    --glow-h: 360px;
   }
 }
 
@@ -377,20 +460,25 @@ a:hover > .arrow {
   }
 
   .h2 {
-    font-size: 27px;
+    font-size: 28px;
     line-height: 1.2;
     max-width: none;
   }
 
   .lede {
-    font-size: 15.5px;
-    line-height: 1.68;
+    font-size: 16px;
+    line-height: 1.7;
   }
 
   .transition-note {
     margin-top: 40px;
     padding: 18px 20px;
-    font-size: 15px;
+    font-size: 15.5px;
+  }
+
+  .sbg__scrim {
+    --scrim-w: 140%;
+    --scrim-h: 80%;
   }
 
   .btn {

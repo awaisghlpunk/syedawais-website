@@ -1,9 +1,22 @@
 ---
 /* Closing CTA. #book / #audit stay as placeholder anchors — the Calendly
    link is deliberately not public yet. */
+import SectionBg from "./SectionBg.astro";
 ---
 
 <section class="section section--alt closing" id="book">
+  <SectionBg
+    pattern="grid"
+    glow="lime"
+    glowX="50%"
+    glowY="50%"
+    glowW="900px"
+    glowH="560px"
+    glowA="0.10"
+    scrimPos="50% 50%"
+    scrimW="70%"
+    scrimH="64%"
+  />
   <div class="closing__glow" aria-hidden="true"></div>
 
   <div class="shell">
@@ -57,7 +70,7 @@
 
   .closing__inner {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -72,9 +85,9 @@
 
   .closing__body {
     margin-top: 24px;
-    font-size: 17px;
-    line-height: 1.74;
-    color: var(--ink-mute);
+    font-size: 17.5px;
+    line-height: 1.76;
+    color: var(--ink-body);
     max-width: 56ch;
   }
 

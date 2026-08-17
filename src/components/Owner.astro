@@ -4,10 +4,20 @@
   ships a clearly marked grey placeholder. Drop the real image in and the
   grayscale treatment is already applied by .owner__photo img.
 */
+import SectionBg from "./SectionBg.astro";
 ---
 
 <section class="section section--alt" id="owner">
-  <div class="tex tex-glow" style="--tex-pos: 20% 24%; --tex-size: 300px;"></div>
+  <SectionBg
+    pattern="rings"
+    glow="lime"
+    glowX="18%"
+    glowY="6%"
+    glowW="640px"
+    glowH="520px"
+    scrimPos="52% 48%"
+    scrimW="82%"
+  />
 
   <div class="shell">
     <div class="owner">
@@ -136,15 +146,15 @@
   }
 
   .owner__para {
-    font-size: 17px;
-    line-height: 1.76;
+    font-size: 17.5px;
+    line-height: 1.78;
     color: var(--ink-soft);
     max-width: 62ch;
   }
 
   .owner__para + .owner__para {
     margin-top: 22px;
-    color: var(--ink-mute);
+    color: var(--ink-body);
   }
 
   @media (max-width: 900px) {

@@ -4,6 +4,8 @@
   Each cell links to the matching case study; the mapping below is inferred,
   since the copy specifies that the links exist but not which pairs with which.
 */
+import SectionBg from "./SectionBg.astro";
+
 const systems = [
   {
     title: "24/7 Lead Capture",
@@ -70,7 +72,16 @@ const paths: Record<string, string> = {
 ---
 
 <section class="section" id="system-wall">
-  <div class="tex tex-grid" style="--tex-pos: 94% 7%; --tex-size: 300px;"></div>
+  <SectionBg
+    pattern="grid"
+    glow="lime"
+    glowX="82%"
+    glowY="102%"
+    glowW="700px"
+    glowH="500px"
+    scrimPos="34% 22%"
+    scrimH="52%"
+  />
 
   <div class="shell">
     <p class="kicker" data-reveal>See the systems</p>
@@ -111,6 +122,9 @@ const paths: Record<string, string> = {
     hairlines instead of sitting in separate cards.
   */
   .wall {
+    /* Sits above the section background layers. */
+    position: relative;
+    z-index: 2;
     margin-top: 64px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -188,9 +202,9 @@ const paths: Record<string, string> = {
 
   .cell__body {
     position: relative;
-    font-size: 14.5px;
-    line-height: 1.62;
-    color: var(--ink-mute);
+    font-size: 15px;
+    line-height: 1.66;
+    color: var(--ink-body);
   }
 
   .cell__arrow {

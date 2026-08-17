@@ -1,5 +1,7 @@
 ---
 /* Problem (Agitation) — stacked list rows with X-icon markers. */
+import SectionBg from "./SectionBg.astro";
+
 const failures = [
   {
     lead: '"Sent" doesn\'t mean delivered.',
@@ -19,7 +21,15 @@ const failures = [
 {/* id="audit" is the target of the hero's "Show me what's leaking" CTA,
     so the mockup's href stays byte-identical. */}
 <section class="section section--alt" id="audit">
-  <div class="tex tex-dots" style="--tex-pos: 94% 9%; --tex-size: 300px;"></div>
+  <SectionBg
+    pattern="dots"
+    glow="lime"
+    glowX="84%"
+    glowY="104%"
+    glowW="720px"
+    glowH="520px"
+    scrimPos="34% 42%"
+  />
 
   <div class="shell">
     <div class="problem__head">
@@ -167,9 +177,9 @@ const failures = [
 
   .failure__desc {
     display: block;
-    font-size: 16px;
-    line-height: 1.68;
-    color: var(--ink-mute);
+    font-size: 16.5px;
+    line-height: 1.7;
+    color: var(--ink-body);
     max-width: 68ch;
   }
 

@@ -3,6 +3,8 @@
   Guarantees — the one section that deliberately repeats the card grid,
   used here for emphasis.
 */
+import SectionBg from "./SectionBg.astro";
+
 const promises = [
   {
     title: "If it breaks, we fix it fast.",
@@ -26,7 +28,15 @@ const promises = [
 ---
 
 <section class="section section--alt" id="guarantees">
-  <div class="tex tex-grid" style="--tex-pos: 94% 9%; --tex-size: 290px;"></div>
+  <SectionBg
+    pattern="grid"
+    glow="lime"
+    glowX="86%"
+    glowY="103%"
+    glowW="680px"
+    glowH="500px"
+    scrimPos="36% 40%"
+  />
 
   <div class="shell">
     <p class="kicker" data-reveal>Built to not break</p>
@@ -159,9 +169,9 @@ const promises = [
 
   .promise__body {
     position: relative;
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--ink-mute);
+    font-size: 15.5px;
+    line-height: 1.72;
+    color: var(--ink-body);
     flex: 1;
   }
 
