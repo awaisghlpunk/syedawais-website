@@ -1,131 +1,396 @@
 ---
-/* Minimal footer. Deliberately carries no claims of its own — just wayfinding
-   back into the page and the credit line already used in the Owner section. */
+/*
+  Shared site footer.
+
+  Everything here is either navigation or text that already appears in the
+  copy documents. No invented tagline, no invented credentials. The email
+  and WhatsApp match the Contact page: visible placeholders, not filled in
+  with plausible-looking values.
+*/
 const year = new Date().getFullYear();
 
-/*
-  Absolute, not bare fragments: this footer renders on Services too, where
-  the Home section anchors do not exist and a bare "#how" would dead-end.
-*/
-const links = [
-  { label: "Services", href: "/services" },
-  { label: "Case studies", href: "/case-studies" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+const columns = [
+  {
+    title: "Pages",
+    links: [
+      { label: "Home", href: "/" },
+      { label: "Services", href: "/services" },
+      { label: "Case studies", href: "/case-studies" },
+      { label: "About", href: "/about" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    title: "What gets built",
+    links: [
+      { label: "The Foundation", href: "/services#foundation" },
+      { label: "AI Automation & Agents", href: "/services#ai-automation" },
+      { label: "Growth & Visibility", href: "/services#growth" },
+      { label: "Packages", href: "/services#packages" },
+    ],
+  },
+  {
+    title: "Proof",
+    links: [
+      { label: "Systems we've built", href: "/case-studies#systems" },
+      { label: "The signature build", href: "/services#webinar-system" },
+      { label: "Track record", href: "/about#track-record" },
+      { label: "Guarantees", href: "/#guarantees" },
+    ],
+  },
 ];
+
+const EMAIL_PLACEHOLDER = "[EMAIL PLACEHOLDER]";
+const WHATSAPP_PLACEHOLDER = "[WHATSAPP PLACEHOLDER]";
 ---
 
-<footer class="footer">
-  <div class="shell">
-    <div class="footer__inner">
-      <div class="footer__brand">
-        <p class="footer__name">The Break-Proof Build System</p>
-        <p class="footer__credit mono">
+<footer class="ft">
+  <div class="ft__glow" aria-hidden="true"></div>
+
+  <div class="shell ft__inner">
+    <div class="ft__top">
+      <div class="ft__brand">
+        <a class="ft__mark" href="/">
+          <span class="ft__logo" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+              <path
+                d="M12 2.6 20.4 7v10L12 21.4 3.6 17V7L12 2.6Z"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linejoin="round"></path>
+              <path
+                d="m8.2 12.2 2.6 2.6 5-5.6"
+                stroke="currentColor"
+                stroke-width="1.9"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          <span class="ft__name">The Break-Proof Build System</span>
+        </a>
+
+        <p class="ft__stack mono">GHL · Meta Ads · AI Automation</p>
+
+        <p class="ft__credit">
           Mechanical Engineering background · Building GHL systems since 2019
         </p>
       </div>
 
-      <nav class="footer__nav" aria-label="Page sections">
-        {links.map((link) => <a href={link.href}>{link.label}</a>)}
-      </nav>
+      {
+        columns.map((col) => (
+          <nav class="ft__col" aria-label={col.title}>
+            <p class="ft__title mono">{col.title}</p>
+            <ul class="ft__list">
+              {col.links.map((l) => (
+                <li>
+                  <a href={l.href}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+
+      <div class="ft__col ft__contact">
+        <p class="ft__title mono">Get in touch</p>
+
+        <ul class="ft__list">
+          <li>
+            <span class="ft__label">Email</span>
+            <span class="ft__ph mono">{EMAIL_PLACEHOLDER}</span>
+          </li>
+          <li>
+            <span class="ft__label">WhatsApp</span>
+            <span class="ft__ph mono">{WHATSAPP_PLACEHOLDER}</span>
+          </li>
+        </ul>
+
+        <a class="ft__cta" href="/contact#contact-form">
+          Book a free call <span class="arrow">→</span>
+        </a>
+      </div>
     </div>
 
-    <div class="footer__base">
-      <p>&copy; {year} syedawais.com</p>
-      <a href="/contact#contact-form" class="footer__cta">
-        Book a call <span class="arrow">→</span>
+    <div class="ft__base">
+      <p class="ft__copy">&copy; {year} syedawais.com</p>
+
+      <p class="ft__note">
+        Response usually within a few hours, always within one business day.
+      </p>
+
+      <a class="ft__top-link" href="#main">
+        Back to top
+        <span class="ft__top-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none">
+            <path
+              d="M12 19V5m0 0-6 6m6-6 6 6"
+              stroke="currentColor"
+              stroke-width="1.9"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </span>
       </a>
     </div>
   </div>
 </footer>
 
 <style>
-  .footer {
+  .ft {
+    position: relative;
+    overflow: hidden;
     background: var(--bg);
-    padding: 72px 0 40px;
     border-top: 1px solid var(--line);
+    padding: 76px 0 34px;
   }
 
-  .footer__inner {
+  /* Faint lift at the base of the page so the footer does not read as a
+     flat slab under the last section. */
+  .ft__glow {
+    position: absolute;
+    left: 50%;
+    bottom: -220px;
+    width: 900px;
+    height: 460px;
+    transform: translateX(-50%);
+    background: radial-gradient(
+      circle closest-side,
+      rgba(198, 255, 61, 0.09) 0%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .ft__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .ft__top {
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr) 1.1fr;
+    gap: 44px 32px;
+    padding-bottom: 48px;
+  }
+
+  /* Brand ------------------------------------------------------------------ */
+
+  .ft__mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+  }
+
+  .ft__logo {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 40px;
-    flex-wrap: wrap;
-    padding-bottom: 40px;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    border: 1px solid rgba(198, 255, 61, 0.35);
+    background: rgba(198, 255, 61, 0.1);
+    color: var(--accent);
+    flex: none;
+    transition: background 0.25s var(--ease);
   }
 
-  .footer__name {
+  .ft__mark:hover .ft__logo {
+    background: rgba(198, 255, 61, 0.2);
+  }
+
+  .ft__name {
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: 15px;
-    letter-spacing: 0.04em;
+    font-size: 14px;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--ink);
-    margin-bottom: 10px;
+    max-width: 20ch;
+    line-height: 1.4;
   }
 
-  .footer__credit {
-    font-size: 11.5px;
-    letter-spacing: 0.05em;
+  .ft__stack {
+    margin-top: 18px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+
+  .ft__credit {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.7;
     color: var(--ink-faint);
+    max-width: 34ch;
   }
 
-  .footer__nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px 28px;
+  /* Link columns ----------------------------------------------------------- */
+
+  .ft__title {
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
   }
 
-  .footer__nav a {
+  .ft__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 11px;
+  }
+
+  .ft__list a {
     font-size: 14px;
+    line-height: 1.5;
     color: var(--ink-mute);
     text-decoration: none;
     transition: color 0.25s var(--ease);
   }
 
-  .footer__nav a:hover {
+  .ft__list a:hover {
     color: var(--accent);
   }
 
-  .footer__base {
-    display: flex;
-    justify-content: space-between;
+  /* Contact ---------------------------------------------------------------- */
+
+  .ft__contact .ft__list {
+    gap: 14px;
+  }
+
+  .ft__label {
+    display: block;
+    font-size: 12px;
+    color: var(--ink-faint);
+    margin-bottom: 5px;
+  }
+
+  /* Marked so a placeholder cannot pass as a real contact detail. */
+  .ft__ph {
+    display: inline-block;
+    padding: 3px 8px;
+    border: 1px dashed rgba(198, 255, 61, 0.35);
+    border-radius: 6px;
+    font-size: 11.5px;
+    color: var(--accent);
+  }
+
+  .ft__cta {
+    display: inline-flex;
     align-items: center;
-    gap: 20px;
+    gap: 8px;
+    margin-top: 22px;
+    padding: 11px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.25s var(--ease), border-color 0.25s var(--ease),
+      transform 0.25s var(--ease);
+  }
+
+  .ft__cta:hover {
+    border-color: rgba(198, 255, 61, 0.55);
+    background: rgba(198, 255, 61, 0.08);
+    transform: translateY(-2px);
+  }
+
+  /* Base bar --------------------------------------------------------------- */
+
+  .ft__base {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
     flex-wrap: wrap;
     padding-top: 26px;
     border-top: 1px solid var(--line);
-    font-size: 13px;
+  }
+
+  .ft__copy,
+  .ft__note {
+    font-size: 12.5px;
+    line-height: 1.6;
     color: var(--ink-faint);
   }
 
-  .footer__cta {
+  .ft__top-link {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
+    font-size: 12.5px;
     color: var(--ink-mute);
     text-decoration: none;
     transition: color 0.25s var(--ease);
   }
 
-  .footer__cta:hover {
+  .ft__top-link:hover {
     color: var(--accent);
   }
 
-  @media (max-width: 640px) {
-    .footer {
-      padding: 52px 0 32px;
+  .ft__top-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    border: 1px solid var(--card-line);
+    transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
+  }
+
+  .ft__top-link:hover .ft__top-icon {
+    transform: translateY(-2px);
+    border-color: rgba(198, 255, 61, 0.45);
+  }
+
+  @media (max-width: 1080px) {
+    .ft__top {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 38px 28px;
     }
 
-    .footer__inner {
+    .ft__brand {
+      grid-column: 1 / -1;
+    }
+
+    .ft__credit {
+      max-width: 46ch;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .ft {
+      padding: 56px 0 28px;
+    }
+
+    .ft__top {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 24px;
+      padding-bottom: 36px;
+    }
+
+    .ft__contact {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .ft__top {
+      grid-template-columns: 1fr;
+    }
+
+    .ft__base {
       flex-direction: column;
-      gap: 26px;
-      padding-bottom: 28px;
-    }
-
-    .footer__nav {
-      gap: 10px 22px;
+      align-items: flex-start;
+      gap: 12px;
     }
   }
 </style>
