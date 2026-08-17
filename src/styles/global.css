@@ -119,7 +119,7 @@ svg {
   last sliver instead, keeping the edge crisp.
 */
 .section--to-light {
-  --neighbor-rgb: 244, 245, 248;
+  --neighbor-rgb: 235, 241, 221;
   --handoff: 98.5%;
 }
 
@@ -142,18 +142,20 @@ svg {
   invisible on white, so text-level accents use --accent-text instead.
 */
 .section--light {
-  --section-rgb: 244, 245, 248;
+  /* "Lime mist": the pale ground tinted toward the brand accent, so the
+     light bands read as part of the palette rather than as plain white. */
+  --section-rgb: 235, 241, 221;
   --neighbor-rgb: 11, 13, 26;
 
-  --ink: #0b0d1a;
-  --ink-soft: #33364a;
-  --ink-body: #4b4f63;
-  --ink-mute: #5f6377;
-  --ink-faint: #74788c;
-  --line: rgba(11, 13, 26, 0.11);
-  --card: #ffffff;
-  --card-line: rgba(11, 13, 26, 0.1);
-  --accent-text: #4a6b00;
+  --ink: #0f1408;
+  --ink-soft: #37402a;
+  --ink-body: #4a5340;
+  --ink-mute: #5d6650;
+  --ink-faint: #747d66;
+  --line: rgba(15, 20, 8, 0.13);
+  --card: #f7faee;
+  --card-line: rgba(15, 20, 8, 0.11);
+  --accent-text: #3f5c00;
 
   color: var(--ink-body);
 }
@@ -196,36 +198,38 @@ svg {
   below the ellipse landed on raw pattern. Legibility now comes from the
   pattern itself being subtle; the scrim only adds depth.
 */
+/* Pattern scale is deliberately large. At the earlier 22px dot pitch and
+   12px line pitch the textures read as noise rather than as a pattern. */
 .sbg__pattern--grid {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2244%22 height=%2244%22%3E%3Cpath d=%22M44 0H0V44%22 fill=%22none%22 stroke=%22%231D2236%22 stroke-width=%221%22/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22112%22 height=%22112%22%3E%3Cpath d=%22M112 0H0V112%22 fill=%22none%22 stroke=%22%23222945%22 stroke-width=%221.5%22/%3E%3C/svg%3E");
 }
 
 .sbg__pattern--dots {
   background-image: radial-gradient(
     circle,
-    rgba(168, 176, 214, 0.17) 1px,
-    transparent 1px
+    rgba(168, 176, 214, 0.22) 2.6px,
+    transparent 2.6px
   );
-  background-size: 22px 22px;
+  background-size: 60px 60px;
 }
 
 .sbg__pattern--diag {
   background-image: repeating-linear-gradient(
     45deg,
-    rgba(150, 158, 200, 0.07) 0px,
-    rgba(150, 158, 200, 0.07) 1px,
-    transparent 1px,
-    transparent 12px
+    rgba(150, 158, 200, 0.095) 0px,
+    rgba(150, 158, 200, 0.095) 2.2px,
+    transparent 2.2px,
+    transparent 40px
   );
 }
 
 .sbg__pattern--rings {
   background-image: repeating-radial-gradient(
     circle at 82% 26%,
-    rgba(150, 158, 200, 0.07) 0px,
-    rgba(150, 158, 200, 0.07) 1px,
-    transparent 1px,
-    transparent 34px
+    rgba(150, 158, 200, 0.095) 0px,
+    rgba(150, 158, 200, 0.095) 2.2px,
+    transparent 2.2px,
+    transparent 92px
   );
 }
 
@@ -299,6 +303,32 @@ svg {
     rgba(88, 120, 255, 0.025) 42%,
     transparent 72%
   );
+}
+
+/*
+  The lime "puff" the hero uses behind its headline, carried into every
+  section. Sits above the scrim so it reads as light in the room rather
+  than a tint buried under the texture.
+*/
+.sbg__puff {
+  position: absolute;
+  width: var(--puff-w, 620px);
+  height: var(--puff-h, 340px);
+  left: var(--puff-x, 30%);
+  top: var(--puff-y, 20%);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(198, 255, 61, var(--puff-a, 0.16)) 0%,
+    rgba(198, 255, 61, 0.05) 38%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* On a pale ground a lime wash reads as a stain, so it is pulled right back. */
+.section--light .sbg__puff {
+  opacity: 0.4;
 }
 
 /* Section header ---------------------------------------------------------- */
@@ -379,16 +409,16 @@ svg {
    Light section adjustments
    -------------------------------------------------------------------------- */
 
-/* Patterns invert: dark lines on a light ground. */
+/* Patterns invert: dark olive lines on the pale ground. */
 .section--light .sbg__pattern--grid {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2244%22 height=%2244%22%3E%3Cpath d=%22M44 0H0V44%22 fill=%22none%22 stroke=%22rgba(11,13,26,0.08)%22 stroke-width=%221%22/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22112%22 height=%22112%22%3E%3Cpath d=%22M112 0H0V112%22 fill=%22none%22 stroke=%22rgba(15,20,8,0.10)%22 stroke-width=%221.5%22/%3E%3C/svg%3E");
 }
 
 .section--light .sbg__pattern--dots {
   background-image: radial-gradient(
     circle,
-    rgba(11, 13, 26, 0.13) 1px,
-    transparent 1px
+    rgba(15, 20, 8, 0.15) 2.6px,
+    transparent 2.6px
   );
 }
 
@@ -396,20 +426,20 @@ svg {
 .section--light .sbg__pattern--rings {
   background-image: repeating-linear-gradient(
     45deg,
-    rgba(11, 13, 26, 0.05) 0px,
-    rgba(11, 13, 26, 0.05) 1px,
-    transparent 1px,
-    transparent 12px
+    rgba(15, 20, 8, 0.07) 0px,
+    rgba(15, 20, 8, 0.07) 2.2px,
+    transparent 2.2px,
+    transparent 40px
   );
 }
 
-/* A lime glow reads as a dirty smear on white; use a cool neutral instead. */
+/* A deep olive haze keeps the light bands in the same colour family. */
 .section--light .sbg__glow,
 .section--light .sbg__glow--blue {
   background: radial-gradient(
     circle,
-    rgba(88, 120, 255, 0.09) 0%,
-    rgba(88, 120, 255, 0.03) 45%,
+    rgba(96, 132, 20, 0.13) 0%,
+    rgba(96, 132, 20, 0.04) 45%,
     transparent 74%
   );
 }

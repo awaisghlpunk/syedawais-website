@@ -20,6 +20,12 @@ interface Props {
   scrimW?: string;
   scrimH?: string;
   patternOpacity?: string;
+  /* Lime puff behind the headline, as in the hero. */
+  puffX?: string;
+  puffY?: string;
+  puffW?: string;
+  puffH?: string;
+  puffA?: string;
 }
 
 const {
@@ -34,10 +40,16 @@ const {
   scrimW = "76%",
   scrimH = "68%",
   patternOpacity = "1",
+  puffX = "30%",
+  puffY = "20%",
+  puffW = "620px",
+  puffH = "340px",
+  puffA = "0.16",
 } = Astro.props;
 
 const scrimStyle = `--scrim-pos:${scrimPos};--scrim-w:${scrimW};--scrim-h:${scrimH};`;
 const glowStyle = `--glow-x:${glowX};--glow-y:${glowY};--glow-w:${glowW};--glow-h:${glowH};--glow-a:${glowA};`;
+const puffStyle = `--puff-x:${puffX};--puff-y:${puffY};--puff-w:${puffW};--puff-h:${puffH};--puff-a:${puffA};`;
 ---
 
 <div class="sbg" aria-hidden="true">
@@ -53,4 +65,5 @@ const glowStyle = `--glow-x:${glowX};--glow-y:${glowY};--glow-w:${glowW};--glow-
     style={glowStyle}
   >
   </div>
+  <div class="sbg__puff" style={puffStyle}></div>
 </div>
