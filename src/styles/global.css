@@ -222,8 +222,14 @@ svg {
 */
 /* Pattern scale is deliberately large. At the earlier 22px dot pitch and
    12px line pitch the textures read as noise rather than as a pattern. */
+/* Gradient lines, not a tiled SVG: a stroke sitting on the tile edge gets
+   half-clipped and neighbouring tiles fail to join, which renders as
+   doubled, uneven lines. */
 .sbg__pattern--grid {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22112%22 height=%22112%22%3E%3Cpath d=%22M112 0H0V112%22 fill=%22none%22 stroke=%22%23222945%22 stroke-width=%221.5%22/%3E%3C/svg%3E");
+  background-image:
+    linear-gradient(to right, rgba(150, 158, 200, 0.17) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(150, 158, 200, 0.17) 1px, transparent 1px);
+  background-size: 84px 84px;
 }
 
 .sbg__pattern--dots {
@@ -433,7 +439,9 @@ svg {
 
 /* Patterns invert: dark olive lines on the pale ground. */
 .section--light .sbg__pattern--grid {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22112%22 height=%22112%22%3E%3Cpath d=%22M112 0H0V112%22 fill=%22none%22 stroke=%22rgba(15,20,8,0.10)%22 stroke-width=%221.5%22/%3E%3C/svg%3E");
+  background-image:
+    linear-gradient(to right, rgba(15, 20, 8, 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 20, 8, 0.14) 1px, transparent 1px);
 }
 
 .section--light .sbg__pattern--dots {

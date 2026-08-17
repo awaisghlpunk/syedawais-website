@@ -92,10 +92,36 @@
       #0f1220 100%
     );
   }
+  /*
+    Drawn with gradients rather than a tiled SVG. The original tile put a
+    1px stroke directly on the tile edge, so half of every line was clipped
+    and neighbouring tiles failed to join, which showed up as doubled and
+    uneven lines. Gradient stops land on whole pixels and stay crisp.
+    Scale matches the 112px grid used by the rest of the page.
+  */
   .hero__grid {
     position: absolute;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2244%22 height=%2244%22%3E%3Cpath d=%22M44 0H0V44%22 fill=%22none%22 stroke=%22%232A2E45%22 stroke-width=%221%22/%3E%3C/svg%3E");
+    background-image:
+      linear-gradient(to right, rgba(46, 52, 80, 0.75) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(46, 52, 80, 0.75) 1px, transparent 1px);
+    background-size: 84px 84px;
+    /* Settle the grid away from the edges so it reads as depth rather than
+       as a sheet laid over the whole section. */
+    -webkit-mask-image: radial-gradient(
+      ellipse 78% 82% at 50% 42%,
+      #000 0%,
+      rgba(0, 0, 0, 0.75) 48%,
+      rgba(0, 0, 0, 0.25) 74%,
+      transparent 94%
+    );
+    mask-image: radial-gradient(
+      ellipse 78% 82% at 50% 42%,
+      #000 0%,
+      rgba(0, 0, 0, 0.75) 48%,
+      rgba(0, 0, 0, 0.25) 74%,
+      transparent 94%
+    );
   }
   .hero__fade {
     position: absolute;
