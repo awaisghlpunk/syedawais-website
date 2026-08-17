@@ -1,33 +1,56 @@
 ---
 /*
   Live pipeline diagram: Meta Ads → funnel → pipeline stages → automated
-  messages, animated as one continuous chain.
+  messages, animated as one continuous chain on a 12s loop.
 
-  Entirely CSS. The counters are odometers (a column of values stepped
-  through with `steps()`), not a script, so this section still ships zero
-  JavaScript. Everything stops under prefers-reduced-motion and the panel
-  stays readable as a static diagram.
+  Entirely CSS. Counters are odometers (a column of values stepped through
+  with `steps()`), not a script, so this section still ships zero JS.
 
-  The figures are illustrative and labelled as such on the panel. They
-  describe how the system behaves, not any client's actual numbers.
+  The stage counts are authored to sum to the intake figure at every step,
+  and every odometer runs on the same delay so they stay in lockstep. If you
+  edit these, keep each column of `stages` summing to the same index of
+  `intake`, or the panel will contradict itself.
+
+  Figures and contact names are illustrative placeholders, labelled as such
+  on the panel. Nothing here is a client's real data.
+
+  LOGOS: the marks below are stylised stand-ins, not the Meta or
+  GoHighLevel trademarks. Drop the official SVGs into .lp__watermark and
+  .lp__brand to use the real ones.
 */
+const intake = ["38", "39", "40", "41", "42", "43"];
+
 const stages = [
-  { label: "New lead", values: ["12", "12", "13", "13", "14", "14"], delay: 2.4 },
-  { label: "Qualified", values: ["8", "8", "9", "9", "9", "10"], delay: 3.2 },
-  { label: "Booked", values: ["5", "5", "5", "6", "6", "6"], delay: 4 },
-  { label: "Won", values: ["3", "3", "3", "3", "4", "4"], delay: 4.8, accent: true },
+  { label: "New lead", values: ["17", "18", "18", "18", "19", "19"], at: 0.7 },
+  { label: "Qualified", values: ["11", "11", "12", "12", "12", "13"], at: 3.6 },
+  { label: "Booked", values: ["6", "6", "6", "7", "7", "7"], at: 6.5 },
+  { label: "Won", values: ["4", "4", "4", "4", "4", "4"], at: 9.4, accent: true },
+];
+
+const contacts = [
+  { initials: "AK", name: "A. Khan", delay: 0 },
+  { initials: "MS", name: "M. Silva", delay: -6 },
 ];
 
 const messages = [
-  { text: "SMS back in seconds", delay: 5.8, icon: "msg" },
-  { text: "AI qualifies and replies", delay: 6.8, icon: "ai" },
-  { text: "Books the call, confirms it", delay: 7.8, icon: "cal" },
+  { text: "SMS back in seconds", delay: 4.2, icon: "msg" },
+  { text: "AI qualifies and replies", delay: 6.4, icon: "ai" },
+  { text: "Books the call, confirms it", delay: 8.6, icon: "cal" },
 ];
-
-const intake = ["38", "39", "40", "41", "42", "43"];
 ---
 
 <div class="lp" data-reveal="scale">
+  <span class="lp__watermark" aria-hidden="true">
+    <svg viewBox="0 0 120 64" fill="none">
+      <path
+        d="M20 32C20 14 42 14 60 32s40 18 40 0-22-18-40 0-40 18-40 0Z"
+        stroke="currentColor"
+        stroke-width="8"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
+  </span>
+
   <div class="lp__head">
     <div>
       <p class="lp__eyebrow mono">Lead intake</p>
@@ -37,7 +60,11 @@ const intake = ["38", "39", "40", "41", "42", "43"];
         >
       </p>
     </div>
-    <span class="lp__note mono">Illustrative</span>
+
+    <div class="lp__headright">
+      <span class="lp__brand mono" aria-label="GoHighLevel">GHL</span>
+      <span class="lp__note mono">Illustrative</span>
+    </div>
   </div>
 
   <div class="lp__row">
@@ -55,8 +82,8 @@ const intake = ["38", "39", "40", "41", "42", "43"];
 
     <div class="lp__track" aria-hidden="true">
       <span class="lp__pill mono" style="animation-delay:0s">lead</span>
-      <span class="lp__pill mono" style="animation-delay:-3.3s">lead</span>
-      <span class="lp__pill mono" style="animation-delay:-6.6s">lead</span>
+      <span class="lp__pill mono" style="animation-delay:-4s">lead</span>
+      <span class="lp__pill mono" style="animation-delay:-8s">lead</span>
     </div>
 
     <div class="lp__node">
@@ -73,31 +100,58 @@ const intake = ["38", "39", "40", "41", "42", "43"];
   </div>
 
   <div class="lp__link" aria-hidden="true">
-    <span class="lp__dot" style="animation-delay:2s"></span>
+    <span class="lp__dot" style="animation-delay:1.4s"></span>
   </div>
 
   <p class="lp__eyebrow mono">Pipeline</p>
-  <div class="lp__stages">
-    {
-      stages.map((s) => (
-        <div class="lp__stage" style={`animation-delay:${s.delay}s`}>
-          <p class="lp__stage-label">{s.label}</p>
-          <p class={`lp__stage-num mono${s.accent ? " is-accent" : ""}`}>
-            <span class="odo">
-              <span class="odo__col" style={`animation-delay:${s.delay}s`}>
-                {s.values.map((v) => (
-                  <b>{v}</b>
-                ))}
+
+  <div class="lp__board">
+    <div class="lp__stages">
+      {
+        stages.map((s) => (
+          <div class="lp__stage" style={`animation-delay:${s.at}s`}>
+            <p class="lp__stage-label">{s.label}</p>
+            <p class={`lp__stage-num mono${s.accent ? " is-accent" : ""}`}>
+              <span class="odo">
+                <span class="odo__col">
+                  {s.values.map((v) => (
+                    <b>{v}</b>
+                  ))}
+                </span>
               </span>
-            </span>
-          </p>
-        </div>
-      ))
-    }
+            </p>
+          </div>
+        ))
+      }
+    </div>
+
+    {/* Contact cards advancing stage to stage, over the top of the board. */}
+    <div class="lp__movers" aria-hidden="true">
+      {
+        contacts.map((c) => (
+          <span class="lp__contact" style={`animation-delay:${c.delay}s`}>
+            <span class="lp__avatar mono">{c.initials}</span>
+            {c.name}
+          </span>
+        ))
+      }
+    </div>
+
+    <div class="lp__toast" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
+        <path
+          d="M20 6 9 17l-5-5"
+          stroke="currentColor"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      Booking confirmed
+    </div>
   </div>
 
   <div class="lp__link" aria-hidden="true">
-    <span class="lp__dot" style="animation-delay:5.4s"></span>
+    <span class="lp__dot" style="animation-delay:9.8s"></span>
   </div>
 
   <p class="lp__eyebrow mono">Automated messages</p>
@@ -151,6 +205,7 @@ const intake = ["38", "39", "40", "41", "42", "43"];
   .lp {
     position: relative;
     z-index: 2;
+    overflow: hidden;
     margin-top: 56px;
     padding: 26px 28px 28px;
     border: 1px solid var(--card-line);
@@ -158,12 +213,50 @@ const intake = ["38", "39", "40", "41", "42", "43"];
     background: rgba(255, 255, 255, 0.03);
   }
 
+  /* Stylised stand-in for the ad-platform mark. Replace with the official
+     SVG when you have it. */
+  .lp__watermark {
+    position: absolute;
+    right: -34px;
+    bottom: -30px;
+    width: 320px;
+    color: var(--accent);
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
+  .lp__watermark svg {
+    width: 100%;
+    height: auto;
+  }
+
   .lp__head {
+    position: relative;
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 16px;
     margin-bottom: 22px;
+  }
+
+  .lp__headright {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: none;
+  }
+
+  .lp__brand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border: 1px solid rgba(198, 255, 61, 0.4);
+    border-radius: 7px;
+    background: rgba(198, 255, 61, 0.1);
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: 0.1em;
   }
 
   .lp__eyebrow {
@@ -186,12 +279,12 @@ const intake = ["38", "39", "40", "41", "42", "43"];
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-faint);
-    flex: none;
   }
 
-  /* Chain: source → track → funnel ---------------------------------------- */
+  /* Chain ------------------------------------------------------------------ */
 
   .lp__row {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -205,6 +298,7 @@ const intake = ["38", "39", "40", "41", "42", "43"];
     padding: 9px 13px;
     border: 1px solid var(--card-line);
     border-radius: 9px;
+    background: rgba(11, 13, 26, 0.5);
     font-size: 13px;
     color: var(--ink-soft);
   }
@@ -219,7 +313,7 @@ const intake = ["38", "39", "40", "41", "42", "43"];
     min-width: 60px;
     height: 22px;
     /* Pills animate to left:100%, which puts their body past the end of the
-       track and on top of the Funnel chip. Clip them to the track instead. */
+       track and on top of the Funnel chip. Clip them to the track. */
     overflow: hidden;
     background-image: repeating-linear-gradient(
       90deg,
@@ -244,7 +338,7 @@ const intake = ["38", "39", "40", "41", "42", "43"];
     font-size: 11px;
     line-height: 18px;
     white-space: nowrap;
-    animation: lp-flow 10s linear infinite;
+    animation: lp-flow 12s linear infinite;
   }
 
   .lp__link {
@@ -266,24 +360,29 @@ const intake = ["38", "39", "40", "41", "42", "43"];
     height: 5px;
     border-radius: 50%;
     background: var(--accent);
-    animation: lp-drop 10s linear infinite;
+    animation: lp-drop 12s linear infinite;
   }
 
-  /* Pipeline --------------------------------------------------------------- */
+  /* Pipeline board --------------------------------------------------------- */
+
+  .lp__board {
+    position: relative;
+    /* Room beneath the stages for the confirmation toast. */
+    margin-bottom: 42px;
+  }
 
   .lp__stages {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 9px;
-    margin-bottom: 4px;
   }
 
   .lp__stage {
-    padding: 11px 13px;
+    padding: 11px 13px 44px;
     border: 1px solid var(--card-line);
     border-radius: 9px;
     background: rgba(255, 255, 255, 0.03);
-    animation: lp-stage 10s linear infinite;
+    animation: lp-stage 12s linear infinite;
   }
 
   .lp__stage-label {
@@ -303,6 +402,67 @@ const intake = ["38", "39", "40", "41", "42", "43"];
     color: var(--accent);
   }
 
+  /* Contacts advancing across the board ------------------------------------ */
+
+  .lp__movers {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /*
+    Sized and stepped off the actual grid geometry: four columns sharing
+    three 9px gaps, so a column is (100% - 27px)/4. Using a flat 25% here
+    ignores the gaps and the chip drifts into the neighbouring stage.
+  */
+  .lp__contact {
+    position: absolute;
+    bottom: 10px;
+    width: calc((100% - 27px) / 4 - 16px);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 8px;
+    border: 1px solid rgba(198, 255, 61, 0.4);
+    border-radius: 7px;
+    background: rgba(198, 255, 61, 0.12);
+    font-size: 11.5px;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    animation: lp-contact 12s ease-in-out infinite;
+  }
+
+  .lp__avatar {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 9px;
+    line-height: 18px;
+    text-align: center;
+  }
+
+  .lp__toast {
+    position: absolute;
+    right: 0;
+    bottom: -34px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 13px;
+    border-radius: 9px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 12.5px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    animation: lp-toast 12s ease-out infinite;
+  }
+
   /* Outbound messages ------------------------------------------------------ */
 
   .lp__msgs {
@@ -320,7 +480,7 @@ const intake = ["38", "39", "40", "41", "42", "43"];
     background: rgba(255, 255, 255, 0.03);
     font-size: 13.5px;
     color: var(--ink-soft);
-    animation: lp-msg 10s linear infinite;
+    animation: lp-msg 12s linear infinite;
   }
 
   .lp__msg-icon {
@@ -336,8 +496,8 @@ const intake = ["38", "39", "40", "41", "42", "43"];
     flex: none;
   }
 
-  /* Odometer --------------------------------------------------------------- */
-
+  /* Odometer. Every column shares one timing so the stage counts always sum
+     to the intake figure. */
   .odo {
     display: inline-block;
     overflow: hidden;
@@ -348,7 +508,7 @@ const intake = ["38", "39", "40", "41", "42", "43"];
 
   .odo__col {
     display: block;
-    animation: lp-odo 10s steps(6) infinite;
+    animation: lp-odo 12s steps(6) infinite;
   }
 
   .odo b {
@@ -369,10 +529,10 @@ const intake = ["38", "39", "40", "41", "42", "43"];
       left: 0;
       opacity: 0;
     }
-    10% {
+    8% {
       opacity: 1;
     }
-    85% {
+    88% {
       opacity: 1;
     }
     100% {
@@ -405,18 +565,83 @@ const intake = ["38", "39", "40", "41", "42", "43"];
   }
 
   @keyframes lp-stage {
-    0%,
+    0% {
+      border-color: rgba(198, 255, 61, 0.75);
+      background: rgba(198, 255, 61, 0.14);
+    }
+    14% {
+      border-color: var(--card-line);
+      background: rgba(255, 255, 255, 0.03);
+    }
     100% {
       border-color: var(--card-line);
       background: rgba(255, 255, 255, 0.03);
     }
-    6% {
-      border-color: rgba(198, 255, 61, 0.75);
-      background: rgba(198, 255, 61, 0.14);
+  }
+
+  /* Advances one stage at a time, pausing in each. */
+  @keyframes lp-contact {
+    0% {
+      left: 8px;
+      opacity: 0;
     }
-    26% {
-      border-color: var(--card-line);
-      background: rgba(255, 255, 255, 0.03);
+    5% {
+      left: 8px;
+      opacity: 1;
+    }
+    22% {
+      left: 8px;
+      opacity: 1;
+    }
+    28% {
+      left: calc((100% - 27px) / 4 + 17px);
+      opacity: 1;
+    }
+    45% {
+      left: calc((100% - 27px) / 4 + 17px);
+      opacity: 1;
+    }
+    51% {
+      left: calc((100% - 27px) / 2 + 26px);
+      opacity: 1;
+    }
+    68% {
+      left: calc((100% - 27px) / 2 + 26px);
+      opacity: 1;
+    }
+    74% {
+      left: calc((100% - 27px) * 0.75 + 35px);
+      opacity: 1;
+    }
+    93% {
+      left: calc((100% - 27px) * 0.75 + 35px);
+      opacity: 1;
+    }
+    100% {
+      left: calc((100% - 27px) * 0.75 + 35px);
+      opacity: 0;
+    }
+  }
+
+  /* Fires as the contact lands in Won. */
+  @keyframes lp-toast {
+    0%,
+    74% {
+      opacity: 0;
+      transform: translateY(10px) scale(0.96);
+    }
+    79% {
+      opacity: 1;
+      transform: none;
+    }
+    90% {
+      opacity: 1;
+      transform: none;
+    }
+    96%,
+    100% {
+      opacity: 0;
+      transform: translateY(-6px);
     }
   }
 
@@ -426,15 +651,15 @@ const intake = ["38", "39", "40", "41", "42", "43"];
       opacity: 0.3;
       transform: translateX(-6px);
     }
-    8% {
+    6% {
       opacity: 1;
       transform: translateX(0);
     }
-    42% {
+    34% {
       opacity: 0.95;
       transform: translateX(0);
     }
-    60% {
+    50% {
       opacity: 0.3;
       transform: translateX(-6px);
     }
@@ -450,6 +675,24 @@ const intake = ["38", "39", "40", "41", "42", "43"];
 
     .lp__stages {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lp__stage {
+      padding-bottom: 12px;
+    }
+
+    /* The board is two rows here, so left-to-right travel no longer maps to
+       stage order. The stage highlight carries the motion instead. */
+    .lp__movers {
+      display: none;
+    }
+
+    .lp__board {
+      margin-bottom: 40px;
+    }
+
+    .lp__watermark {
+      width: 230px;
     }
   }
 
@@ -467,8 +710,12 @@ const intake = ["38", "39", "40", "41", "42", "43"];
       margin-bottom: 18px;
     }
 
-    /* The row still fits horizontally at 360px once the chips tighten, so
-       the chain keeps reading left to right rather than stacking. */
+    .lp__headright {
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 7px;
+    }
+
     .lp__row {
       gap: 8px;
     }
@@ -488,8 +735,7 @@ const intake = ["38", "39", "40", "41", "42", "43"];
       padding: 0 7px;
     }
 
-    /* One pill in flight at a time: the short track cannot separate three
-       without them bunching into each other. */
+    /* One pill in flight: the short track cannot separate three. */
     .lp__pill:nth-child(2),
     .lp__pill:nth-child(3) {
       display: none;
@@ -507,6 +753,13 @@ const intake = ["38", "39", "40", "41", "42", "43"];
       font-size: 17px;
     }
 
+    .lp__toast {
+      right: auto;
+      left: 0;
+      font-size: 11.5px;
+      padding: 8px 11px;
+    }
+
     .lp__msg {
       font-size: 12.5px;
       padding: 9px 10px;
@@ -522,18 +775,26 @@ const intake = ["38", "39", "40", "41", "42", "43"];
     .lp__track,
     .lp__stage,
     .lp__msg,
+    .lp__contact,
+    .lp__toast,
     .odo__col {
       animation: none !important;
     }
 
     .lp__pill,
-    .lp__dot {
+    .lp__dot,
+    .lp__toast {
       display: none;
     }
 
     .lp__msg {
       opacity: 1;
       transform: none;
+    }
+
+    .lp__contact {
+      left: 0;
+      opacity: 1;
     }
   }
 </style>
