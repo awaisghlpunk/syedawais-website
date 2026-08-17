@@ -40,6 +40,35 @@ const steps = [
     scrimPos="42% 46%"
   />
 
+  {/*
+    Section watermark, bottom right. Drawn as a lemniscate with a heavy
+    round stroke, which is the geometry of the Meta mark: two lobes meeting
+    at a crossing in the centre. Tinted to the site accent rather than the
+    brand blue, and kept faint so it reads as texture, not a logo drop.
+  */}
+  {/*
+    Corner watermark: three rising arrows with the wordmark under them, in
+    the platform's own colours rather than the site accent, held at low
+    opacity and masked so it dissolves before it reaches the copy.
+  */}
+  <span class="watermark" aria-hidden="true">
+    <svg viewBox="0 0 120 116">
+      <path d="M32 26 47 44h-8v32H25V44h-8Z" fill="#FBBC05"></path>
+      <path d="M60 40 75 58h-8v18H53V58h-8Z" fill="#4285F4"></path>
+      <path d="M88 18l15 18h-8v40H81V36h-8Z" fill="#34A853"></path>
+      <text
+        x="60"
+        y="106"
+        text-anchor="middle"
+        font-family="'Space Grotesk', sans-serif"
+        font-weight="500"
+        font-size="30"
+        letter-spacing="0.5"
+        fill="#E8EAF2">GHL</text
+      >
+    </svg>
+  </span>
+
   <div class="shell">
     <p class="kicker" data-reveal>The Break-Proof Build System</p>
     <h2 class="h2 h2--wide" data-reveal style="--d: 60ms">
@@ -79,6 +108,58 @@ const steps = [
 </section>
 
 <style>
+  .watermark {
+    position: absolute;
+    right: -70px;
+    /* The section clips its overflow, and the tilt drops the outer corner
+       further down, so the wordmark needs clearance from the edge. */
+    bottom: 54px;
+    width: 620px;
+    z-index: 1;
+    opacity: 0.2;
+    pointer-events: none;
+    transform: rotate(-13deg);
+    transform-origin: 100% 100%;
+    /* Solid at the outer corner, dissolving as it reaches back toward the
+       copy, so it never competes with the text. */
+    -webkit-mask-image: linear-gradient(
+      312deg,
+      #000 0%,
+      rgba(0, 0, 0, 0.5) 40%,
+      rgba(0, 0, 0, 0.12) 68%,
+      transparent 88%
+    );
+    mask-image: linear-gradient(
+      312deg,
+      #000 0%,
+      rgba(0, 0, 0, 0.5) 40%,
+      rgba(0, 0, 0, 0.12) 68%,
+      transparent 88%
+    );
+  }
+
+  .watermark svg {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 900px) {
+    .watermark {
+      width: 430px;
+      right: -56px;
+      bottom: 22px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .watermark {
+      width: 310px;
+      right: -46px;
+      bottom: 16px;
+      opacity: 0.16;
+    }
+  }
+
   .flow {
     position: relative;
     margin-top: 72px;

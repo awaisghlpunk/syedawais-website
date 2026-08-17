@@ -28,8 +28,36 @@ const stages = [
 ];
 
 const contacts = [
-  { initials: "AK", name: "A. Khan", delay: 0 },
-  { initials: "MS", name: "M. Silva", delay: -6 },
+  { initials: "RC", name: "Ryan Carter", delay: 0 },
+  { initials: "MB", name: "Megan Brooks", delay: -6 },
+];
+
+/*
+  One toast per stage the contact lands in, timed to that arrival and
+  anchored to the right edge of that stage's column so it grows leftward.
+  Anchoring the left edge instead pushes any toast wider than one column out
+  over the following stage, which is what made the booking message look like
+  it belonged to Won. The Won toast is solid so the sequence builds to it.
+*/
+const toasts = [
+  {
+    text: "Welcome message sent",
+    delay: 0.8,
+    pos: "--toast-right:calc(75% + 7px)",
+    solid: false,
+  },
+  {
+    text: "Booking confirmed · Reminders scheduled",
+    delay: 6.3,
+    pos: "--toast-right:calc(25% + 2px)",
+    solid: false,
+  },
+  {
+    text: "Deal closed won",
+    delay: 9.1,
+    pos: "--toast-right:0px",
+    solid: true,
+  },
 ];
 
 const messages = [
@@ -40,17 +68,6 @@ const messages = [
 ---
 
 <div class="lp" data-reveal="scale">
-  <span class="lp__watermark" aria-hidden="true">
-    <svg viewBox="0 0 120 64" fill="none">
-      <path
-        d="M20 32C20 14 42 14 60 32s40 18 40 0-22-18-40 0-40 18-40 0Z"
-        stroke="currentColor"
-        stroke-width="8"
-        stroke-linecap="round"
-        stroke-linejoin="round"></path>
-    </svg>
-  </span>
-
   <div class="lp__head">
     <div>
       <p class="lp__eyebrow mono">Lead intake</p>
@@ -62,18 +79,33 @@ const messages = [
     </div>
 
     <div class="lp__headright">
-      <span class="lp__brand mono" aria-label="GoHighLevel">GHL</span>
+      <span class="lp__brand mono" aria-label="GoHighLevel">
+        <svg viewBox="0 0 120 84" width="17" height="12" aria-hidden="true">
+          <path d="M32 26 47 44h-8v32H25V44h-8Z" fill="#FBBC05"></path>
+          <path d="M60 40 75 58h-8v18H53V58h-8Z" fill="#4285F4"></path>
+          <path d="M88 18l15 18h-8v40H81V36h-8Z" fill="#34A853"></path>
+        </svg>
+        GHL
+      </span>
       <span class="lp__note mono">Illustrative</span>
     </div>
   </div>
 
   <div class="lp__row">
     <div class="lp__node">
-      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true">
+      {/* The mark in its own blue rather than the site accent. */}
+      <svg
+        class="lp__meta"
+        viewBox="0 0 120 72"
+        width="19"
+        height="12"
+        fill="none"
+        aria-hidden="true"
+      >
         <path
-          d="M3 11v2a1 1 0 0 0 1 1h2l4 4V6L6 10H4a1 1 0 0 0-1 1Zm14-4a6 6 0 0 1 0 10"
-          stroke="currentColor"
-          stroke-width="1.6"
+          d="M30 36C30 20 45 20 60 36S90 52 90 36 75 20 60 36 30 52 30 36Z"
+          stroke="#0081FB"
+          stroke-width="13"
           stroke-linecap="round"
           stroke-linejoin="round"></path>
       </svg>
@@ -137,17 +169,26 @@ const messages = [
       }
     </div>
 
-    <div class="lp__toast" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
-        <path
-          d="M20 6 9 17l-5-5"
-          stroke="currentColor"
-          stroke-width="2.4"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-      </svg>
-      Booking confirmed
-    </div>
+    {
+      toasts.map((t) => (
+        <div
+          class={`lp__toast${t.solid ? " is-solid" : ""}`}
+          style={`animation-delay:${t.delay}s;${t.pos}`}
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
+            <path
+              d="M20 6 9 17l-5-5"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          {t.text}
+        </div>
+      ))
+    }
   </div>
 
   <div class="lp__link" aria-hidden="true">
@@ -213,23 +254,6 @@ const messages = [
     background: rgba(255, 255, 255, 0.03);
   }
 
-  /* Stylised stand-in for the ad-platform mark. Replace with the official
-     SVG when you have it. */
-  .lp__watermark {
-    position: absolute;
-    right: -34px;
-    bottom: -30px;
-    width: 320px;
-    color: var(--accent);
-    opacity: 0.05;
-    pointer-events: none;
-  }
-
-  .lp__watermark svg {
-    width: 100%;
-    height: auto;
-  }
-
   .lp__head {
     position: relative;
     display: flex;
@@ -250,6 +274,7 @@ const messages = [
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
     padding: 5px 10px;
     border: 1px solid rgba(198, 255, 61, 0.4);
     border-radius: 7px;
@@ -305,6 +330,12 @@ const messages = [
 
   .lp__node svg {
     color: var(--accent);
+    flex: none;
+  }
+
+  /* Carries its own brand colour, so it must not inherit the accent. */
+  .lp__meta {
+    color: inherit;
   }
 
   .lp__track {
@@ -445,22 +476,41 @@ const messages = [
     text-align: center;
   }
 
+  /*
+    Only one is visible at a time. Position comes from custom properties set
+    per toast, so the media queries below can still override `left`/`right`
+    outright: an inline custom property would otherwise outrank them.
+  */
   .lp__toast {
     position: absolute;
-    right: 0;
+    left: var(--toast-left, auto);
+    right: var(--toast-right, auto);
     bottom: -34px;
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 9px 13px;
     border-radius: 9px;
-    background: var(--accent);
-    color: var(--accent-ink);
+    border: 1px solid rgba(198, 255, 61, 0.45);
+    background: rgba(198, 255, 61, 0.12);
+    color: var(--accent);
     font-size: 12.5px;
     font-weight: 500;
-    white-space: nowrap;
+    line-height: 1.35;
+    /* Wraps rather than running the full width of the board. */
+    max-width: calc((100% - 27px) / 2 + 9px);
     opacity: 0;
     animation: lp-toast 12s ease-out infinite;
+  }
+
+  .lp__toast svg {
+    flex: none;
+  }
+
+  .lp__toast.is-solid {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--accent-ink);
   }
 
   /* Outbound messages ------------------------------------------------------ */
@@ -623,22 +673,22 @@ const messages = [
     }
   }
 
-  /* Fires as the contact lands in Won. */
+  /* Fires at the start of its own cycle; each toast is offset by its delay
+     so it lands with the contact card. */
   @keyframes lp-toast {
-    0%,
-    74% {
+    0% {
       opacity: 0;
       transform: translateY(10px) scale(0.96);
     }
-    79% {
+    6% {
       opacity: 1;
       transform: none;
     }
-    90% {
+    16% {
       opacity: 1;
       transform: none;
     }
-    96%,
+    22%,
     100% {
       opacity: 0;
       transform: translateY(-6px);
@@ -691,8 +741,9 @@ const messages = [
       margin-bottom: 40px;
     }
 
-    .lp__watermark {
-      width: 230px;
+    .lp__toast {
+      left: 0;
+      right: auto;
     }
   }
 
@@ -753,11 +804,14 @@ const messages = [
       font-size: 17px;
     }
 
+    /* Two-row board here, so a per-column anchor is meaningless. */
     .lp__toast {
-      right: auto;
       left: 0;
-      font-size: 11.5px;
-      padding: 8px 11px;
+      right: auto;
+      font-size: 11px;
+      padding: 8px 10px;
+      white-space: normal;
+      max-width: 100%;
     }
 
     .lp__msg {
