@@ -1,0 +1,123 @@
+---
+import SectionBg from "../SectionBg.astro";
+
+/*
+  Three paragraphs, each given its own numbered block so the argument reads
+  as three steps rather than one wall of prose.
+*/
+const paras = [
+  "An engineer doesn't ship a part that works on the bench and hope it holds up in the field. It gets tested under load first, checked against the conditions it'll actually face, not just the conditions it was designed for. That's not a coincidence, either: engineering is the single most common background among the world's wealthiest people, more than business, finance, or any other individual field. The same instinct that makes someone good at building things that hold up under real conditions is what makes them good at building wealth that holds up too.",
+  "That's the same thinking behind every GoHighLevel system built here. A workflow that only works in a clean demo isn't finished, it's untested. Every build gets checked against real, messy data before it's ever called done: the lead with a typo in their email, the form filled out at 2am, the duplicate submission that would trip up a system that was only ever tested once, on purpose, with clean inputs.",
+  "That mindset is also why documentation isn't an afterthought here. An engineer hands off drawings, not a black box. Every system ships with the same thing, written instructions, recorded walkthroughs, and a client who actually understands what they're running, instead of being stuck needing someone else to explain it.",
+];
+---
+
+<section class="section" id="story">
+  <SectionBg
+    pattern="diag"
+    corner="98% 8%"
+    glow="blue"
+    glowX="16%"
+    glowY="101%"
+    glowW="660px"
+    glowH="520px"
+  />
+
+  <div class="shell">
+    <p class="kicker" data-reveal>Why engineering matters here</p>
+
+    <div class="story">
+      {
+        paras.map((t, i) => (
+          <div class="story__row" data-reveal style={`--d: ${i * 90}ms`}>
+            <span class="story__num mono">{String(i + 1).padStart(2, "0")}</span>
+            <p class="story__text">{t}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="section-cta" data-reveal>
+      <a class="btn btn--outline" href="#journey">
+        See the journey <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .story {
+    margin-top: 46px;
+    border-top: 1px solid var(--line);
+  }
+
+  .story__row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 0 20px;
+    padding: 30px 8px 30px 0;
+    border-bottom: 1px solid var(--line);
+    transition: background 0.35s var(--ease), padding-left 0.35s var(--ease);
+  }
+
+  .story__row::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s var(--ease);
+  }
+
+  .story__row:hover {
+    background: rgba(255, 255, 255, 0.02);
+    padding-left: 18px;
+  }
+
+  .story__row:hover::after {
+    transform: scaleY(1);
+  }
+
+  .story__num {
+    font-size: 13px;
+    color: var(--ink-faint);
+    padding-top: 5px;
+    transition: color 0.3s var(--ease);
+  }
+
+  .story__row:hover .story__num {
+    color: var(--accent);
+  }
+
+  .story__text {
+    font-size: 17px;
+    line-height: 1.78;
+    color: var(--ink-body);
+    max-width: 74ch;
+  }
+
+  @media (max-width: 640px) {
+    .story {
+      margin-top: 34px;
+    }
+
+    .story__row {
+      grid-template-columns: 34px 1fr;
+      gap: 0 14px;
+      padding: 24px 0;
+    }
+
+    .story__row:hover {
+      padding-left: 0;
+    }
+
+    .story__text {
+      font-size: 15.5px;
+    }
+  }
+</style>

@@ -1,0 +1,157 @@
+---
+import SectionBg from "../SectionBg.astro";
+
+/*
+  Accordion built on native <details>/<summary>: keyboard accessible,
+  findable by browser in-page search, and no script needed.
+*/
+const faqs = [
+  {
+    q: "Is the call actually free?",
+    a: "Yes. No credit card, no catch. If it's not a fit, you'll hear that directly, not a sales pitch dressed up as a diagnosis.",
+  },
+  {
+    q: "What should I have ready?",
+    a: "Nothing required, but if you can log into your GHL account or pull up your ad account during the call, we can look at the actual system together instead of talking in the abstract.",
+  },
+  {
+    q: "What if I'm not sure GHL is even the right tool for me?",
+    a: "That's a completely reasonable thing to bring to the call. Part of the point of the 30 minutes is figuring out what actually fits, not assuming the answer before we've looked.",
+  },
+  {
+    q: "Do you work with businesses outside coaching, home services, or trades?",
+    a: "Yes. Those are where most of the case studies on this site come from, but they're not the only businesses this works for. Anything outside that core lane gets routed through a dedicated process for evaluating fit first, because a system built for a home-service business doesn't just copy-paste onto a completely different sales cycle. If that's you, the call is exactly where we figure out whether it's a fit before anything gets built.",
+  },
+];
+---
+
+<section class="section section--alt" id="faq">
+  <SectionBg
+    pattern="diag"
+    corner="98% 6%"
+    glow="lime"
+    glowX="84%"
+    glowY="101%"
+    glowW="660px"
+    glowH="520px"
+  />
+
+  <div class="shell">
+    <p class="kicker" data-reveal>Before you book</p>
+    <h2 class="h2" data-reveal style="--d: 60ms">
+      Common questions, answered up front.
+    </h2>
+
+    <div class="faq">
+      {
+        faqs.map((f, i) => (
+          <details class="qa" data-reveal style={`--d: ${100 + i * 80}ms`}>
+            <summary class="qa__q">
+              <span>{f.q}</span>
+              <span class="qa__mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none">
+                  <path
+                    d="M12 5v14M5 12h14"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </span>
+            </summary>
+            <p class="qa__a">{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+
+    <div class="section-cta" data-reveal>
+      <a class="btn btn--outline" href="#contact-form">
+        Send a message <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    margin-top: 46px;
+    border-top: 1px solid var(--line);
+  }
+
+  .qa {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .qa__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 22px 4px 22px 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--ink);
+    transition: color 0.25s var(--ease);
+  }
+
+  /* Hide the native disclosure triangle in both engines. */
+  .qa__q::-webkit-details-marker {
+    display: none;
+  }
+
+  .qa__q::marker {
+    content: "";
+  }
+
+  .qa__q:hover {
+    color: var(--accent);
+  }
+
+  .qa__mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--card-line);
+    color: var(--accent);
+    flex: none;
+    transition: transform 0.3s var(--ease), background 0.3s var(--ease);
+  }
+
+  .qa[open] .qa__mark {
+    transform: rotate(45deg);
+    background: rgba(198, 255, 61, 0.12);
+  }
+
+  .qa__a {
+    padding: 0 44px 24px 0;
+    font-size: 16px;
+    line-height: 1.74;
+    color: var(--ink-body);
+    max-width: 78ch;
+  }
+
+  @media (max-width: 640px) {
+    .faq {
+      margin-top: 34px;
+    }
+
+    .qa__q {
+      font-size: 16.5px;
+      padding: 18px 0;
+      gap: 14px;
+    }
+
+    .qa__a {
+      padding: 0 0 20px;
+      font-size: 15px;
+    }
+  }
+</style>

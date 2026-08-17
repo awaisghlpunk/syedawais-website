@@ -8,10 +8,10 @@ const year = new Date().getFullYear();
   the Home section anchors do not exist and a bare "#how" would dead-end.
 */
 const links = [
-  { label: "The system", href: "/#how" },
-  { label: "Guarantees", href: "/#guarantees" },
-  { label: "Case studies", href: "/case-studies" },
   { label: "Services", href: "/services" },
+  { label: "Case studies", href: "/case-studies" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 ---
 
@@ -32,7 +32,9 @@ const links = [
 
     <div class="footer__base">
       <p>&copy; {year} syedawais.com</p>
-      <a href="#book" class="footer__cta">Book a call <span class="arrow">→</span></a>
+      <a href="/contact#contact-form" class="footer__cta">
+        Book a call <span class="arrow">→</span>
+      </a>
     </div>
   </div>
 </footer>

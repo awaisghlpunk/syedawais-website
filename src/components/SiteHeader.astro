@@ -23,7 +23,8 @@ const links = [
   { label: "Home", href: "/", match: "/" },
   { label: "Services", href: "/services", match: "/services" },
   { label: "Case studies", href: "/case-studies", match: "/case-studies" },
-  { label: "Pricing", href: "/services#packages", match: null },
+  { label: "About", href: "/about", match: "/about" },
+  { label: "Contact", href: "/contact", match: "/contact" },
 ];
 ---
 
@@ -74,7 +75,11 @@ const links = [
           <span class="hdr__badge-dot" aria-hidden="true"></span>
           Only 3 build slots this month
         </span>
-        <a class="hdr__cta" href="#book">Book a call <span class="arrow">→</span></a>
+        {/* Routes to the contact page now that one exists, rather than the
+            current page's own closing section. */}
+        <a class="hdr__cta" href="/contact#contact-form">
+          Book a call <span class="arrow">→</span>
+        </a>
       </div>
     </div>
   </div>

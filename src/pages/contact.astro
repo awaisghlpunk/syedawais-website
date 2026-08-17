@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import ContactHero from "../components/contact/ContactHero.astro";
+import ContactForm from "../components/contact/ContactForm.astro";
+import OtherWays from "../components/contact/OtherWays.astro";
+import Faq from "../components/contact/Faq.astro";
+import PageClosing from "../components/PageClosing.astro";
+
+const title =
+  "Contact: Book a Free Strategy Call | The Break-Proof Build System";
+const description =
+  "Tell us what's going on with your GHL setup, ads, or automation, 30-minute call, free, no pressure.";
+---
+
+<BaseLayout title={title} description={description}>
+  <ContactHero />
+  <ContactForm />
+  <OtherWays />
+  <Faq />
+
+  {/*
+    The closing CTA points at the form on this page, not an external
+    calendar: there is no public booking link yet.
+  */}
+  <PageClosing
+    kicker="Either way works"
+    heading="Book the call, or send a message."
+    body="Either way, tell us what's actually going on, the real picture, not the polished version."
+    ctaLabel="Book Your Free Call"
+    ctaHref="#contact-form"
+    pattern="rings"
+    id="closing"
+  />
+
+  <SiteFooter />
+</BaseLayout>

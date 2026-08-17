@@ -1,0 +1,213 @@
+---
+import PlaceholderImage from "../PlaceholderImage.astro";
+
+/*
+  About hero. Same gradient, grid and glow as the other three pages, but
+  split rather than centred, because the copy calls for the owner photo
+  beside the headline.
+*/
+---
+
+<section class="ahero">
+  <div class="ahero__grid"></div>
+  <div class="ahero__fade"></div>
+  <div class="ahero__glow"></div>
+
+  <div class="ahero__content">
+    <div class="shell ahero__body">
+      <div class="ahero__text">
+        <p class="kicker" data-reveal>Who's actually building this</p>
+
+        <h1 data-reveal style="--d: 60ms">
+          From mechanical engineering to systems that don't break.
+        </h1>
+
+        <p class="ahero__sub" data-reveal style="--d: 120ms">
+          Every system on this site was built by one person, not a team you'll
+          never talk to. The engineering background is why these systems get
+          built the way they do.
+        </p>
+
+        <div class="ahero__cta" data-reveal style="--d: 180ms">
+          <a class="btn btn--accent" href="#journey">
+            See the journey <span class="arrow">→</span>
+          </a>
+          <a class="btn btn--outline" href="#track-record">
+            See the numbers <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <figure class="ahero__photo" data-reveal="right" style="--d: 140ms">
+        <PlaceholderImage
+          id="owner-photo-hero"
+          label="Owner Photo (B&W)"
+          note="owner portrait, black and white, positioned to one side of the hero"
+          w={600}
+          h={750}
+        />
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ahero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+      115deg,
+      #060608 0%,
+      #0b0d1a 45%,
+      #131a3a 88%,
+      #0f1220 100%
+    );
+  }
+
+  .ahero__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(46, 52, 80, 0.75) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(46, 52, 80, 0.75) 1px, transparent 1px);
+    background-size: 84px 84px;
+    -webkit-mask-image: radial-gradient(
+      ellipse 84% 86% at 42% 46%,
+      #000 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      transparent 94%
+    );
+    mask-image: radial-gradient(
+      ellipse 84% 86% at 42% 46%,
+      #000 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      transparent 94%
+    );
+  }
+
+  .ahero__fade {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 64% 60% at 38% 50%,
+      #0b0d1a 0%,
+      rgba(11, 13, 26, 0.86) 42%,
+      transparent 78%
+    );
+  }
+
+  .ahero__glow {
+    position: absolute;
+    top: 46%;
+    left: 34%;
+    transform: translate(-50%, -50%);
+    width: 620px;
+    /* Tall enough to contain the glow rather than clipping it square. */
+    height: 500px;
+    background: radial-gradient(
+      circle closest-side,
+      rgba(198, 255, 61, 0.18) 0%,
+      transparent 100%
+    );
+    pointer-events: none;
+    animation: aheroGlow 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes aheroGlow {
+    from {
+      opacity: 0.7;
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.07);
+    }
+  }
+
+  .ahero__content {
+    position: relative;
+  }
+
+  /* Top padding clears the fixed header. */
+  .ahero__body {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+    padding-top: 168px;
+    padding-bottom: 104px;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(34px, 4.6vw, 56px);
+    line-height: 1.07;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    max-width: 16ch;
+    margin: 0 0 24px;
+  }
+
+  .ahero__sub {
+    font-size: 18px;
+    line-height: 1.74;
+    color: var(--ink-body);
+    max-width: 56ch;
+  }
+
+  .ahero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 36px;
+  }
+
+  .ahero__photo {
+    margin: 0;
+  }
+
+  /* Ready for the real photo: drop the file in and it is already B&W. */
+  .ahero__photo :global(.ph img) {
+    filter: grayscale(100%) contrast(1.04);
+  }
+
+  @media (max-width: 940px) {
+    .ahero__body {
+      grid-template-columns: 1fr;
+      gap: 36px;
+      padding-top: 148px;
+      padding-bottom: 76px;
+    }
+
+    .ahero__photo {
+      max-width: 420px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ahero__body {
+      padding-top: 128px;
+      padding-bottom: 56px;
+    }
+
+    h1 {
+      font-size: 31px;
+      max-width: none;
+    }
+
+    .ahero__sub {
+      font-size: 15.5px;
+    }
+
+    .ahero__cta .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ahero__glow {
+      animation: none;
+    }
+  }
+</style>

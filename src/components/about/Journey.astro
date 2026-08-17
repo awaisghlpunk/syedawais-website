@@ -1,0 +1,231 @@
+---
+import SectionBg from "../SectionBg.astro";
+
+/*
+  A real timeline: a rail with a node per entry, each revealing as it enters
+  the viewport. Alternating sides on desktop, single column on mobile, where
+  alternating would leave half the width empty on every other row.
+*/
+const entries = [
+  {
+    when: "2019–2023",
+    title: "Mechanical Engineering",
+    body: "BSc from NFC-IEFR (UET Lahore). CGPA 3.43. Built the analytical foundation everything else runs on.",
+  },
+  {
+    when: "2019",
+    title: "Started SEO Journey",
+    body: "First local SEO clients. Discovered the same structured thinking that makes engineering work also applies to making a business visible in search.",
+  },
+  {
+    when: "2020",
+    title: "Partner, Hainan Apex Traders",
+    body: "Took ownership of full digital growth, Meta Ads, GoHighLevel CRM, and the systems making sure leads don't disappear.",
+  },
+  {
+    when: "2021–2025",
+    title: "Scaled to 20+ Clients",
+    body: "Built local SEO systems generating 2.5M+ impressions and 35,000+ clicks across clients.",
+  },
+  {
+    when: "2023",
+    title: "GoHighLevel & CRM Mastery",
+    body: "Built advanced GHL CRM ecosystems. Started integrating AI directly into automation workflows instead of treating it as a separate tool.",
+  },
+  {
+    when: "2024–Present",
+    title: "AI-Powered Growth Systems",
+    body: "Growth Director at Hainan Corporate Services Group. Freelance GoHighLevel & AI Automation Consultant, independent. 15+ systems built across home services, coaching, consulting, and trades.",
+  },
+];
+---
+
+<section class="section section--alt" id="journey">
+  <SectionBg
+    pattern="dots"
+    corner="96% 6%"
+    glow="lime"
+    glowX="84%"
+    glowY="101%"
+    glowW="680px"
+    glowH="540px"
+  />
+
+  <div class="shell">
+    <p class="kicker" data-reveal>The story behind the systems</p>
+    <h2 class="h2 h2--wide" data-reveal style="--d: 60ms">My Journey</h2>
+
+    <ol class="tl">
+      {
+        entries.map((e, i) => (
+          <li class={`tl__row${i % 2 ? " is-right" : ""}`} data-reveal style={`--d: ${i * 90}ms`}>
+            <span class="tl__node" aria-hidden="true">
+              <span class="tl__pulse" />
+            </span>
+
+            <div class="tl__card">
+              <p class="tl__when mono">{e.when}</p>
+              <h3 class="tl__title">{e.title}</h3>
+              <p class="tl__body">{e.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="section-cta" data-reveal>
+      <a class="btn btn--outline" href="#ai-first">
+        How AI fits in <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tl {
+    position: relative;
+    list-style: none;
+    margin: 56px 0 0;
+    padding: 0;
+  }
+
+  /* The rail. Centred on desktop, moved to the left edge on mobile. */
+  .tl::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      180deg,
+      rgba(198, 255, 61, 0.55),
+      rgba(198, 255, 61, 0.18) 72%,
+      transparent
+    );
+  }
+
+  .tl__row {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 0 30px;
+  }
+
+  .tl__row.is-right {
+    justify-content: flex-end;
+  }
+
+  .tl__row:last-child {
+    padding-bottom: 0;
+  }
+
+  .tl__node {
+    position: absolute;
+    left: 50%;
+    top: 22px;
+    width: 13px;
+    height: 13px;
+    margin-left: -6.5px;
+    border-radius: 50%;
+    background: var(--bg-alt);
+    border: 2px solid var(--accent);
+    z-index: 1;
+  }
+
+  .tl__pulse {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1px solid rgba(198, 255, 61, 0.35);
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+  }
+
+  .tl__row:hover .tl__pulse {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .tl__card {
+    width: calc(50% - 42px);
+    padding: 22px 24px 24px;
+    border: 1px solid var(--card-line);
+    border-radius: 14px;
+    background: var(--card);
+    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease),
+      box-shadow 0.4s var(--ease);
+  }
+
+  .tl__row:hover .tl__card {
+    transform: translateY(-4px);
+    border-color: rgba(198, 255, 61, 0.32);
+    box-shadow: 0 22px 44px -28px rgba(0, 0, 0, 0.9);
+  }
+
+  .tl__when {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .tl__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.32;
+    color: var(--ink);
+    margin-bottom: 9px;
+  }
+
+  .tl__body {
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--ink-body);
+  }
+
+  /*
+    Below this the rail moves left and every card takes the full remaining
+    width. Alternating sides here would leave half the row empty each time.
+  */
+  @media (max-width: 860px) {
+    .tl {
+      margin-top: 40px;
+      padding-left: 30px;
+    }
+
+    .tl::before {
+      left: 6px;
+      transform: none;
+    }
+
+    .tl__row,
+    .tl__row.is-right {
+      justify-content: flex-start;
+      padding-bottom: 20px;
+    }
+
+    .tl__node {
+      left: -30px;
+      margin-left: 0;
+    }
+
+    .tl__card {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .tl__title {
+      font-size: 17px;
+    }
+
+    .tl__body {
+      font-size: 15px;
+    }
+  }
+</style>

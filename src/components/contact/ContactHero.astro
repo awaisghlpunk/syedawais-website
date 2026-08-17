@@ -1,0 +1,203 @@
+---
+/*
+  Contact hero.
+
+  The copy draft placed a calendar embed here as the headline action. Per a
+  later decision that widget is deliberately held back, so the hero leads
+  straight into the contact form below instead. The H1, subhead and trust
+  line are unchanged; only the calendar placeholder is gone.
+*/
+---
+
+<section class="chero">
+  <div class="chero__grid"></div>
+  <div class="chero__fade"></div>
+  <div class="chero__glow"></div>
+
+  <div class="chero__content">
+    <div class="shell chero__body">
+      <p class="kicker" data-reveal>Let's look at your system</p>
+
+      <h1 data-reveal style="--d: 60ms">
+        Tell us what's going on. The messier, the better.
+      </h1>
+
+      <p class="chero__sub" data-reveal style="--d: 120ms">
+        Book a free 30-minute call. We'll look at what you have running right
+        now, your ads, your CRM, your follow-up, and show you exactly where
+        leads are slipping through. If you don't move forward after that, the
+        call still cost you nothing.
+      </p>
+
+      <div class="chero__cta" data-reveal style="--d: 180ms">
+        <a class="btn btn--accent" href="#contact-form">
+          Book Your Free Call <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <p class="chero__trust" data-reveal style="--d: 240ms">
+        No pressure. No sales script. Just a clear look at what's working and
+        what isn't.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .chero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+      115deg,
+      #060608 0%,
+      #0b0d1a 45%,
+      #131a3a 88%,
+      #0f1220 100%
+    );
+  }
+
+  .chero__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(46, 52, 80, 0.75) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(46, 52, 80, 0.75) 1px, transparent 1px);
+    background-size: 84px 84px;
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 84% at 50% 44%,
+      #000 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      transparent 94%
+    );
+    mask-image: radial-gradient(
+      ellipse 80% 84% at 50% 44%,
+      #000 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      transparent 94%
+    );
+  }
+
+  .chero__fade {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 62% 58% at 50% 48%,
+      #0b0d1a 0%,
+      rgba(11, 13, 26, 0.86) 42%,
+      transparent 78%
+    );
+  }
+
+  .chero__glow {
+    position: absolute;
+    top: 44%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 620px;
+    height: 500px;
+    background: radial-gradient(
+      circle closest-side,
+      rgba(198, 255, 61, 0.18) 0%,
+      transparent 100%
+    );
+    pointer-events: none;
+    animation: cheroGlow 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes cheroGlow {
+    from {
+      opacity: 0.7;
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.07);
+    }
+  }
+
+  .chero__content {
+    position: relative;
+  }
+
+  /* Top padding clears the fixed header. */
+  .chero__body {
+    padding-top: 176px;
+    padding-bottom: 96px;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.07;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    max-width: 18ch;
+    margin: 0 auto 26px;
+  }
+
+  .chero__sub {
+    font-size: 18px;
+    line-height: 1.74;
+    color: var(--ink-body);
+    max-width: 62ch;
+    margin: 0 auto;
+  }
+
+  .chero__cta {
+    margin-top: 36px;
+  }
+
+  .chero__cta .btn {
+    padding: 18px 32px;
+    font-size: 16px;
+  }
+
+  .chero__trust {
+    margin-top: 24px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-faint);
+    max-width: 48ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 940px) {
+    .chero__body {
+      padding-top: 152px;
+      padding-bottom: 72px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .chero__body {
+      padding-top: 132px;
+      padding-bottom: 56px;
+    }
+
+    h1 {
+      font-size: 31px;
+      max-width: none;
+    }
+
+    .chero__sub {
+      font-size: 15.5px;
+    }
+
+    .chero__cta {
+      width: 100%;
+    }
+
+    .chero__cta .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chero__glow {
+      animation: none;
+    }
+  }
+</style>

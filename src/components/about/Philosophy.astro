@@ -1,0 +1,151 @@
+---
+import SectionBg from "../SectionBg.astro";
+
+const points = [
+  {
+    title: "Systems Over Tactics",
+    body: "No chasing hacks. A good system beats a good tactic every time, because a system still works next month.",
+  },
+  {
+    title: "AI-First, Always",
+    body: "AI isn't a bonus feature bolted onto the system after the fact, it's built into how the system works from the start.",
+  },
+  {
+    title: "Data Over Opinions",
+    body: "Every decision is backed by actual data, Search Console, CRM analytics, conversion numbers. Not guesswork dressed up as strategy.",
+  },
+  {
+    title: "Visibility to Revenue",
+    body: "Ranking on Google means nothing if it doesn't convert. The whole pipeline matters, search visibility, CRM capture, automated follow-up, closed revenue.",
+  },
+];
+---
+
+<section class="section" id="philosophy">
+  <SectionBg
+    pattern="diag"
+    corner="98% 92%"
+    glow="lime"
+    glowX="18%"
+    glowY="100%"
+    glowW="660px"
+    glowH="520px"
+  />
+
+  <div class="shell">
+    <p class="kicker" data-reveal>Philosophy</p>
+    <h2 class="h2" data-reveal style="--d: 60ms">Systems over shortcuts.</h2>
+
+    <div class="phil">
+      {
+        points.map((p, i) => (
+          <article class="phil__card" data-reveal style={`--d: ${100 + i * 90}ms`}>
+            <span class="phil__index mono">{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="phil__title">{p.title}</h3>
+            <p class="phil__body">{p.body}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="section-cta" data-reveal>
+      <a class="btn btn--outline" href="/contact">
+        Book a free call <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .phil {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 50px;
+  }
+
+  .phil__card {
+    position: relative;
+    padding: 30px 28px 28px;
+    border: 1px solid var(--card-line);
+    border-radius: 16px;
+    background: var(--card);
+    overflow: hidden;
+    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease),
+      box-shadow 0.4s var(--ease);
+  }
+
+  .phil__card::before {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 100%;
+    background: linear-gradient(0deg, rgba(198, 255, 61, 0.07), transparent 55%);
+    opacity: 0;
+    transition: opacity 0.45s var(--ease);
+    pointer-events: none;
+  }
+
+  .phil__card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(198, 255, 61, 0.32);
+    box-shadow: 0 22px 44px -28px rgba(0, 0, 0, 0.9);
+  }
+
+  .phil__card:hover::before {
+    opacity: 1;
+  }
+
+  .phil__index {
+    position: relative;
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+    transition: color 0.3s var(--ease);
+  }
+
+  .phil__card:hover .phil__index {
+    color: var(--accent);
+  }
+
+  .phil__title {
+    position: relative;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 11px;
+  }
+
+  .phil__body {
+    position: relative;
+    font-size: 16px;
+    line-height: 1.72;
+    color: var(--ink-body);
+  }
+
+  @media (max-width: 860px) {
+    .phil {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 38px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .phil__card {
+      padding: 24px 20px 22px;
+    }
+
+    .phil__title {
+      font-size: 18px;
+    }
+
+    .phil__body {
+      font-size: 15px;
+    }
+  }
+</style>

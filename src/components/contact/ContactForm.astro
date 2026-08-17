@@ -1,0 +1,275 @@
+---
+import SectionBg from "../SectionBg.astro";
+
+/*
+  The primary action on this page, so it is built as the centrepiece rather
+  than a block under a calendar.
+
+  NOT YET WIRED. The form is meant to be Contact Form 7 on WordPress and the
+  CF7 form ID has not been provided. Rather than let the button fail
+  silently, an inline script intercepts submit and says so. Replace the
+  markup below with the CF7 shortcode output, or point `action` at the CF7
+  REST endpoint, and delete that script.
+*/
+const CF7_FORM_ID = "REPLACE_WITH_CF7_FORM_ID";
+---
+
+<section class="section section--alt" id="contact-form">
+  <SectionBg
+    pattern="grid"
+    corner="98% 6%"
+    glow="lime"
+    glowX="86%"
+    glowY="101%"
+    glowW="700px"
+    glowH="540px"
+    puffX="30%"
+    puffY="22%"
+  />
+
+  <div class="shell">
+    <p class="kicker" data-reveal>Send a message</p>
+    <h2 class="h2 h2--wide" data-reveal style="--d: 60ms">
+      Tell us what's actually going on.
+    </h2>
+
+    <!-- CF7 PLACEHOLDER: replace this form with the Contact Form 7 shortcode
+         output once the form ID exists. Field names below match the spec. -->
+    <form
+      class="cf"
+      data-cf7-id={CF7_FORM_ID}
+      data-unwired="true"
+      novalidate
+      data-reveal
+      style="--d: 120ms"
+    >
+      <div class="cf__grid">
+        <label class="field">
+          <span class="field__label">Name</span>
+          <input type="text" name="your-name" required autocomplete="name" />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Email</span>
+          <input type="email" name="your-email" required autocomplete="email" />
+        </label>
+
+        <label class="field">
+          <span class="field__label">
+            Phone <span class="field__opt">optional</span>
+          </span>
+          <input type="tel" name="your-phone" autocomplete="tel" />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Business name</span>
+          <input type="text" name="business-name" autocomplete="organization" />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Current GHL setup?</span>
+          <select name="ghl-setup">
+            <option value="">Choose one</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="not-sure">Not sure</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Preferred contact method</span>
+          <select name="contact-method">
+            <option value="">Choose one</option>
+            <option value="call">Call</option>
+            <option value="email">Email</option>
+            <option value="whatsapp">WhatsApp</option>
+          </select>
+        </label>
+
+        <label class="field field--wide">
+          <span class="field__label">What's going on?</span>
+          <textarea name="whats-going-on" rows="5" placeholder="The messier, the better"
+          ></textarea>
+        </label>
+      </div>
+
+      <div class="cf__foot">
+        <button class="btn btn--accent cf__submit" type="submit">
+          Send It <span class="arrow">→</span>
+        </button>
+        <p class="cf__note" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script is:inline>
+  /*
+    Temporary. The form has no CF7 endpoint yet, so submitting would do
+    nothing and look broken. Say so instead. Delete this once CF7 is wired.
+  */
+  (function () {
+    var form = document.querySelector('form.cf[data-unwired="true"]');
+    if (!form) return;
+    var note = form.querySelector(".cf__note");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var name = form.querySelector('[name="your-name"]');
+      var email = form.querySelector('[name="your-email"]');
+
+      if (!name.value.trim() || !email.value.trim()) {
+        note.textContent = "Add your name and email first.";
+        note.className = "cf__note is-error";
+        return;
+      }
+
+      note.textContent =
+        "This form is not connected yet. Use the email or WhatsApp below in the meantime.";
+      note.className = "cf__note is-warn";
+    });
+  })();
+</script>
+
+<style>
+  .cf {
+    margin-top: 46px;
+    padding: 34px 34px 30px;
+    border: 1px solid var(--card-line);
+    border-radius: 18px;
+    background: var(--card);
+  }
+
+  .cf__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .field--wide {
+    grid-column: 1 / -1;
+  }
+
+  .field__label {
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+  }
+
+  .field__opt {
+    color: var(--ink-faint);
+    font-size: 11.5px;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid var(--card-line);
+    border-radius: 10px;
+    background: rgba(11, 13, 26, 0.55);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.5;
+    transition: border-color 0.25s var(--ease), background 0.25s var(--ease),
+      box-shadow 0.25s var(--ease);
+  }
+
+  .field textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--ink-faint);
+  }
+
+  .field input:hover,
+  .field select:hover,
+  .field textarea:hover {
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: rgba(198, 255, 61, 0.6);
+    background: rgba(11, 13, 26, 0.75);
+    box-shadow: 0 0 0 3px rgba(198, 255, 61, 0.12);
+  }
+
+  /* The native arrow is invisible on this background in some browsers. */
+  .field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%238A8CA0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 38px;
+  }
+
+  .field select option {
+    background: #0f1220;
+    color: var(--ink);
+  }
+
+  .cf__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+
+  .cf__submit {
+    padding: 15px 30px;
+  }
+
+  .cf__submit:active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  .cf__note {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-mute);
+    margin: 0;
+  }
+
+  .cf__note.is-error {
+    color: #ff8080;
+  }
+
+  .cf__note.is-warn {
+    color: var(--accent);
+  }
+
+  @media (max-width: 760px) {
+    .cf {
+      margin-top: 34px;
+      padding: 24px 20px 22px;
+      border-radius: 14px;
+    }
+
+    .cf__grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .cf__submit {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

@@ -1,0 +1,178 @@
+---
+import SectionBg from "../SectionBg.astro";
+
+/*
+  Six capabilities, each listing its tools. The tool names come straight from
+  the copy and are rendered as text chips rather than vendor logos: the copy
+  names them in prose, and drawing marks for eleven different products would
+  claim more than it says.
+*/
+const items = [
+  {
+    title: "AI-Powered CRM Systems",
+    body: "GoHighLevel systems where AI handles lead scoring, follow-up sequencing, appointment booking, and pipeline management.",
+    tools: ["Claude", "GPT", "GHL", "n8n"],
+  },
+  {
+    title: "AI Chatbot Development",
+    body: "Custom chatbots integrated directly into GoHighLevel, qualifying leads, booking appointments, and nurturing prospects without human intervention.",
+    tools: ["ChatGPT", "Claude", "MiniMax"],
+  },
+  {
+    title: "AI Content & Graphics",
+    body: "Full content pipelines where AI generates blog posts, social content, ad copy, and visual graphics, integrated into automated publishing workflows.",
+    tools: ["Veo 3", "Kling AI", "Manus"],
+  },
+  {
+    title: "AI Funnel Optimization",
+    body: "Funnels that use AI to personalize copy, test variations, and optimize conversion paths automatically.",
+    tools: ["GHL Funnels", "AI Logic", "Make.com"],
+  },
+  {
+    title: "AI Workflow Automation",
+    body: "Complex multi-step automations where AI decides the next action based on lead behavior, data patterns, and business rules, no manual intervention needed.",
+    tools: ["n8n", "Make.com", "GHL", "Claude"],
+  },
+  {
+    title: "AI Business Intelligence",
+    body: "Systems that analyze data from Google Analytics, Search Console, and CRM to generate insights, predict trends, and recommend strategic actions.",
+    tools: ["GA4", "GSC", "AI Analysis"],
+  },
+];
+---
+
+<section class="section" id="ai-first">
+  <SectionBg
+    pattern="grid"
+    corner="98% 92%"
+    glow="blue"
+    glowX="16%"
+    glowY="100%"
+    glowW="680px"
+    glowH="540px"
+  />
+
+  <div class="shell">
+    <p class="kicker" data-reveal>AI-first approach</p>
+    <h2 class="h2 h2--wide" data-reveal style="--d: 60ms">
+      I don't just use AI. I build with it.
+    </h2>
+
+    <p class="lede ai__lede" data-reveal style="--d: 100ms">
+      Every system connects AI directly into the CRM pipeline, not as a chatbot
+      bolted on the side, but as the layer that qualifies, follows up, and
+      books, running inside the same system as everything else.
+    </p>
+
+    <div class="ai">
+      {
+        items.map((it, i) => (
+          <article class="ai__card" data-reveal style={`--d: ${120 + i * 70}ms`}>
+            <h3 class="ai__title">{it.title}</h3>
+            <p class="ai__body">{it.body}</p>
+            <ul class="ai__tools">
+              {it.tools.map((t) => (
+                <li class="ai__tool mono">{t}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="section-cta" data-reveal>
+      <a class="btn btn--outline" href="#track-record">
+        See the numbers <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ai__lede {
+    margin-top: 20px;
+  }
+
+  .ai {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 50px;
+  }
+
+  .ai__card {
+    display: flex;
+    flex-direction: column;
+    padding: 26px 24px 22px;
+    border: 1px solid var(--card-line);
+    border-radius: 14px;
+    background: var(--card);
+    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease),
+      box-shadow 0.4s var(--ease);
+  }
+
+  .ai__card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(198, 255, 61, 0.32);
+    box-shadow: 0 22px 44px -28px rgba(0, 0, 0, 0.9);
+  }
+
+  .ai__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 17.5px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .ai__body {
+    font-size: 15px;
+    line-height: 1.68;
+    color: var(--ink-body);
+    flex: 1;
+  }
+
+  .ai__tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 16px 0 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .ai__tool {
+    padding: 4px 9px;
+    border: 1px solid rgba(198, 255, 61, 0.28);
+    border-radius: 6px;
+    background: rgba(198, 255, 61, 0.07);
+    color: var(--accent);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 1000px) {
+    .ai {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 38px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ai {
+      grid-template-columns: 1fr;
+    }
+
+    .ai__card {
+      padding: 22px 20px 20px;
+    }
+
+    .ai__title {
+      font-size: 16.5px;
+    }
+  }
+</style>

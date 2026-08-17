@@ -1,0 +1,124 @@
+---
+import SectionBg from "./SectionBg.astro";
+
+/*
+  Shared closing CTA. Services, Case Studies, About and Contact all ended
+  with the same block differing only in wording, so it lives here once.
+*/
+interface Props {
+  kicker: string;
+  heading: string;
+  body: string;
+  ctaLabel: string;
+  ctaHref: string;
+  pattern?: "dots" | "diag" | "grid" | "rings";
+  alt?: boolean;
+  id?: string;
+}
+
+const {
+  kicker,
+  heading,
+  body,
+  ctaLabel,
+  ctaHref,
+  pattern = "rings",
+  alt = false,
+  id = "book",
+} = Astro.props;
+---
+
+<section class={`section closing${alt ? " section--alt" : ""}`} id={id}>
+  <SectionBg
+    pattern={pattern}
+    corner="100% 92%"
+    glow="lime"
+    glowX="50%"
+    glowY="50%"
+    glowW="880px"
+    glowH="600px"
+    glowA="0.1"
+    scrimPos="50% 50%"
+    scrimW="70%"
+    scrimH="64%"
+    puffX="50%"
+    puffY="32%"
+    puffA="0.18"
+  />
+
+  <div class="shell">
+    <div class="closing__inner">
+      <p class="kicker" data-reveal>{kicker}</p>
+
+      <h2 class="h2 closing__h2" data-reveal style="--d: 60ms">{heading}</h2>
+
+      <p class="closing__body" data-reveal style="--d: 120ms">{body}</p>
+
+      <div class="closing__actions" data-reveal style="--d: 180ms">
+        <a class="btn btn--accent" href={ctaHref}>
+          {ctaLabel} <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .closing {
+    text-align: center;
+  }
+
+  .closing__inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .closing__h2 {
+    max-width: 20ch;
+    font-size: clamp(30px, 4.2vw, 50px);
+  }
+
+  .closing__body {
+    margin-top: 24px;
+    font-size: 17.5px;
+    line-height: 1.76;
+    color: var(--ink-body);
+    max-width: 58ch;
+  }
+
+  .closing__actions {
+    margin-top: 40px;
+  }
+
+  .closing__actions .btn {
+    padding: 18px 34px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 640px) {
+    .closing__h2 {
+      font-size: 28px;
+      max-width: none;
+    }
+
+    .closing__body {
+      font-size: 15.5px;
+      margin-top: 20px;
+    }
+
+    .closing__actions {
+      margin-top: 32px;
+      width: 100%;
+    }
+
+    .closing__actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

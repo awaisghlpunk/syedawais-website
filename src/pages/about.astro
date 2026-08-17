@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Marquee from "../components/Marquee.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import AboutHero from "../components/about/AboutHero.astro";
+import OwnerSection from "../components/about/OwnerSection.astro";
+import TheStory from "../components/about/TheStory.astro";
+import Journey from "../components/about/Journey.astro";
+import AiFirst from "../components/about/AiFirst.astro";
+import TrackRecord from "../components/about/TrackRecord.astro";
+import Philosophy from "../components/about/Philosophy.astro";
+import PageClosing from "../components/PageClosing.astro";
+
+const title = "About | The Break-Proof Build System";
+const description =
+  "GoHighLevel systems, AI automation, and everything behind them, who's actually building this and why the systems get built the way they do.";
+---
+
+<BaseLayout title={title} description={description}>
+  <AboutHero />
+  <Marquee />
+  <OwnerSection />
+  <TheStory />
+  <Journey />
+  <AiFirst />
+  <TrackRecord />
+  <Philosophy />
+
+  <PageClosing
+    kicker="Let's look at your system"
+    heading="See what this looks like for your business."
+    body="Book a free 30-minute call. Tell us what's going on, the messier, the better, and we'll show you what a system built this way would actually look like for you."
+    ctaLabel="Book Your Free Call"
+    ctaHref="/contact#contact-form"
+    pattern="rings"
+  />
+
+  <SiteFooter />
+</BaseLayout>
