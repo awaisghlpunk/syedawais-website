@@ -2,24 +2,34 @@
 /* The System — horizontal connected timeline, circle nodes on a shared rail. */
 import SectionBg from "./SectionBg.astro";
 import LivePipeline from "./LivePipeline.astro";
+import ToolMark from "./ToolMark.astro";
 
+/*
+  `icon` is a vendor mark only where the step names a product. "AI
+  Automation" and "System Bible" describe capabilities, not tools, so they
+  take generic accent icons rather than a Claude, OpenAI or n8n logo.
+*/
 const steps = [
   {
+    icon: "meta",
     label: "Meta Ads",
     role: "Fuel",
     body: "The click happens, and before the visitor's even finished typing their phone number, the pixel's already told the CRM which ad sent them. Not tagged later during a weekly report. Tagged the second they arrive.",
   },
   {
+    icon: "ghl",
     label: "GoHighLevel",
     role: "Backbone",
     body: "Not a template pipeline with your logo pasted over someone else's stages. Built around the actual questions your sales process asks, then run against fifty real leads with typos, duplicates, and 2am submissions, before it's ever called finished.",
   },
   {
+    icon: "ai",
     label: "AI Automation",
     role: "The Weapon",
     body: "A lead comes in at midnight. Nobody's awake. The system already qualified them, texted back, and put a slot on the calendar before the sun came up. The exact layer that pushed one live system's bookings up 50%.",
   },
   {
+    icon: "doc",
     label: "System Bible",
     role: "What You Keep",
     body: "Every workflow has a recorded walkthrough next to it, in plain language. Six months from now, when the person who built it isn't the person you're asking, the answer is already written down.",
@@ -80,7 +90,35 @@ const steps = [
               </div>
 
               <div class="step__card">
-                <h3 class="step__label">{step.label}</h3>
+                <h3 class="step__label">
+                  <span class="step__icon">
+                    {(step.icon === "meta" || step.icon === "ghl") && (
+                      <ToolMark id={step.icon as any} size={20} />
+                    )}
+
+                    {step.icon === "ai" && (
+                      <svg viewBox="0 0 24 24" width="19" height="19" fill="none">
+                        <path
+                          d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Zm6.5 9.5.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9.9-2.1Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    )}
+
+                    {step.icon === "doc" && (
+                      <svg viewBox="0 0 24 24" width="19" height="19" fill="none">
+                        <path
+                          d="M5 4.5A1.5 1.5 0 0 1 6.5 3H17a2 2 0 0 1 2 2v13.5M5 4.5V19a2 2 0 0 0 2 2h12v-2.5M5 4.5c0 .8.7 1.5 1.5 1.5H19M8.5 9.5h7M8.5 13h5"
+                          stroke="currentColor"
+                          stroke-width="1.7"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    )}
+                  </span>
+                  {step.label}
+                </h3>
                 <p class="step__role">{step.role}</p>
                 <p class="step__body">{step.body}</p>
               </div>
@@ -247,12 +285,26 @@ const steps = [
   }
 
   .step__label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-family: var(--font-display);
     font-weight: 500;
     font-size: 19px;
     line-height: 1.3;
     color: var(--ink);
     margin-bottom: 5px;
+  }
+
+  /* Fixed box so the four labels align regardless of each mark's ratio. */
+  .step__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 22px;
+    flex: none;
+    color: var(--accent);
   }
 
   .step__role {
