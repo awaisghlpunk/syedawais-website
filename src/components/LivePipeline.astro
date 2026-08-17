@@ -1,0 +1,539 @@
+---
+/*
+  Live pipeline diagram: Meta Ads → funnel → pipeline stages → automated
+  messages, animated as one continuous chain.
+
+  Entirely CSS. The counters are odometers (a column of values stepped
+  through with `steps()`), not a script, so this section still ships zero
+  JavaScript. Everything stops under prefers-reduced-motion and the panel
+  stays readable as a static diagram.
+
+  The figures are illustrative and labelled as such on the panel. They
+  describe how the system behaves, not any client's actual numbers.
+*/
+const stages = [
+  { label: "New lead", values: ["12", "12", "13", "13", "14", "14"], delay: 2.4 },
+  { label: "Qualified", values: ["8", "8", "9", "9", "9", "10"], delay: 3.2 },
+  { label: "Booked", values: ["5", "5", "5", "6", "6", "6"], delay: 4 },
+  { label: "Won", values: ["3", "3", "3", "3", "4", "4"], delay: 4.8, accent: true },
+];
+
+const messages = [
+  { text: "SMS back in seconds", delay: 5.8, icon: "msg" },
+  { text: "AI qualifies and replies", delay: 6.8, icon: "ai" },
+  { text: "Books the call, confirms it", delay: 7.8, icon: "cal" },
+];
+
+const intake = ["38", "39", "40", "41", "42", "43"];
+---
+
+<div class="lp" data-reveal="scale">
+  <div class="lp__head">
+    <div>
+      <p class="lp__eyebrow mono">Lead intake</p>
+      <p class="lp__big mono">
+        <span class="odo"
+          ><span class="odo__col">{intake.map((v) => <b>{v}</b>)}</span></span
+        >
+      </p>
+    </div>
+    <span class="lp__note mono">Illustrative</span>
+  </div>
+
+  <div class="lp__row">
+    <div class="lp__node">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true">
+        <path
+          d="M3 11v2a1 1 0 0 0 1 1h2l4 4V6L6 10H4a1 1 0 0 0-1 1Zm14-4a6 6 0 0 1 0 10"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      Meta Ads
+    </div>
+
+    <div class="lp__track" aria-hidden="true">
+      <span class="lp__pill mono" style="animation-delay:0s">lead</span>
+      <span class="lp__pill mono" style="animation-delay:-3.3s">lead</span>
+      <span class="lp__pill mono" style="animation-delay:-6.6s">lead</span>
+    </div>
+
+    <div class="lp__node">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true">
+        <path
+          d="M3 5h18l-7 8v6l-4 2v-8L3 5Z"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      Funnel
+    </div>
+  </div>
+
+  <div class="lp__link" aria-hidden="true">
+    <span class="lp__dot" style="animation-delay:2s"></span>
+  </div>
+
+  <p class="lp__eyebrow mono">Pipeline</p>
+  <div class="lp__stages">
+    {
+      stages.map((s) => (
+        <div class="lp__stage" style={`animation-delay:${s.delay}s`}>
+          <p class="lp__stage-label">{s.label}</p>
+          <p class={`lp__stage-num mono${s.accent ? " is-accent" : ""}`}>
+            <span class="odo">
+              <span class="odo__col" style={`animation-delay:${s.delay}s`}>
+                {s.values.map((v) => (
+                  <b>{v}</b>
+                ))}
+              </span>
+            </span>
+          </p>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="lp__link" aria-hidden="true">
+    <span class="lp__dot" style="animation-delay:5.4s"></span>
+  </div>
+
+  <p class="lp__eyebrow mono">Automated messages</p>
+  <div class="lp__msgs">
+    {
+      messages.map((m) => (
+        <div class="lp__msg" style={`animation-delay:${m.delay}s`}>
+          <span class="lp__msg-icon" aria-hidden="true">
+            {m.icon === "msg" && (
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none">
+                <path
+                  d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-6.4A8 8 0 1 1 21 12Z"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            )}
+            {m.icon === "ai" && (
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none">
+                <path
+                  d="M12 3v3m-5 3h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2Zm2 4v2m6-2v2"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            )}
+            {m.icon === "cal" && (
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none">
+                <path
+                  d="M8 3v3m8-3v3M4 9h16M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm3 10 2 2 4-4"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            )}
+          </span>
+          {m.text}
+          <span class="lp__sent mono">sent</span>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .lp {
+    position: relative;
+    z-index: 2;
+    margin-top: 56px;
+    padding: 26px 28px 28px;
+    border: 1px solid var(--card-line);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .lp__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  .lp__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 8px;
+  }
+
+  .lp__big {
+    font-size: 40px;
+    line-height: 1.05;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  .lp__note {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    flex: none;
+  }
+
+  /* Chain: source → track → funnel ---------------------------------------- */
+
+  .lp__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .lp__node {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 13px;
+    border: 1px solid var(--card-line);
+    border-radius: 9px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .lp__node svg {
+    color: var(--accent);
+  }
+
+  .lp__track {
+    position: relative;
+    flex: 1;
+    min-width: 60px;
+    height: 22px;
+    /* Pills animate to left:100%, which puts their body past the end of the
+       track and on top of the Funnel chip. Clip them to the track instead. */
+    overflow: hidden;
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.2) 0 8px,
+      transparent 8px 18px
+    );
+    background-size: 36px 1px;
+    background-repeat: repeat-x;
+    background-position: 0 50%;
+    animation: lp-dash 1.2s linear infinite;
+  }
+
+  .lp__pill {
+    position: absolute;
+    top: 50%;
+    margin-top: -9px;
+    height: 18px;
+    padding: 0 9px;
+    border-radius: 9px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 11px;
+    line-height: 18px;
+    white-space: nowrap;
+    animation: lp-flow 10s linear infinite;
+  }
+
+  .lp__link {
+    position: relative;
+    width: 1px;
+    height: 26px;
+    margin: 0 auto;
+    background: repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.24) 0 5px,
+      transparent 5px 11px
+    );
+  }
+
+  .lp__dot {
+    position: absolute;
+    left: -2px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: lp-drop 10s linear infinite;
+  }
+
+  /* Pipeline --------------------------------------------------------------- */
+
+  .lp__stages {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 9px;
+    margin-bottom: 4px;
+  }
+
+  .lp__stage {
+    padding: 11px 13px;
+    border: 1px solid var(--card-line);
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.03);
+    animation: lp-stage 10s linear infinite;
+  }
+
+  .lp__stage-label {
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin: 0 0 6px;
+  }
+
+  .lp__stage-num {
+    font-size: 19px;
+    line-height: 1.05;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .lp__stage-num.is-accent {
+    color: var(--accent);
+  }
+
+  /* Outbound messages ------------------------------------------------------ */
+
+  .lp__msgs {
+    display: grid;
+    gap: 8px;
+  }
+
+  .lp__msg {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border: 1px solid var(--card-line);
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    animation: lp-msg 10s linear infinite;
+  }
+
+  .lp__msg-icon {
+    display: flex;
+    color: var(--accent);
+    flex: none;
+  }
+
+  .lp__sent {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--ink-faint);
+    flex: none;
+  }
+
+  /* Odometer --------------------------------------------------------------- */
+
+  .odo {
+    display: inline-block;
+    overflow: hidden;
+    height: 1.05em;
+    line-height: 1.05em;
+    vertical-align: -0.08em;
+  }
+
+  .odo__col {
+    display: block;
+    animation: lp-odo 10s steps(6) infinite;
+  }
+
+  .odo b {
+    display: block;
+    height: 1.05em;
+    line-height: 1.05em;
+    font-weight: 400;
+  }
+
+  @keyframes lp-odo {
+    to {
+      transform: translateY(-6.3em);
+    }
+  }
+
+  @keyframes lp-flow {
+    0% {
+      left: 0;
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    85% {
+      opacity: 1;
+    }
+    100% {
+      left: 100%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes lp-dash {
+    to {
+      background-position: 36px 0;
+    }
+  }
+
+  @keyframes lp-drop {
+    0% {
+      top: 0;
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      top: 100%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes lp-stage {
+    0%,
+    100% {
+      border-color: var(--card-line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    6% {
+      border-color: rgba(198, 255, 61, 0.75);
+      background: rgba(198, 255, 61, 0.14);
+    }
+    26% {
+      border-color: var(--card-line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+  }
+
+  @keyframes lp-msg {
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: translateX(-6px);
+    }
+    8% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    42% {
+      opacity: 0.95;
+      transform: translateX(0);
+    }
+    60% {
+      opacity: 0.3;
+      transform: translateX(-6px);
+    }
+  }
+
+  /* Responsive ------------------------------------------------------------- */
+
+  @media (max-width: 900px) {
+    .lp {
+      margin-top: 44px;
+      padding: 22px 20px 24px;
+    }
+
+    .lp__stages {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .lp {
+      padding: 20px 16px 22px;
+      border-radius: 14px;
+    }
+
+    .lp__big {
+      font-size: 32px;
+    }
+
+    .lp__head {
+      margin-bottom: 18px;
+    }
+
+    /* The row still fits horizontally at 360px once the chips tighten, so
+       the chain keeps reading left to right rather than stacking. */
+    .lp__row {
+      gap: 8px;
+    }
+
+    .lp__node {
+      padding: 8px 10px;
+      font-size: 12px;
+      gap: 6px;
+    }
+
+    .lp__track {
+      min-width: 34px;
+    }
+
+    .lp__pill {
+      font-size: 10.5px;
+      padding: 0 7px;
+    }
+
+    /* One pill in flight at a time: the short track cannot separate three
+       without them bunching into each other. */
+    .lp__pill:nth-child(2),
+    .lp__pill:nth-child(3) {
+      display: none;
+    }
+
+    .lp__stage {
+      padding: 10px;
+    }
+
+    .lp__stage-label {
+      font-size: 11.5px;
+    }
+
+    .lp__stage-num {
+      font-size: 17px;
+    }
+
+    .lp__msg {
+      font-size: 12.5px;
+      padding: 9px 10px;
+      gap: 8px;
+    }
+
+    .lp__sent {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lp__track,
+    .lp__stage,
+    .lp__msg,
+    .odo__col {
+      animation: none !important;
+    }
+
+    .lp__pill,
+    .lp__dot {
+      display: none;
+    }
+
+    .lp__msg {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

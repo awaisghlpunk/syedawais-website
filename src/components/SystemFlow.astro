@@ -1,6 +1,7 @@
 ---
 /* The System — horizontal connected timeline, circle nodes on a shared rail. */
 import SectionBg from "./SectionBg.astro";
+import LivePipeline from "./LivePipeline.astro";
 
 const steps = [
   {
@@ -67,6 +68,8 @@ const steps = [
         }
       </ol>
     </div>
+
+    <LivePipeline />
 
     <p class="transition-note" data-reveal>
       Every build here gets tested against real data before handoff, and backed
