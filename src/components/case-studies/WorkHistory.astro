@@ -1,5 +1,6 @@
 ---
 import SectionBg from "../SectionBg.astro";
+import SectionWatermark from "../SectionWatermark.astro";
 
 /*
   Roles as a vertical timeline: a rail down the left with a node per role,
@@ -44,6 +45,9 @@ const roles = [
     glowH="480px"
   />
 
+  {/* Every role names GoHighLevel or Meta Ads work. */}
+  <SectionWatermark id="ghl" side="right" width="700px" />
+
   <div class="shell">
     <p class="kicker" data-reveal>Where this experience comes from</p>
     <h2 class="h2 h2--wide" data-reveal style="--d: 60ms">
@@ -70,6 +74,12 @@ const roles = [
         ))
       }
     </ol>
+
+    <div class="section-cta" data-reveal>
+      <a class="btn btn--outline" href="#case-1">
+        See the first build <span class="arrow">→</span>
+      </a>
+    </div>
   </div>
 </section>
 

@@ -1,5 +1,6 @@
 ---
 import SectionBg from "../SectionBg.astro";
+import SectionWatermark from "../SectionWatermark.astro";
 import PlaceholderImage from "../PlaceholderImage.astro";
 import ToolMark from "../ToolMark.astro";
 
@@ -25,6 +26,9 @@ interface Props {
   flip?: boolean;
   pattern: "dots" | "diag" | "grid" | "rings";
   corner?: string;
+  /* Corner mark for this case, only a tool its own copy names. */
+  mark?: "ghl" | "meta" | "n8n" | "gbp" | "gads";
+  cta?: { label: string; href: string };
 }
 
 const {
@@ -44,6 +48,8 @@ const {
   flip = false,
   pattern,
   corner = "100% 8%",
+  mark,
+  cta,
 } = Astro.props;
 ---
 
@@ -57,6 +63,8 @@ const {
     glowW="680px"
     glowH="500px"
   />
+
+  {mark && <SectionWatermark id={mark} side="right" width="720px" />}
 
   <div class="shell">
     <p class="case__kicker mono" data-reveal>{kicker}</p>
@@ -95,6 +103,16 @@ const {
       <span class="case__result-label mono">Result</span>
       {result}
     </p>
+
+    {
+      cta && (
+        <div class="section-cta" data-reveal>
+          <a class="btn btn--outline" href={cta.href}>
+            {cta.label} <span class="arrow">→</span>
+          </a>
+        </div>
+      )
+    }
   </div>
 </section>
 

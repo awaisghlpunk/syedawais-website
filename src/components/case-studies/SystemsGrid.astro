@@ -1,5 +1,6 @@
 ---
 import SectionBg from "../SectionBg.astro";
+import SectionWatermark from "../SectionWatermark.astro";
 import PlaceholderImage from "../PlaceholderImage.astro";
 
 /*
@@ -120,6 +121,9 @@ const systems = [
     glowH="520px"
   />
 
+  {/* n8n Automation Agents is one of the thirteen systems listed here. */}
+  <SectionWatermark id="n8n" side="right" width="700px" />
+
   <div class="shell">
     <p class="kicker" data-reveal>See the systems</p>
     <h2 class="h2" data-reveal style="--d: 60ms">Not just described. Shown.</h2>
@@ -168,6 +172,12 @@ const systems = [
       This list keeps growing, every new system built gets added here,
       screenshot and all.
     </p>
+
+    <div class="section-cta" data-reveal>
+      <a class="btn btn--outline" href="#book">
+        Book a free call <span class="arrow">→</span>
+      </a>
+    </div>
   </div>
 
   {/* Lightboxes. Hidden until their id is the URL target. */}
