@@ -1,0 +1,223 @@
+---
+import SectionBg from "../SectionBg.astro";
+import PlaceholderImage from "../PlaceholderImage.astro";
+import ToolMark from "../ToolMark.astro";
+
+/*
+  One case study: image on one side, situation and what's running on the
+  other, result as a stat callout underneath. The image side alternates so
+  four in a row do not read as one repeated block.
+*/
+interface Props {
+  id: string;
+  index: number;
+  kicker: string;
+  name: string;
+  situation: string;
+  runningLabel: string;
+  running: string;
+  result: string;
+  imageId: string;
+  imageLabel: string;
+  imageNote: string;
+  tools: string[];
+  alt?: boolean;
+  flip?: boolean;
+  pattern: "dots" | "diag" | "grid" | "rings";
+  corner?: string;
+}
+
+const {
+  id,
+  index,
+  kicker,
+  name,
+  situation,
+  runningLabel,
+  running,
+  result,
+  imageId,
+  imageLabel,
+  imageNote,
+  tools,
+  alt = false,
+  flip = false,
+  pattern,
+  corner = "100% 8%",
+} = Astro.props;
+---
+
+<section class={`section case${alt ? " section--alt" : ""}`} id={id}>
+  <SectionBg
+    pattern={pattern}
+    corner={corner}
+    glow={index % 2 === 0 ? "lime" : "blue"}
+    glowX={flip ? "18%" : "84%"}
+    glowY="101%"
+    glowW="680px"
+    glowH="500px"
+  />
+
+  <div class="shell">
+    <p class="case__kicker mono" data-reveal>{kicker}</p>
+
+    <h2 class="h2 case__name" data-reveal style="--d: 60ms">{name}</h2>
+
+    <div class={`case__split${flip ? " is-flipped" : ""}`}>
+      <div class="case__media" data-reveal={flip ? "left" : "right"} style="--d: 120ms">
+        <PlaceholderImage
+          id={imageId}
+          label={imageLabel}
+          note={imageNote}
+          w={800}
+          h={520}
+        />
+      </div>
+
+      <div class="case__text" data-reveal={flip ? "right" : "left"} style="--d: 100ms">
+        <div class="case__block">
+          <p class="case__label mono">The situation</p>
+          <p class="case__body">{situation}</p>
+        </div>
+
+        <div class="case__block">
+          <p class="case__label mono">{runningLabel}</p>
+          <p class="case__body">{running}</p>
+        </div>
+
+        <div class="case__stack">
+          {tools.map((t) => <ToolMark id={t as any} size={20} />)}
+        </div>
+      </div>
+    </div>
+
+    <p class="case__result" data-reveal style="--d: 160ms">
+      <span class="case__result-label mono">Result</span>
+      {result}
+    </p>
+  </div>
+</section>
+
+<style>
+  .case__kicker {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    max-width: 70ch;
+    line-height: 1.6;
+  }
+
+  .case__name {
+    max-width: 22ch;
+  }
+
+  .case__split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 44px;
+    align-items: center;
+    margin-top: 46px;
+  }
+
+  /* Alternates which side the screenshot sits on. */
+  .case__split.is-flipped .case__media {
+    order: 2;
+  }
+
+  .case__media :global(.ph) {
+    transition: transform 0.5s var(--ease), border-color 0.5s var(--ease),
+      box-shadow 0.5s var(--ease);
+  }
+
+  .case__media:hover :global(.ph) {
+    transform: translateY(-5px);
+    border-color: rgba(198, 255, 61, 0.3);
+    box-shadow: 0 28px 56px -30px rgba(0, 0, 0, 0.95);
+  }
+
+  .case__media:hover :global(.ph img) {
+    transform: scale(1.03);
+  }
+
+  .case__block + .case__block {
+    margin-top: 24px;
+  }
+
+  .case__label {
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+
+  .case__body {
+    font-size: 16.5px;
+    line-height: 1.74;
+    color: var(--ink-body);
+  }
+
+  .case__stack {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 26px;
+    padding: 8px 13px;
+    border: 1px solid var(--card-line);
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .case__result {
+    position: relative;
+    margin-top: 40px;
+    padding: 22px 26px;
+    border-left: 2px solid var(--accent);
+    background: linear-gradient(90deg, rgba(198, 255, 61, 0.07), transparent 76%);
+    border-radius: 0 12px 12px 0;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 74ch;
+  }
+
+  .case__result-label {
+    display: block;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 900px) {
+    .case__split {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-top: 34px;
+    }
+
+    /* Image always leads once the row stacks. */
+    .case__split.is-flipped .case__media {
+      order: initial;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .case__kicker {
+      font-size: 10.5px;
+    }
+
+    .case__body {
+      font-size: 15.5px;
+    }
+
+    .case__result {
+      margin-top: 30px;
+      padding: 18px 20px;
+      font-size: 15.5px;
+    }
+  }
+</style>

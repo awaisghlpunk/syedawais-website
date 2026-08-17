@@ -1,0 +1,121 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Marquee from "../components/Marquee.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import CaseStudiesHero from "../components/case-studies/CaseStudiesHero.astro";
+import WorkHistory from "../components/case-studies/WorkHistory.astro";
+import CaseStudyFeature from "../components/case-studies/CaseStudyFeature.astro";
+import SystemsGrid from "../components/case-studies/SystemsGrid.astro";
+import CaseStudiesClosing from "../components/case-studies/CaseStudiesClosing.astro";
+
+const title =
+  "Case Studies — Real GHL Systems, Real Results | The Break-Proof Build System";
+const description =
+  "Systems currently running for real businesses, real pipelines, real numbers, real screenshots.";
+
+/*
+  Tool marks per case study follow the same rule used on the Home page:
+  only what that case study's own copy names. Every one mentions pipelines,
+  which is GoHighLevel. The AI on cases 1 and 2 is named without a vendor,
+  so no AI logo appears.
+*/
+const studies = [
+  {
+    id: "case-1",
+    index: 0,
+    kicker: "Growth Director — B2B, international clients · Sep 2025–Present",
+    name: "Hainan Corporate Services Group",
+    situation:
+      "Hainan Corporate Services Group helps international clients set up and run businesses in China. The acquisition side needed to work as one connected system, not separate pieces someone had to manually stitch together.",
+    runningLabel: "What's running now",
+    running:
+      "5 pipelines built inside GoHighLevel, fed directly by Meta Ads campaigns, with AI-powered workflows moving leads through qualification and follow-up without anyone manually pushing them along.",
+    result:
+      "$1M in leads sitting in pipeline every month, at a 10% on-paper conversion rate, from Meta Ads alone.",
+    imageId: "case-study-1-image",
+    imageLabel: "HCSG — Pipeline View",
+    imageNote:
+      "Hainan Corporate Services Group — the 5 GoHighLevel pipelines fed by Meta Ads, showing lead volume in stage",
+    tools: ["ghl", "meta"],
+    pattern: "dots" as const,
+    corner: "96% 8%",
+  },
+  {
+    id: "case-2",
+    index: 1,
+    kicker:
+      "Marketing Director — international import/export · Dec 2020–Present",
+    name: "Hainan Apex Traders",
+    situation:
+      "An international import/export company bringing in leads every month through paid ads and cold outreach, but with no system to guarantee any of them actually got followed up on before they went cold.",
+    runningLabel: "What's running now",
+    running:
+      "3 pipelines in GoHighLevel, fed from two different sources, paid ads and cold outreach, with an AI chatbot handling qualification and booking, and automated follow-up making sure nothing sits untouched.",
+    result:
+      "$500K in pipeline from ads, $200K in pipeline from cold outreach. 30% conversion rate from the funnel. 40% more bookings since the AI chatbot went live.",
+    imageId: "case-study-2-image",
+    imageLabel: "Apex — Chatbot + Pipelines",
+    imageNote:
+      "Hainan Apex Traders — the 3 pipelines and the AI chatbot qualification and booking flow",
+    tools: ["ghl", "meta"],
+    flip: true,
+    alt: true,
+    pattern: "diag" as const,
+    corner: "4% 92%",
+  },
+  {
+    id: "case-3",
+    index: 2,
+    kicker: "Funnels & automation — Google Ads at scale",
+    name: "Nationwide RV",
+    situation:
+      "Leads were coming in through Google Ads, but with no automation system built around them and no reliable tracking to confirm which campaigns were actually producing results.",
+    runningLabel: "What was built",
+    running:
+      "Funnels and a full automation system handling up to $70K in Google Ad spend worth of leads, fully automated to match their specific pipeline, with UTM parameters correctly configured through Google Analytics and Google Tag Manager, so every lead traces back to the exact campaign that produced it.",
+    result:
+      "Handles up to $70K in Google Ad spend leads, fully automated, with clean attribution from ad click to pipeline stage.",
+    imageId: "case-study-3-image",
+    imageLabel: "Nationwide RV — Attribution",
+    imageNote:
+      "Nationwide RV — the funnel and automation build with UTM attribution running through Google Analytics and Tag Manager",
+    tools: ["ghl", "gads", "ganalytics", "gtm"],
+    pattern: "rings" as const,
+    corner: "98% 90%",
+  },
+  {
+    id: "case-4",
+    index: 3,
+    kicker: "Local SEO & lead generation · Jan 2019–Present",
+    name: "Local SEO: Home Services",
+    situation:
+      "U.S. home-service businesses that were hard to find in local search, showing up nowhere when the people looking for their exact service went looking.",
+    runningLabel: "What's running now",
+    running:
+      "Google Business Profile optimization, citation building, on-page SEO, and 20+ pipelines built across clients, every one connecting organic search traffic straight through to a tracked booking, not just a ranking number in a report nobody reads.",
+    result:
+      "20+ pipelines generating more than $10M in leads sitting in pipeline, converting above industry-standard rates, because the system was built to create sales, not just look active.",
+    imageId: "case-study-4-image",
+    imageLabel: "Local SEO — Rankings",
+    imageNote:
+      "Local SEO home services — Google Business Profile optimisation and the pipelines connecting organic search traffic to tracked bookings",
+    tools: ["ghl", "gbp"],
+    flip: true,
+    alt: true,
+    pattern: "dots" as const,
+    corner: "4% 8%",
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <CaseStudiesHero />
+  <Marquee />
+  <WorkHistory />
+
+  {studies.map((s) => <CaseStudyFeature {...s} />)}
+
+  <SystemsGrid />
+  <CaseStudiesClosing />
+  <SiteFooter />
+</BaseLayout>

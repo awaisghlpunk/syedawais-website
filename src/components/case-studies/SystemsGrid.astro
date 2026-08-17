@@ -1,0 +1,430 @@
+---
+import SectionBg from "../SectionBg.astro";
+import PlaceholderImage from "../PlaceholderImage.astro";
+
+/*
+  The centrepiece of the page: 13 systems, each with a screenshot.
+
+  Every image is a placeholder, labelled with the screenshot it is waiting
+  for. Swapping one in means passing `src` to PlaceholderImage; nothing else
+  here changes.
+
+  The expand-on-click lightbox is CSS only, driven by :target, so the page
+  still ships zero JavaScript bundles. Each card links to #lb-<id>, and the
+  overlay for that id becomes visible when it is the URL target.
+*/
+const systems = [
+  {
+    id: "webinar",
+    name: "Automated Webinar System",
+    desc: "Fully self-running — dates roll forward automatically, leads get reported, attendance gets tracked, with zero manual moving parts. Built 2-3 times for different clients.",
+    label: "Webinar Dashboard",
+    note: "webinar dashboard — auto-updating date, registration count, attendance tracking",
+    priority: true,
+  },
+  {
+    id: "lead-recovery",
+    name: "Lead Recovery System",
+    desc: "Catches leads that went cold and re-engages them automatically instead of letting them sit untouched.",
+    label: "Recovery Workflow",
+    note: "recovery workflow / re-engagement sequence",
+  },
+  {
+    id: "revenue-recovery",
+    name: "Revenue Recovery System",
+    desc: "Identifies revenue about to be lost — abandoned bookings, unpaid invoices, stalled deals — and automatically works to recover it.",
+    label: "Recovered Revenue",
+    note: "recovered-revenue tracking view",
+  },
+  {
+    id: "dead-lead",
+    name: "Dead Lead Revival System",
+    desc: 'Goes back through leads marked "dead" and re-opens the ones still worth pursuing, automatically.',
+    label: "Revival Workflow",
+    note: "revival workflow / reactivated leads",
+  },
+  {
+    id: "missed-call",
+    name: "Missed Call Text-Back System",
+    desc: "The second a call is missed, a text goes out automatically — the lead hears back before they've set the phone down.",
+    label: "Trigger + Text Log",
+    note: "automation trigger + text log",
+  },
+  {
+    id: "chatbot",
+    name: "AI Chatbot",
+    desc: "Answers, qualifies, and books directly inside GHL — not a bolted-on widget nobody clicks.",
+    label: "Chatbot Flow",
+    note: "chatbot conversation flow",
+  },
+  {
+    id: "voice",
+    name: "AI Voice Agents",
+    desc: "Handles calls and follow-up by voice automatically, including no-show recovery.",
+    label: "Voice Agent Config",
+    note: "call log / voice agent config",
+  },
+  {
+    id: "n8n",
+    name: "n8n Automation Agents",
+    desc: "Custom agents that read data, make decisions, and take action across connected systems.",
+    label: "n8n Workflow Canvas",
+    note: "n8n workflow canvas",
+  },
+  {
+    id: "capture",
+    name: "24/7 Lead Capture",
+    desc: "Every lead gets caught the moment they show up — day or night.",
+    label: "Capture + CRM Entry",
+    note: "capture form + instant CRM entry",
+  },
+  {
+    id: "crm-cleanup",
+    name: "Zero-Chaos CRM Cleanup",
+    desc: "Untangles a messy, duplicate-filled CRM into something usable.",
+    label: "Before / After Pipeline",
+    note: "before/after pipeline view",
+  },
+  {
+    id: "lead-import",
+    name: "Zero-Touch Lead Import",
+    desc: "Existing leads get imported and organized automatically — no manual data entry.",
+    label: "Import Automation",
+    note: "import automation",
+  },
+  {
+    id: "deliverability",
+    name: "Email/SMS Deliverability Fix",
+    desc: "Fixes messages that were silently failing to arrive.",
+    label: "SPF / DKIM / DMARC",
+    note: "SPF/DKIM/DMARC setup or deliverability report",
+  },
+  {
+    id: "local-visibility",
+    name: "Local Visibility System",
+    desc: "Google Business Profile, citations, and reviews connected to actual lead tracking.",
+    label: "Profile + Rankings",
+    note: "Google Business Profile / rankings",
+  },
+];
+---
+
+<section class="section section--alt" id="systems">
+  <SectionBg
+    pattern="grid"
+    corner="100% 4%"
+    glow="lime"
+    glowX="84%"
+    glowY="101%"
+    glowW="720px"
+    glowH="520px"
+  />
+
+  <div class="shell">
+    <p class="kicker" data-reveal>See the systems</p>
+    <h2 class="h2" data-reveal style="--d: 60ms">Not just described. Shown.</h2>
+
+    <p class="lede systems__lede" data-reveal style="--d: 100ms">
+      Every system below is a real build, currently running. Screenshots are the
+      actual dashboards, workflows, and automations, not stock images.
+    </p>
+
+    <div class="grid">
+      {
+        systems.map((s, i) => (
+          <article
+            class={`card${s.priority ? " is-priority" : ""}`}
+            data-reveal="scale"
+            style={`--d: ${i * 55}ms`}
+          >
+            <a class="card__open" href={`#lb-${s.id}`} aria-label={`Expand ${s.name} screenshot`}>
+              <span class="card__shot">
+                <PlaceholderImage
+                  id={`system-${s.id}-image`}
+                  label={s.label}
+                  note={s.note}
+                  w={600}
+                  h={400}
+                />
+              </span>
+              <span class="card__zoom" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none">
+                  <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8" />
+                  <path d="M15.8 15.8 20 20M11 8.6v4.8M8.6 11h4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+              </span>
+            </a>
+
+            <div class="card__text">
+              <h3 class="card__name">{s.name}</h3>
+              <p class="card__desc">{s.desc}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="systems__note" data-reveal>
+      This list keeps growing, every new system built gets added here,
+      screenshot and all.
+    </p>
+  </div>
+
+  {/* Lightboxes. Hidden until their id is the URL target. */}
+  {
+    systems.map((s) => (
+      <div class="lb" id={`lb-${s.id}`}>
+        <a class="lb__scrim" href="#systems" aria-label="Close" />
+        <div class="lb__panel" role="dialog" aria-label={s.name}>
+          <div class="lb__head">
+            <p class="lb__name">{s.name}</p>
+            <a class="lb__close" href="#systems" aria-label="Close">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </a>
+          </div>
+          <PlaceholderImage
+            id={`system-${s.id}-image-large`}
+            label={s.label}
+            note={s.note}
+            w={1200}
+            h={760}
+          />
+          <p class="lb__note mono">Awaiting real screenshot: {s.note}</p>
+        </div>
+      </div>
+    ))
+  }
+</section>
+
+<style>
+  .systems__lede {
+    margin-top: 20px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 56px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--card-line);
+    border-radius: 14px;
+    background: var(--card);
+    overflow: hidden;
+    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease),
+      box-shadow 0.4s var(--ease);
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(198, 255, 61, 0.34);
+    box-shadow: 0 26px 52px -30px rgba(0, 0, 0, 0.95);
+  }
+
+  /* The webinar build is the first screenshot to be swapped in. */
+  .card.is-priority {
+    border-color: rgba(198, 255, 61, 0.3);
+  }
+
+  .card__open {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    line-height: 0;
+  }
+
+  .card__shot :global(.ph) {
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid var(--card-line);
+  }
+
+  .card:hover .card__shot :global(.ph img) {
+    transform: scale(1.06);
+  }
+
+  .card__zoom {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: rgba(11, 13, 26, 0.8);
+    border: 1px solid var(--card-line);
+    color: var(--accent);
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+
+  .card:hover .card__zoom,
+  .card__open:focus-visible .card__zoom {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card__text {
+    padding: 18px 18px 20px;
+    flex: 1;
+  }
+
+  .card__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.32;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .card__desc {
+    font-size: 14px;
+    line-height: 1.62;
+    color: var(--ink-body);
+  }
+
+  .systems__note {
+    margin-top: 34px;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-mute);
+    font-style: italic;
+  }
+
+  /* Lightbox ---------------------------------------------------------------- */
+
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s var(--ease), visibility 0.3s var(--ease);
+  }
+
+  .lb:target {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .lb__scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 6, 12, 0.86);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .lb__panel {
+    position: relative;
+    width: min(1100px, 100%);
+    max-height: 88vh;
+    overflow: auto;
+    padding: 18px;
+    border: 1px solid var(--card-line);
+    border-radius: 16px;
+    background: var(--bg-alt);
+    transform: scale(0.97);
+    transition: transform 0.3s var(--ease);
+  }
+
+  .lb:target .lb__panel {
+    transform: scale(1);
+  }
+
+  .lb__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .lb__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--ink);
+  }
+
+  .lb__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    border: 1px solid var(--card-line);
+    color: var(--ink-soft);
+    flex: none;
+    transition: background 0.25s var(--ease), color 0.25s var(--ease);
+  }
+
+  .lb__close:hover {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .lb__note {
+    margin-top: 12px;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+  }
+
+  @media (max-width: 1100px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 40px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .card__zoom {
+      opacity: 1;
+      transform: none;
+    }
+
+    .lb {
+      padding: 14px;
+    }
+
+    .lb__panel {
+      padding: 14px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card,
+    .card__shot :global(.ph img),
+    .lb,
+    .lb__panel {
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,188 @@
+---
+import SectionBg from "../SectionBg.astro";
+
+/*
+  Roles as a vertical timeline: a rail down the left with a node per role,
+  which reads as a run of ongoing work rather than four separate cards.
+*/
+const roles = [
+  {
+    title: "Growth Director — Meta Ads, GHL Automation & AI Systems",
+    org: "Hainan Corporate Services Group",
+    dates: "Sep 2025–Present",
+    body: "Directing the growth engine for a B2B firm. Meta Ads campaigns, GoHighLevel CRM and automation systems, AI-powered workflows that turn ad clicks into booked calls.",
+  },
+  {
+    title: "Marketing Director — Meta Ads, GoHighLevel CRM & Local SEO",
+    org: "Hainan Apex Traders",
+    dates: "Dec 2020–Present",
+    body: "Running the full growth engine for an international import/export company. Ads bring leads in, the GoHighLevel system makes sure none of them slip through.",
+  },
+  {
+    title: "Local SEO & Lead Generation Specialist",
+    org: "Home Services Businesses",
+    dates: "Jan 2019–Present",
+    body: "Helped 20+ U.S. home-service businesses improve local search visibility and turn Google traffic into calls, bookings, and qualified inquiries.",
+  },
+  {
+    title: "Freelance GoHighLevel & AI Automation Consultant",
+    org: "Independent",
+    dates: "Jan 2024–Present",
+    body: "GoHighLevel CRM builds, workflow automation, Meta Ads integration, AI chatbot and voice agent deployment, email/SMS deliverability optimization. 15+ systems built across home services, coaching, consulting, and trades.",
+  },
+];
+---
+
+<section class="section section--alt" id="work-history">
+  <SectionBg
+    pattern="diag"
+    corner="96% 8%"
+    glow="blue"
+    glowX="18%"
+    glowY="102%"
+    glowW="660px"
+    glowH="480px"
+  />
+
+  <div class="shell">
+    <p class="kicker" data-reveal>Where this experience comes from</p>
+    <h2 class="h2 h2--wide" data-reveal style="--d: 60ms">
+      Not a portfolio built overnight. Ongoing, active work.
+    </h2>
+
+    <ol class="roles">
+      {
+        roles.map((r, i) => (
+          <li class="role" data-reveal style={`--d: ${100 + i * 80}ms`}>
+            <span class="role__node" aria-hidden="true" />
+            <div class="role__body">
+              <h3 class="role__title">{r.title}</h3>
+              <p class="role__meta mono">
+                <span class="role__org">{r.org}</span>
+                <span class="role__sep" aria-hidden="true">
+                  ·
+                </span>
+                <span class="role__dates">{r.dates}</span>
+              </p>
+              <p class="role__text">{r.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .roles {
+    position: relative;
+    list-style: none;
+    margin: 56px 0 0;
+    padding: 0 0 0 32px;
+  }
+
+  /* The rail the nodes sit on. */
+  .roles::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(
+      180deg,
+      rgba(198, 255, 61, 0.5),
+      rgba(198, 255, 61, 0.14) 70%,
+      transparent
+    );
+  }
+
+  .role {
+    position: relative;
+    padding: 0 0 34px;
+  }
+
+  .role:last-child {
+    padding-bottom: 0;
+  }
+
+  .role__node {
+    position: absolute;
+    left: -32px;
+    top: 7px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--bg-alt);
+    border: 2px solid var(--accent);
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  }
+
+  .role:hover .role__node {
+    transform: scale(1.25);
+    box-shadow: 0 0 0 5px rgba(198, 255, 61, 0.12);
+  }
+
+  .role__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 18.5px;
+    line-height: 1.36;
+    color: var(--ink);
+    margin-bottom: 8px;
+    max-width: 56ch;
+  }
+
+  .role__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .role__org {
+    color: var(--accent);
+  }
+
+  .role__sep {
+    color: var(--ink-faint);
+  }
+
+  .role__dates {
+    color: var(--ink-faint);
+  }
+
+  .role__text {
+    font-size: 16px;
+    line-height: 1.72;
+    color: var(--ink-body);
+    max-width: 68ch;
+  }
+
+  @media (max-width: 640px) {
+    .roles {
+      margin-top: 40px;
+      padding-left: 26px;
+    }
+
+    .role {
+      padding-bottom: 28px;
+    }
+
+    .role__node {
+      left: -26px;
+    }
+
+    .role__title {
+      font-size: 17px;
+    }
+
+    .role__text {
+      font-size: 15px;
+    }
+  }
+</style>

@@ -1,0 +1,180 @@
+---
+/*
+  Case Studies hero. Same gradient, grid and glow as Home and Services, and
+  centred like both. Nav lives in the shared site header.
+*/
+---
+
+<section class="chero">
+  <div class="chero__grid"></div>
+  <div class="chero__fade"></div>
+  <div class="chero__glow"></div>
+
+  <div class="chero__content">
+    <div class="shell chero__body">
+      <p class="kicker" data-reveal>Real systems, real results</p>
+
+      <h1 data-reveal style="--d: 60ms">
+        Not portfolio pieces. Systems that are still running.
+      </h1>
+
+      <p class="chero__sub" data-reveal style="--d: 120ms">
+        Every case study here is something currently in use, not a project that
+        got handed off and forgotten the day it launched.
+      </p>
+
+      <div class="chero__cta" data-reveal style="--d: 180ms">
+        <a class="btn btn--accent" href="#systems">
+          See the systems <span class="arrow">→</span>
+        </a>
+        <a class="btn btn--outline" href="#case-1">
+          Start with the first build <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .chero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+      115deg,
+      #060608 0%,
+      #0b0d1a 45%,
+      #131a3a 88%,
+      #0f1220 100%
+    );
+  }
+
+  .chero__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(46, 52, 80, 0.75) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(46, 52, 80, 0.75) 1px, transparent 1px);
+    background-size: 84px 84px;
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 84% at 50% 44%,
+      #000 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      transparent 94%
+    );
+    mask-image: radial-gradient(
+      ellipse 80% 84% at 50% 44%,
+      #000 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      transparent 94%
+    );
+  }
+
+  .chero__fade {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 62% 58% at 50% 48%,
+      #0b0d1a 0%,
+      rgba(11, 13, 26, 0.86) 42%,
+      transparent 78%
+    );
+  }
+
+  .chero__glow {
+    position: absolute;
+    top: 44%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 620px;
+    height: 340px;
+    background: radial-gradient(
+      circle,
+      rgba(198, 255, 61, 0.18) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    animation: cheroGlow 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes cheroGlow {
+    from {
+      opacity: 0.7;
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.07);
+    }
+  }
+
+  .chero__content {
+    position: relative;
+  }
+
+  /* Top padding clears the fixed header. */
+  .chero__body {
+    padding-top: 176px;
+    padding-bottom: 104px;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(34px, 5vw, 60px);
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    max-width: 18ch;
+    margin: 0 auto 26px;
+  }
+
+  .chero__sub {
+    font-size: 18px;
+    line-height: 1.74;
+    color: var(--ink-body);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .chero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 38px;
+  }
+
+  @media (max-width: 940px) {
+    .chero__body {
+      padding-top: 152px;
+      padding-bottom: 76px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .chero__body {
+      padding-top: 132px;
+      padding-bottom: 56px;
+    }
+
+    h1 {
+      font-size: 32px;
+      max-width: none;
+    }
+
+    .chero__sub {
+      font-size: 15.5px;
+    }
+
+    .chero__cta .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chero__glow {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,85 @@
+---
+/*
+  Every image on the Case Studies page is a placeholder. None of the real
+  screenshots exist yet.
+
+  TO SWAP IN A REAL SCREENSHOT: put the file in /public/screenshots/ and
+  pass `src="/screenshots/your-file.png"`. Nothing else changes, the sizing,
+  framing and lazy loading all stay. Each usage carries a stable `id` such
+  as case-study-1-image or system-webinar-image so it is findable.
+
+  An HTML comment is emitted above every placeholder in the built output
+  saying exactly what the real screenshot should show.
+*/
+interface Props {
+  id: string;
+  /** Short label drawn on the placeholder itself. */
+  label: string;
+  /** What the real screenshot must eventually show. */
+  note: string;
+  w?: number;
+  h?: number;
+  src?: string;
+}
+
+const { id, label, note, w = 800, h = 500, src } = Astro.props;
+
+const placeholder = `https://placehold.co/${w}x${h}/0B0D1A/C6FF3D?text=${encodeURIComponent(
+  label
+).replace(/%20/g, "+")}`;
+
+const resolved = src ?? placeholder;
+const isPlaceholder = !src;
+const comment = `<!-- ${
+  isPlaceholder ? "PLACEHOLDER" : "REAL"
+} IMAGE [${id}] — needs screenshot of: ${note} -->`;
+---
+
+<Fragment set:html={comment} />
+
+<figure class={`ph${isPlaceholder ? " is-placeholder" : ""}`}>
+  <img
+    id={id}
+    src={resolved}
+    width={w}
+    height={h}
+    alt={note}
+    loading="lazy"
+    decoding="async"
+  />
+  {isPlaceholder && <figcaption class="ph__tag mono">Placeholder</figcaption>}
+</figure>
+
+<style>
+  .ph {
+    position: relative;
+    margin: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--card-line);
+    background: var(--bg-alt2);
+    line-height: 0;
+  }
+
+  .ph img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .ph__tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 9px;
+    border-radius: 6px;
+    border: 1px dashed rgba(198, 255, 61, 0.4);
+    background: rgba(11, 13, 26, 0.72);
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+</style>
