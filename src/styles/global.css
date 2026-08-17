@@ -1,0 +1,400 @@
+/* ==========================================================================
+   syedawais.com — design system
+   Fully dark. No light sections anywhere on the site.
+   ========================================================================== */
+
+:root {
+  --bg: #0b0d1a;
+  --bg-alt: #0f1220;
+  --bg-alt2: #10131f;
+  --ink: #ffffff;
+  --ink-soft: #c7c9d6;
+  --ink-mute: #8a8ca0;
+  --ink-faint: #6e7080;
+  --line: rgba(255, 255, 255, 0.08);
+  --accent: #c6ff3d;
+  --accent-ink: #0b0c14;
+  --card: rgba(255, 255, 255, 0.035);
+  --card-line: rgba(255, 255, 255, 0.09);
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --shell: 1160px;
+  --pad-x: 40px;
+  --pad-y: 130px;
+
+  /* Easing used for every reveal + hover transition on the page. */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Anchor targets clear the top of the viewport instead of butting against it. */
+  scroll-padding-top: 32px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink-soft);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Section scaffolding
+   No border-bottom between sections — rhythm comes only from alternating
+   --bg / --bg-alt, so the page reads as one continuous scroll.
+   -------------------------------------------------------------------------- */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: var(--pad-y) 0;
+  background: var(--bg);
+}
+
+.section--alt {
+  background: var(--bg-alt);
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+
+/* Section header ---------------------------------------------------------- */
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 22px;
+}
+
+.kicker::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(28px, 3.6vw, 44px);
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  max-width: 20ch;
+}
+
+.h2--wide {
+  max-width: 26ch;
+}
+
+.lede {
+  font-size: 17px;
+  line-height: 1.72;
+  color: var(--ink-mute);
+  max-width: 62ch;
+}
+
+.lede + .lede {
+  margin-top: 20px;
+}
+
+.lede strong {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+/* Transition line — the connective sentence that closes several sections. */
+.transition-note {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-top: 56px;
+  padding: 22px 26px;
+  border-left: 2px solid var(--accent);
+  background: linear-gradient(90deg, rgba(198, 255, 61, 0.05), transparent 70%);
+  border-radius: 0 10px 10px 0;
+  font-size: 16px;
+  line-height: 1.66;
+  color: var(--ink-soft);
+  max-width: 74ch;
+}
+
+.transition-note em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.accent-em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Section textures
+   One distinct texture per section, confined to a small corner patch and
+   masked so it fades out well before it reaches any headline or body text.
+   The text-heavy top-left of every section stays completely blank.
+   -------------------------------------------------------------------------- */
+
+.tex {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  --tex-pos: 88% 14%;
+  --tex-size: 380px;
+}
+
+.tex-dots {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.22) 1px, transparent 1px);
+  background-size: 20px 20px;
+  -webkit-mask-image: radial-gradient(circle var(--tex-size) at var(--tex-pos), #000 0%, transparent 100%);
+  mask-image: radial-gradient(circle var(--tex-size) at var(--tex-pos), #000 0%, transparent 100%);
+}
+
+.tex-diag {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.07) 0px,
+    rgba(255, 255, 255, 0.07) 1px,
+    transparent 1px,
+    transparent 11px
+  );
+  -webkit-mask-image: radial-gradient(circle var(--tex-size) at var(--tex-pos), #000 0%, transparent 100%);
+  mask-image: radial-gradient(circle var(--tex-size) at var(--tex-pos), #000 0%, transparent 100%);
+}
+
+.tex-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(circle var(--tex-size) at var(--tex-pos), #000 0%, transparent 100%);
+  mask-image: radial-gradient(circle var(--tex-size) at var(--tex-pos), #000 0%, transparent 100%);
+}
+
+/* Soft colour glow only — no lines, so it needs no mask of its own. */
+.tex-glow {
+  background-image: radial-gradient(
+    circle var(--tex-size) at var(--tex-pos),
+    rgba(198, 255, 61, 0.07) 0%,
+    rgba(198, 255, 61, 0.02) 45%,
+    transparent 72%
+  );
+}
+
+/*
+  Line textures only render where the layout is wide enough to leave a real
+  corner outside the text column. Below this the shell fills the viewport,
+  content collapses toward one column, and any line pattern would cross
+  headline or body text — the exact bug the design system calls out. The
+  glow has no lines and does not affect legibility, so it stays at all sizes.
+*/
+@media (max-width: 1200px) {
+  .tex-dots,
+  .tex-diag,
+  .tex-grid {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 16px 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease),
+    background 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.btn--accent {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn--accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -10px rgba(198, 255, 61, 0.5);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.btn--outline:hover {
+  border-color: rgba(198, 255, 61, 0.55);
+  background: rgba(198, 255, 61, 0.06);
+  transform: translateY(-2px);
+}
+
+/* Arrow nudge shared by buttons and inline links. */
+.btn .arrow,
+.arrow {
+  display: inline-block;
+  transition: transform 0.25s var(--ease);
+}
+
+.btn:hover .arrow,
+a:hover > .arrow {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   Scroll reveal
+   Hidden state is scoped to .js, which an inline head script sets before
+   first paint. With JS off or slow, every element renders visible and
+   readable — the animation is strictly additive.
+   -------------------------------------------------------------------------- */
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+
+.js [data-reveal="left"] {
+  transform: translateX(-26px);
+}
+
+.js [data-reveal="right"] {
+  transform: translateX(26px);
+}
+
+.js [data-reveal="scale"] {
+  transform: scale(0.96);
+}
+
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .js [data-reveal],
+  .js [data-reveal="left"],
+  .js [data-reveal="right"],
+  .js [data-reveal="scale"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   Section padding drops substantially on mobile and headings get explicit
+   overrides rather than relying on clamp() minimums alone.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  :root {
+    --pad-y: 88px;
+    --pad-x: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --pad-y: 64px;
+    --pad-x: 24px;
+  }
+
+  .h2 {
+    font-size: 27px;
+    line-height: 1.2;
+    max-width: none;
+  }
+
+  .lede {
+    font-size: 15.5px;
+    line-height: 1.68;
+  }
+
+  .transition-note {
+    margin-top: 40px;
+    padding: 18px 20px;
+    font-size: 15px;
+  }
+
+  .btn {
+    padding: 15px 24px;
+    font-size: 14.5px;
+  }
+}

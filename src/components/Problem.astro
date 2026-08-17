@@ -1,0 +1,216 @@
+---
+/* Problem (Agitation) — stacked list rows with X-icon markers. */
+const failures = [
+  {
+    lead: '"Sent" doesn\'t mean delivered.',
+    body: "T-Mobile silently blocks unregistered SMS — no bounce, no alert, just a message that never arrives.",
+  },
+  {
+    lead: "A CRM full of untagged leads.",
+    body: "You can't tell which ad, which campaign, actually produced a booked call.",
+  },
+  {
+    lead: "Built once, tested never.",
+    body: "Automations built against a clean demo, then left running against data they were never checked against.",
+  },
+];
+---
+
+{/* id="audit" is the target of the hero's "Show me what's leaking" CTA,
+    so the mockup's href stays byte-identical. */}
+<section class="section section--alt" id="audit">
+  <div class="tex tex-dots" style="--tex-pos: 94% 9%; --tex-size: 300px;"></div>
+
+  <div class="shell">
+    <div class="problem__head">
+      <p class="kicker" data-reveal>Why good ads still lose</p>
+      <h2 class="h2 h2--wide" data-reveal style="--d: 60ms">
+        The leak isn't your ad spend. It's everything after the click.
+      </h2>
+
+      <div class="problem__body">
+        <p class="lede" data-reveal style="--d: 120ms">
+          Your Meta ad works. The click happens. The form gets filled out. Then
+          the lead enters GoHighLevel — and that's where things go quiet. A
+          workflow marked "active" that's actually misfiring. An SMS that never
+          left the carrier's network. An email that landed in spam. A follow-up
+          sequence quietly broken since week two.
+        </p>
+        <p class="lede" data-reveal style="--d: 180ms">
+          None of this throws an error. You just see fewer booked calls than the
+          lead count should produce — and assume the ads stopped working.
+        </p>
+      </div>
+    </div>
+
+    <ol class="failures">
+      {
+        failures.map((item, i) => (
+          <li class="failure" data-reveal style={`--d: ${i * 90}ms`}>
+            <span class="failure__mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none">
+                <path
+                  d="M6 6l12 12M18 6L6 18"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </span>
+            <span class="failure__num mono">0{i + 1}</span>
+            <span class="failure__text">
+              <strong class="failure__lead">{item.lead}</strong>
+              <span class="failure__desc">{item.body}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="transition-note" data-reveal>
+      This is exactly why "just get more leads" doesn't fix it. More leads into
+      the same leaking system is just a bigger leak.
+    </p>
+  </div>
+</section>
+
+<style>
+  .problem__head {
+    max-width: 780px;
+  }
+
+  .problem__body {
+    margin-top: 26px;
+  }
+
+  .failures {
+    list-style: none;
+    margin: 64px 0 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .failure {
+    position: relative;
+    display: grid;
+    grid-template-columns: 34px 44px 1fr;
+    align-items: start;
+    gap: 0 18px;
+    padding: 30px 8px 30px 0;
+    border-bottom: 1px solid var(--line);
+    transition: background 0.35s var(--ease), padding-left 0.35s var(--ease);
+  }
+
+  .failure::after {
+    /* Lime rail that grows in from the left on hover. */
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s var(--ease);
+  }
+
+  .failure:hover {
+    background: rgba(255, 255, 255, 0.02);
+    padding-left: 18px;
+  }
+
+  .failure:hover::after {
+    transform: scaleY(1);
+  }
+
+  .failure__mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 92, 92, 0.08);
+    border: 1px solid rgba(255, 92, 92, 0.22);
+    color: #ff7676;
+    flex: none;
+    transition: transform 0.35s var(--ease), background 0.35s var(--ease);
+  }
+
+  .failure:hover .failure__mark {
+    transform: rotate(90deg);
+    background: rgba(255, 92, 92, 0.14);
+  }
+
+  .failure__num {
+    font-size: 13px;
+    color: var(--ink-faint);
+    padding-top: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .failure__text {
+    display: block;
+    padding-top: 4px;
+  }
+
+  .failure__lead {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .failure__desc {
+    display: block;
+    font-size: 16px;
+    line-height: 1.68;
+    color: var(--ink-mute);
+    max-width: 68ch;
+  }
+
+  @media (max-width: 640px) {
+    .failures {
+      margin-top: 44px;
+    }
+
+    .failure {
+      grid-template-columns: 28px 1fr;
+      gap: 0 14px;
+      padding: 24px 0;
+    }
+
+    .failure__mark {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* The index sits inline above the text once the row narrows. */
+    .failure__num {
+      grid-column: 2;
+      padding-top: 3px;
+      font-size: 12px;
+    }
+
+    .failure__text {
+      grid-column: 2;
+      padding-top: 6px;
+    }
+
+    .failure__lead {
+      font-size: 17px;
+    }
+
+    .failure__desc {
+      font-size: 15px;
+    }
+
+    .failure:hover {
+      padding-left: 0;
+    }
+  }
+</style>

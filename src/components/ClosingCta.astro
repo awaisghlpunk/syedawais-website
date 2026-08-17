@@ -1,0 +1,119 @@
+---
+/* Closing CTA. #book / #audit stay as placeholder anchors — the Calendly
+   link is deliberately not public yet. */
+---
+
+<section class="section section--alt closing" id="book">
+  <div class="closing__glow" aria-hidden="true"></div>
+
+  <div class="shell">
+    <div class="closing__inner">
+      <p class="kicker" data-reveal>Let's look at your system</p>
+
+      <h2 class="h2 closing__h2" data-reveal style="--d: 60ms">
+        Tell us what's going on. The messier, the better.
+      </h2>
+
+      <p class="closing__body" data-reveal style="--d: 120ms">
+        Book a free 30-minute call. We'll look at what you have running right
+        now and show you exactly where leads are slipping through — free,
+        whether or not you move forward after.
+      </p>
+
+      <div class="closing__actions" data-reveal style="--d: 180ms">
+        <a class="btn btn--accent" href="#book">
+          Book Your Free Call <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <p class="closing__trust" data-reveal style="--d: 240ms">
+        No pressure. No sales script. Just a clear look at what's working and
+        what isn't.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .closing {
+    text-align: center;
+  }
+
+  .closing__glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(760px, 92vw);
+    height: 420px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(198, 255, 61, 0.11) 0%,
+      transparent 68%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .closing__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .closing__h2 {
+    max-width: 18ch;
+    font-size: clamp(30px, 4.2vw, 50px);
+  }
+
+  .closing__body {
+    margin-top: 24px;
+    font-size: 17px;
+    line-height: 1.74;
+    color: var(--ink-mute);
+    max-width: 56ch;
+  }
+
+  .closing__actions {
+    margin-top: 40px;
+  }
+
+  .closing__actions .btn {
+    padding: 18px 34px;
+    font-size: 16px;
+  }
+
+  .closing__trust {
+    margin-top: 26px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-faint);
+    max-width: 48ch;
+  }
+
+  @media (max-width: 640px) {
+    .closing__h2 {
+      font-size: 28px;
+      max-width: none;
+    }
+
+    .closing__body {
+      font-size: 15.5px;
+      margin-top: 20px;
+    }
+
+    .closing__actions {
+      margin-top: 32px;
+      width: 100%;
+    }
+
+    .closing__actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

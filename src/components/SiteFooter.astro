@@ -1,0 +1,125 @@
+---
+/* Minimal footer. Deliberately carries no claims of its own — just wayfinding
+   back into the page and the credit line already used in the Owner section. */
+const year = new Date().getFullYear();
+
+const links = [
+  { label: "The system", href: "#how" },
+  { label: "Guarantees", href: "#guarantees" },
+  { label: "Case studies", href: "#case-studies" },
+  { label: "System wall", href: "#system-wall" },
+];
+---
+
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <p class="footer__name">The Break-Proof Build System</p>
+        <p class="footer__credit mono">
+          Mechanical Engineering background · Building GHL systems since 2019
+        </p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Page sections">
+        {links.map((link) => <a href={link.href}>{link.label}</a>)}
+      </nav>
+    </div>
+
+    <div class="footer__base">
+      <p>&copy; {year} syedawais.com</p>
+      <a href="#book" class="footer__cta">Book a call <span class="arrow">→</span></a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--bg);
+    padding: 72px 0 40px;
+    border-top: 1px solid var(--line);
+  }
+
+  .footer__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding-bottom: 40px;
+  }
+
+  .footer__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .footer__credit {
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+    color: var(--ink-faint);
+  }
+
+  .footer__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+  }
+
+  .footer__nav a {
+    font-size: 14px;
+    color: var(--ink-mute);
+    text-decoration: none;
+    transition: color 0.25s var(--ease);
+  }
+
+  .footer__nav a:hover {
+    color: var(--accent);
+  }
+
+  .footer__base {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-top: 26px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink-faint);
+  }
+
+  .footer__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--ink-mute);
+    text-decoration: none;
+    transition: color 0.25s var(--ease);
+  }
+
+  .footer__cta:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .footer {
+      padding: 52px 0 32px;
+    }
+
+    .footer__inner {
+      flex-direction: column;
+      gap: 26px;
+      padding-bottom: 28px;
+    }
+
+    .footer__nav {
+      gap: 10px 22px;
+    }
+  }
+</style>

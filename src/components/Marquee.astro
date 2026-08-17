@@ -1,0 +1,130 @@
+---
+/*
+  Infinite marquee, directly below the hero and before the Problem section.
+  Every figure here comes from the verified data set — nothing invented.
+  The list is duplicated once in the DOM (aria-hidden on the copy) so the
+  -50% translate loops seamlessly.
+*/
+const items = [
+  "50% more bookings from AI no-show recovery",
+  "$10M+ in leads in pipeline",
+  "15+ GHL systems built",
+  "$1M/month in pipeline from Meta Ads",
+  "20+ businesses served",
+  "20+ sites ranked #1",
+  "35,000+ clicks",
+  "0 manual follow-up",
+];
+---
+
+<div class="marquee" role="region" aria-label="Key proof points">
+  <div class="marquee__track">
+    <ul class="marquee__list">
+      {
+        items.map((item) => (
+          <li class="marquee__item">
+            <span class="marquee__dot" aria-hidden="true" />
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+    <ul class="marquee__list" aria-hidden="true">
+      {
+        items.map((item) => (
+          <li class="marquee__item">
+            <span class="marquee__dot" />
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<style>
+  .marquee {
+    position: relative;
+    overflow: hidden;
+    background: #0a0c18;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 17px 0;
+    /* Feather both ends so items enter and leave instead of popping. */
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 9%,
+      #000 91%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 9%,
+      #000 91%,
+      transparent
+    );
+  }
+
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    animation: marquee 42s linear infinite;
+  }
+
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  .marquee__list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .marquee__item {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding-right: 22px;
+    white-space: nowrap;
+    font-size: 13.5px;
+    letter-spacing: 0.01em;
+    color: var(--ink-mute);
+  }
+
+  .marquee__dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+    opacity: 0.85;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .marquee {
+      padding: 14px 0;
+    }
+    .marquee__item {
+      font-size: 12.5px;
+      gap: 16px;
+      padding-right: 16px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+    }
+  }
+</style>

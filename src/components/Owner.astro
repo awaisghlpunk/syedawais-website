@@ -1,0 +1,176 @@
+---
+/*
+  The Owner — photo + text split. No real photo has been supplied yet, so this
+  ships a clearly marked grey placeholder. Drop the real image in and the
+  grayscale treatment is already applied by .owner__photo img.
+*/
+---
+
+<section class="section section--alt" id="owner">
+  <div class="tex tex-glow" style="--tex-pos: 20% 24%; --tex-size: 300px;"></div>
+
+  <div class="shell">
+    <div class="owner">
+      <figure class="owner__media" data-reveal="left">
+        <div class="owner__photo" role="img" aria-label="Photo placeholder">
+          <span class="owner__placeholder">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none">
+              <path
+                d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21a8 8 0 0 1 16 0"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              ></path>
+            </svg>
+            <span class="owner__placeholder-text">Photo placeholder</span>
+            <span class="owner__placeholder-note">Black &amp; white, to be added</span>
+          </span>
+        </div>
+
+        <figcaption class="owner__credit mono">
+          Mechanical Engineering background · Building GHL systems since 2019
+        </figcaption>
+      </figure>
+
+      <div class="owner__text">
+        <p class="kicker" data-reveal>Who's actually building this</p>
+
+        <p class="owner__para" data-reveal style="--d: 60ms">
+          Every system on this site was built by one person — not handed off
+          between five people you'll never meet. The background's in mechanical
+          engineering, and it shows up in how these get built: an engineer
+          doesn't ship a part that works on the bench and hope it holds up in
+          the field. It gets tested under load first.
+        </p>
+
+        <p class="owner__para" data-reveal style="--d: 120ms">
+          50+ businesses. Home services, coaching, real estate, B2B. Every
+          system documented well enough that the client could run it without
+          ever calling back.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .owner {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .owner__media {
+    margin: 0;
+  }
+
+  .owner__photo {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 16px;
+    overflow: hidden;
+    background:
+      repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.022) 0px,
+        rgba(255, 255, 255, 0.022) 12px,
+        transparent 12px,
+        transparent 24px
+      ),
+      #191c29;
+    border: 1px solid var(--card-line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Grayscale treatment is pre-wired for the real photo. */
+  .owner__photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.05);
+    transition: filter 0.5s var(--ease), transform 0.6s var(--ease);
+  }
+
+  .owner__photo:hover :global(img) {
+    transform: scale(1.03);
+  }
+
+  .owner__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--ink-faint);
+    text-align: center;
+    padding: 20px;
+  }
+
+  .owner__placeholder svg {
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
+  .owner__placeholder-text {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .owner__placeholder-note {
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  .owner__credit {
+    margin-top: 20px;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+    color: var(--ink-faint);
+  }
+
+  .owner__para {
+    font-size: 17px;
+    line-height: 1.76;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+
+  .owner__para + .owner__para {
+    margin-top: 22px;
+    color: var(--ink-mute);
+  }
+
+  @media (max-width: 900px) {
+    .owner {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .owner__photo {
+      aspect-ratio: 3 / 2;
+      max-width: 420px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .owner__para {
+      font-size: 15.5px;
+      line-height: 1.72;
+    }
+
+    .owner__photo {
+      aspect-ratio: 4 / 3;
+    }
+
+    .owner__credit {
+      font-size: 11px;
+    }
+  }
+</style>

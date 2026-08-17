@@ -1,0 +1,152 @@
+---
+/* Why This System Is Different — plain checklist, deliberately no cards. */
+const points = [
+  "Tested against real, messy data before you ever see it — not a clean demo that only works once, on purpose.",
+  "Error handling on every automation. If something fails, you get an alert — it doesn't just fail silently into a lead you'll never know you lost.",
+  "AI built into the system itself, answering and qualifying leads — not a chatbot bubble in the corner that nobody clicks.",
+  "Everything written down, so the system doesn't live only in one person's memory.",
+];
+---
+
+<section class="section section--alt" id="different">
+  <div class="tex tex-dots" style="--tex-pos: 96% 94%; --tex-size: 200px;"></div>
+
+  <div class="shell">
+    <div class="different">
+      <div class="different__intro">
+        <p class="kicker" data-reveal>What makes this different</p>
+        <h2 class="h2" data-reveal style="--d: 60ms">
+          Most GHL builds are the same template with your logo swapped on top.
+        </h2>
+
+        <p class="lede" data-reveal style="--d: 120ms">
+          It looks finished in the demo. Then your business does something the
+          template never accounted for — a lead who reschedules twice, a form
+          submitted in two languages — and it quietly stops working, with nobody
+          watching closely enough to notice for weeks.
+        </p>
+      </div>
+
+      <div class="different__list">
+        <p class="different__label" data-reveal>
+          Here's what's different about how this gets built:
+        </p>
+
+        <ul class="checklist">
+          {
+            points.map((point, i) => (
+              <li class="check" data-reveal style={`--d: ${i * 90}ms`}>
+                <span class="check__mark" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
+                    <path
+                      d="M20 6L9 17l-5-5"
+                      stroke="currentColor"
+                      stroke-width="2.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+                <span class="check__text">{point}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <p class="transition-note" data-reveal>
+      This is what "done right" actually looks like. Not a demo. A system still
+      working after the invoice is six months old.
+    </p>
+  </div>
+</section>
+
+<style>
+  .different {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .different__intro .lede {
+    margin-top: 24px;
+  }
+
+  .different__label {
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: var(--ink-faint);
+    padding-bottom: 20px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .checklist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .check {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .check:last-child {
+    border-bottom: none;
+  }
+
+  .check__mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(198, 255, 61, 0.1);
+    border: 1px solid rgba(198, 255, 61, 0.28);
+    color: var(--accent);
+    flex: none;
+    margin-top: 2px;
+    transition: transform 0.35s var(--ease), background 0.35s var(--ease);
+  }
+
+  .check:hover .check__mark {
+    transform: scale(1.12);
+    background: rgba(198, 255, 61, 0.2);
+  }
+
+  .check__text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    transition: color 0.3s var(--ease);
+  }
+
+  .check:hover .check__text {
+    color: var(--ink);
+  }
+
+  @media (max-width: 900px) {
+    .different {
+      grid-template-columns: 1fr;
+      gap: 44px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .check {
+      gap: 13px;
+      padding: 18px 0;
+    }
+
+    .check__text {
+      font-size: 15px;
+    }
+  }
+</style>

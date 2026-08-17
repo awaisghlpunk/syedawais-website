@@ -1,17 +1,34 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Marquee from "../components/Marquee.astro";
+import Problem from "../components/Problem.astro";
+import SystemFlow from "../components/SystemFlow.astro";
+import Guarantees from "../components/Guarantees.astro";
+import CaseStudies from "../components/CaseStudies.astro";
+import WhyDifferent from "../components/WhyDifferent.astro";
+import SystemWall from "../components/SystemWall.astro";
+import Owner from "../components/Owner.astro";
+import Testimonials from "../components/Testimonials.astro";
+import ClosingCta from "../components/ClosingCta.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 
+const title = "The Break-Proof Build System — GoHighLevel, Meta Ads & AI Automation";
+const description =
+  "Your GoHighLevel should be booking calls right now. Instead, it's losing them. GHL systems, Meta Ads and AI automation built to be tested against real data before handoff.";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title={title} description={description}>
+  <Hero />
+  <Marquee />
+  <Problem />
+  <SystemFlow />
+  <Guarantees />
+  <CaseStudies />
+  <WhyDifferent />
+  <SystemWall />
+  <Owner />
+  <Testimonials />
+  <ClosingCta />
+  <SiteFooter />
+</BaseLayout>

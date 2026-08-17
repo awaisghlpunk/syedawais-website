@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>syedawais.com — Hero Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter', sans-serif; background:#0B0D1A; }
+
+  .hero {
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(115deg, #060608 0%, #0B0D1A 45%, #131A3A 100%);
+  }
+  .hero__grid {
+    position:absolute; inset:0;
+    background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2244%22 height=%2244%22%3E%3Cpath d=%22M44 0H0V44%22 fill=%22none%22 stroke=%22%232A2E45%22 stroke-width=%221%22/%3E%3C/svg%3E');
+  }
+  .hero__fade {
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse 60% 55% at 50% 45%, #0B0D1A 0%, rgba(11,13,26,0.88) 40%, transparent 75%);
+  }
+  .hero__glow {
+    position:absolute; top:38%; left:50%; transform:translate(-50%,-50%);
+    width:560px; height:300px;
+    background:radial-gradient(circle, rgba(198,255,61,0.2) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero__content { position:relative; }
+
+  /* Top bar */
+  .topbar {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 48px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .topbar__brand {
+    font-size:12px; letter-spacing:0.1em; color:#9A9CAC; text-transform:uppercase;
+  }
+  .topbar__right { display:flex; align-items:center; gap:16px; }
+  .badge-scarcity {
+    display:flex; align-items:center; gap:6px;
+    background:#C6FF3D; padding:6px 14px; border-radius:20px;
+    font-size:12px; font-weight:500; color:#0B0C14;
+  }
+  .badge-scarcity__dot { width:6px; height:6px; border-radius:50%; background:#0B0C14; }
+  .btn-ghost {
+    background:transparent; border:1px solid rgba(255,255,255,0.25);
+    color:#FFFFFF; font-size:13px; font-weight:500;
+    padding:9px 18px; border-radius:20px;
+    text-decoration:none; display:inline-flex; align-items:center; gap:6px;
+  }
+
+  /* Hero body */
+  .hero__body { padding:72px 40px 24px; text-align:center; }
+  .kicker-pill {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,0.05); color:#B9BBCC;
+    font-size:13px; padding:7px 16px; border-radius:20px;
+    margin-bottom:28px; border:1px solid rgba(255,255,255,0.12);
+  }
+  .kicker-pill__dot { width:6px; height:6px; border-radius:50%; background:#C6FF3D; }
+
+  h1 {
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:500;
+    font-size:clamp(34px, 5vw, 60px);
+    line-height:1.06;
+    letter-spacing:-0.01em;
+    color:#FFFFFF;
+    max-width:780px;
+    margin:0 auto 26px;
+  }
+  h1 em, .accent-em { font-style:italic; color:#C6FF3D; }
+
+  .subhead-primary {
+    font-size:21px; line-height:1.5; color:#E4E5EC;
+    max-width:540px; margin:0 auto 14px;
+  }
+  .subhead-secondary {
+    font-size:15px; line-height:1.6; color:#8A8CA0;
+    max-width:480px; margin:0 auto 40px;
+  }
+
+  .cta-row { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:64px; }
+  .btn-primary {
+    background:#C6FF3D; color:#0B0C14; font-size:15px; font-weight:500;
+    padding:16px 28px; border-radius:8px; border:none; cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+  }
+  .btn-link {
+    color:#FFFFFF; font-size:15px; font-weight:500;
+    padding:16px 4px; border-bottom:1px solid rgba(255,255,255,0.3);
+    text-decoration:none;
+  }
+
+  /* Proof strip */
+  .proof-strip {
+    padding:26px 40px;
+    border-top:1px solid rgba(255,255,255,0.08);
+    display:flex; justify-content:center; gap:64px; flex-wrap:wrap;
+  }
+  .proof-stat { text-align:center; }
+  .proof-stat__num {
+    font-family:'JetBrains Mono', monospace;
+    font-size:24px; font-weight:500; color:#C6FF3D;
+  }
+  .proof-stat__label { font-size:12px; color:#6E7080; margin-top:4px; }
+
+  /* Floating contact bubble */
+  .contact-bubble {
+    position:absolute; bottom:24px; right:24px;
+    display:flex; align-items:center; gap:10px;
+    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12);
+    padding:10px 16px; border-radius:24px; text-decoration:none;
+  }
+  .contact-bubble__icon {
+    width:30px; height:30px; border-radius:50%;
+    background:rgba(198,255,61,0.13);
+    display:flex; align-items:center; justify-content:center;
+    color:#C6FF3D; font-size:15px;
+  }
+  .contact-bubble__label { font-size:13px; color:#C6FF3D; font-weight:500; }
+
+  @media (max-width: 640px) {
+    .topbar { flex-direction:column; gap:14px; align-items:flex-start; padding:18px 24px; }
+    .hero__body { padding:48px 24px 16px; }
+    .proof-strip { gap:32px; padding:24px; }
+    .contact-bubble { position:static; margin:24px auto; width:fit-content; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero__grid"></div>
+  <div class="hero__fade"></div>
+  <div class="hero__glow"></div>
+
+  <div class="hero__content">
+    <div class="topbar">
+      <div class="topbar__brand">The Break-Proof Build System</div>
+      <div class="topbar__right">
+        <div class="badge-scarcity">
+          <span class="badge-scarcity__dot"></span>
+          Only 3 build slots this month
+        </div>
+        <a href="#book" class="btn-ghost">Book a call →</a>
+      </div>
+    </div>
+
+    <div class="hero__body">
+      <div class="kicker-pill">
+        <span class="kicker-pill__dot"></span>
+        GHL · Meta Ads · AI Automation
+      </div>
+
+      <h1>Your GoHighLevel should be booking calls right now.<br>Instead, it's <em>losing them.</em></h1>
+
+      <p class="subhead-primary">Stop losing leads to a system that <span class="accent-em">looks like it's working.</span></p>
+
+      <p class="subhead-secondary">A lead fills out your form at 11pm. GHL shows the workflow completed. Nobody follows up until Monday — by then they've booked with someone else.</p>
+
+      <div class="cta-row">
+        <a href="#audit" class="btn-primary">Show me what's leaking →</a>
+        <a href="#how" class="btn-link">See how it's fixed</a>
+      </div>
+    </div>
+
+    <div class="proof-strip">
+      <div class="proof-stat">
+        <div class="proof-stat__num">50%</div>
+        <div class="proof-stat__label">More bookings, live system</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-stat__num">15+</div>
+        <div class="proof-stat__label">GHL builds delivered</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-stat__num">0</div>
+        <div class="proof-stat__label">Manual follow-up</div>
+      </div>
+    </div>
+  </div>
+
+  <a href="#book" class="contact-bubble">
+    <span class="contact-bubble__icon">&#9993;</span>
+    <span class="contact-bubble__label">Book a call ↗</span>
+  </a>
+</section>
+
+</body>
+</html>

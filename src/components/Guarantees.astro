@@ -1,0 +1,206 @@
+---
+/*
+  Guarantees — the one section that deliberately repeats the card grid,
+  used here for emphasis.
+*/
+const promises = [
+  {
+    title: "If it breaks, we fix it fast.",
+    body: "Something stops working within 30 days, and you didn't touch it — it's fixed free. Within 4 hours. Not “we'll get to it Monday.”",
+    stat: "4h",
+    statLabel: "Response window",
+  },
+  {
+    title: "You get the full instructions.",
+    body: "Every system ships with written instructions and video walkthroughs. You could explain your own system to a stranger in plain English — because you'll actually understand it.",
+    stat: "100%",
+    statLabel: "Documented",
+  },
+  {
+    title: "It has to save you real time.",
+    body: "Not saving 10+ hours a week within 30 days? We keep refining it until it does — at no extra cost, because “close enough” isn't the deal we made.",
+    stat: "10+",
+    statLabel: "Hours a week",
+  },
+];
+---
+
+<section class="section section--alt" id="guarantees">
+  <div class="tex tex-grid" style="--tex-pos: 94% 9%; --tex-size: 290px;"></div>
+
+  <div class="shell">
+    <p class="kicker" data-reveal>Built to not break</p>
+    <h2 class="h2" data-reveal style="--d: 60ms">
+      Three promises that come with every system.
+    </h2>
+
+    <div class="promises">
+      {
+        promises.map((p, i) => (
+          <article class="promise" data-reveal style={`--d: ${120 + i * 110}ms`}>
+            <div class="promise__top">
+              <span class="promise__index mono">0{i + 1}</span>
+              <span class="promise__seal" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+                  <path
+                    d="M20 6L9 17l-5-5"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </div>
+
+            <h3 class="promise__title">{p.title}</h3>
+            <p class="promise__body">{p.body}</p>
+
+            <div class="promise__stat">
+              <span class="promise__num mono">{p.stat}</span>
+              <span class="promise__label">{p.statLabel}</span>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .promises {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-top: 64px;
+  }
+
+  .promise {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 30px 28px;
+    border-radius: 14px;
+    background: var(--card);
+    border: 1px solid var(--card-line);
+    overflow: hidden;
+    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease),
+      background 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+
+  .promise::before {
+    /* Lime wash that fades up from the bottom edge on hover. */
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 100%;
+    background: linear-gradient(
+      0deg,
+      rgba(198, 255, 61, 0.07),
+      transparent 55%
+    );
+    opacity: 0;
+    transition: opacity 0.45s var(--ease);
+    pointer-events: none;
+  }
+
+  .promise:hover {
+    transform: translateY(-5px);
+    border-color: rgba(198, 255, 61, 0.32);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 22px 44px -26px rgba(0, 0, 0, 0.9);
+  }
+
+  .promise:hover::before {
+    opacity: 1;
+  }
+
+  .promise__top {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+  }
+
+  .promise__index {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+  }
+
+  .promise__seal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(198, 255, 61, 0.1);
+    border: 1px solid rgba(198, 255, 61, 0.25);
+    color: var(--accent);
+    transition: transform 0.4s var(--ease), background 0.4s var(--ease);
+  }
+
+  .promise:hover .promise__seal {
+    transform: scale(1.1);
+    background: rgba(198, 255, 61, 0.18);
+  }
+
+  .promise__title {
+    position: relative;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.32;
+    color: var(--ink);
+    margin-bottom: 13px;
+  }
+
+  .promise__body {
+    position: relative;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-mute);
+    flex: 1;
+  }
+
+  .promise__stat {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  .promise__num {
+    font-size: 24px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .promise__label {
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  @media (max-width: 900px) {
+    .promises {
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 44px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .promise {
+      padding: 26px 22px 24px;
+    }
+
+    .promise__title {
+      font-size: 18px;
+    }
+  }
+</style>

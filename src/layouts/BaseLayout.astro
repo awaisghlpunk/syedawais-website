@@ -1,0 +1,84 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0B0D1A" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+
+    {/* Set before first paint so the reveal styles never apply without JS. */}
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+
+  <body>
+    <slot />
+
+    {/*
+      Reveal + marquee-duration wiring. Inline and un-bundled on purpose: a
+      deferred module could leave revealed content hidden if it loads slowly.
+    */}
+    <script is:inline>
+      (function () {
+        var nodes = document.querySelectorAll("[data-reveal]");
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function showAll() {
+          for (var i = 0; i < nodes.length; i++) nodes[i].classList.add("is-in");
+        }
+
+        if (reduced || !("IntersectionObserver" in window)) {
+          showAll();
+          return;
+        }
+
+        try {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("is-in");
+                io.unobserve(entry.target);
+              });
+            },
+            { rootMargin: "0px 0px -10% 0px", threshold: 0.08 }
+          );
+
+          for (var i = 0; i < nodes.length; i++) {
+            // Anything already on screen at load reveals immediately.
+            io.observe(nodes[i]);
+          }
+        } catch (err) {
+          // Observer never got off the ground — show everything rather than
+          // stranding content behind an animation that will never run.
+          showAll();
+        }
+      })();
+    </script>
+  </body>
+</html>

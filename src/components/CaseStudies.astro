@@ -1,0 +1,288 @@
+---
+/*
+  Case Studies — alternating left/right rows, text + stat box, order flipping
+  each row. Every figure below is drawn from the verified data set.
+*/
+const studies = [
+  {
+    id: "hainan-corporate-services-group",
+    name: "Hainan Corporate Services Group",
+    tag: "GHL · Meta Ads · AI Workflows",
+    body: "Every lead this company got came through a WhatsApp number one person checked when they remembered to. No CRM meant no way to know if a lead ever got a reply, or just quietly disappeared. We built 5 pipelines inside GoHighLevel, fed directly by Meta Ads, with AI-powered workflows moving leads through qualification and follow-up automatically.",
+    result:
+      "$1M in leads sitting in pipeline every month, at a 10% on-paper conversion rate — from Meta Ads alone.",
+    stats: [
+      { num: "5", label: "Pipelines built" },
+      { num: "$1M", label: "In pipeline / month" },
+      { num: "10%", label: "On-paper conversion" },
+    ],
+  },
+  {
+    id: "hainan-apex-traders",
+    name: "Hainan Apex Traders",
+    tag: "GHL · AI Chatbot · Follow-Up",
+    body: "Leads came in through paid ads and cold outreach, but nothing guaranteed any of them actually got followed up on before they went cold. We built 3 pipelines, an AI chatbot handling qualification and booking, and automated follow-up so nothing sits untouched.",
+    result:
+      "$500K in pipeline from ads, $200K from cold outreach. 30% conversion rate from the funnel. 40% more bookings since the chatbot went live.",
+    stats: [
+      { num: "3", label: "Pipelines built" },
+      { num: "$500K", label: "Pipeline from ads" },
+      { num: "$200K", label: "From cold outreach" },
+      { num: "30%", label: "Funnel conversion" },
+      { num: "40%", label: "More bookings" },
+    ],
+  },
+  {
+    id: "nationwide-rv",
+    name: "Nationwide RV",
+    tag: "Funnels · Automation · Attribution",
+    body: "Leads were coming in through Google Ads with no automation system built around them and no reliable way to trace which campaigns actually worked. We built funnels and a full automation system, fully matched to their pipeline, with UTM tracking wired through Google Analytics and Tag Manager.",
+    result:
+      "Handles up to $70K in Google Ad spend leads, fully automated, with clean attribution from click to pipeline stage.",
+    stats: [
+      { num: "$70K", label: "Ad spend handled" },
+      { num: "UTM", label: "GA + GTM tracking" },
+    ],
+  },
+  {
+    id: "local-seo-home-services",
+    name: "Local SEO — Home Services",
+    tag: "Local SEO · Lead Generation",
+    body: "Searched for, and found nowhere. A customer looking for exactly what these businesses sold would scroll past them without knowing they existed. We built a repeatable local SEO system and ran it across 20+ businesses.",
+    result:
+      "20+ pipelines generating more than $10M in leads in pipeline, converting above industry-standard rates.",
+    stats: [
+      { num: "20+", label: "Pipelines" },
+      { num: "$10M+", label: "Leads in pipeline" },
+      { num: "20+", label: "Businesses served" },
+    ],
+  },
+];
+---
+
+<section class="section" id="case-studies">
+  <div class="tex tex-glow" style="--tex-pos: 93% 11%; --tex-size: 360px;"></div>
+
+  <div class="shell">
+    <p class="kicker" data-reveal>Real systems, real results</p>
+    <h2 class="h2 h2--wide" data-reveal style="--d: 60ms">
+      Here's what this looked like before we touched it.
+    </h2>
+
+    <div class="cases">
+      {
+        studies.map((study, i) => (
+          <article class="case" id={study.id}>
+            <div class="case__text" data-reveal={i % 2 === 0 ? "left" : "right"}>
+              <p class="case__tag mono">{study.tag}</p>
+              <h3 class="case__name">{study.name}</h3>
+              <p class="case__body">{study.body}</p>
+
+              <p class="case__result">
+                <span class="case__result-label">Result</span>
+                {study.result}
+              </p>
+            </div>
+
+            <div
+              class="case__panel"
+              data-reveal={i % 2 === 0 ? "right" : "left"}
+              style="--d: 100ms"
+            >
+              <ul class="stat-row">
+                {study.stats.map((s) => (
+                  <li class="stat">
+                    <span class="stat__num mono">{s.num}</span>
+                    <span class="stat__label">{s.label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .cases {
+    margin-top: 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  .case {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: 56px;
+    padding: 44px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .case:first-child {
+    border-top: none;
+    padding-top: 8px;
+  }
+
+  /* Flip the column order on every other row. */
+  .case:nth-child(even) .case__text {
+    order: 2;
+  }
+
+  .case:nth-child(even) .case__panel {
+    order: 1;
+  }
+
+  .case__tag {
+    font-size: 11px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .case__name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(22px, 2.4vw, 28px);
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .case__body {
+    font-size: 16px;
+    line-height: 1.72;
+    color: var(--ink-mute);
+    max-width: 62ch;
+  }
+
+  .case__result {
+    position: relative;
+    margin-top: 24px;
+    padding: 18px 22px;
+    border-left: 2px solid var(--accent);
+    background: linear-gradient(
+      90deg,
+      rgba(198, 255, 61, 0.055),
+      transparent 75%
+    );
+    border-radius: 0 10px 10px 0;
+    font-size: 15.5px;
+    line-height: 1.66;
+    color: var(--ink-soft);
+    max-width: 64ch;
+  }
+
+  .case__result-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 7px;
+  }
+
+  /* Stat panel ------------------------------------------------------------ */
+
+  .case__panel {
+    padding: 30px 28px;
+    border-radius: 14px;
+    background: var(--card);
+    border: 1px solid var(--card-line);
+    transition: border-color 0.4s var(--ease), background 0.4s var(--ease);
+  }
+
+  .case__panel:hover {
+    border-color: rgba(198, 255, 61, 0.24);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26px 34px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .stat {
+    min-width: 104px;
+    flex: 1 1 104px;
+  }
+
+  .stat__num {
+    display: block;
+    font-size: clamp(26px, 3vw, 34px);
+    line-height: 1.05;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    transition: transform 0.35s var(--ease);
+  }
+
+  .stat:hover .stat__num {
+    transform: translateY(-3px);
+  }
+
+  .stat__label {
+    display: block;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--ink-faint);
+    margin-top: 8px;
+  }
+
+  @media (max-width: 900px) {
+    .cases {
+      margin-top: 48px;
+      gap: 8px;
+    }
+
+    .case {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding: 36px 0;
+    }
+
+    /* Text always leads once the row stacks. */
+    .case:nth-child(even) .case__text,
+    .case:nth-child(even) .case__panel {
+      order: initial;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .case__body {
+      font-size: 15px;
+    }
+
+    .case__result {
+      padding: 16px 18px;
+      font-size: 15px;
+    }
+
+    .case__panel {
+      padding: 24px 20px;
+    }
+
+    .stat-row {
+      gap: 22px 24px;
+    }
+
+    .stat {
+      min-width: 92px;
+      flex: 1 1 92px;
+    }
+
+    .stat__num {
+      font-size: 25px;
+    }
+  }
+</style>
