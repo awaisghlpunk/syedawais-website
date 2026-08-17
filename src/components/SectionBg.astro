@@ -20,6 +20,11 @@ interface Props {
   scrimW?: string;
   scrimH?: string;
   patternOpacity?: string;
+  /* Corner the pattern is anchored to, and how far it reaches before
+     fading out. */
+  corner?: string;
+  texW?: string;
+  texH?: string;
   /* Lime puff behind the headline, as in the hero. */
   puffX?: string;
   puffY?: string;
@@ -40,6 +45,9 @@ const {
   scrimW = "76%",
   scrimH = "68%",
   patternOpacity = "1",
+  corner = "100% 6%",
+  texW = "86%",
+  texH = "92%",
   puffX = "30%",
   puffY = "20%",
   puffW = "620px",
@@ -55,7 +63,7 @@ const puffStyle = `--puff-x:${puffX};--puff-y:${puffY};--puff-w:${puffW};--puff-
 <div class="sbg" aria-hidden="true">
   <div
     class={`sbg__pattern sbg__pattern--${pattern}`}
-    style={`opacity:${patternOpacity}`}
+    style={`opacity:${patternOpacity};--tex-corner:${corner};--tex-w:${texW};--tex-h:${texH};`}
   >
   </div>
   <div class="sbg__scrim" style={scrimStyle}></div>

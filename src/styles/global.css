@@ -186,9 +186,31 @@ svg {
   pointer-events: none;
 }
 
+/*
+  Patterns are anchored to one corner and fade out toward the middle of the
+  section rather than tiling edge to edge. A uniform field reads as wallpaper
+  and crowds the copy; a corner sweep gives the same texture without ever
+  building up behind the reading column.
+*/
 .sbg__pattern {
   position: absolute;
   inset: -1px;
+  -webkit-mask-image: radial-gradient(
+    ellipse var(--tex-w, 86%) var(--tex-h, 92%) at var(--tex-corner, 100% 6%),
+    #000 0%,
+    rgba(0, 0, 0, 0.92) 18%,
+    rgba(0, 0, 0, 0.5) 45%,
+    rgba(0, 0, 0, 0.16) 68%,
+    transparent 86%
+  );
+  mask-image: radial-gradient(
+    ellipse var(--tex-w, 86%) var(--tex-h, 92%) at var(--tex-corner, 100% 6%),
+    #000 0%,
+    rgba(0, 0, 0, 0.92) 18%,
+    rgba(0, 0, 0, 0.5) 45%,
+    rgba(0, 0, 0, 0.16) 68%,
+    transparent 86%
+  );
 }
 
 /*
