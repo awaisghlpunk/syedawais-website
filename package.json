@@ -1,7 +1,13 @@
 {
-  "name": "claude-webiste-to-js",
+  "name": "syedawais-website",
   "type": "module",
   "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awaisghlpunk/syedawais-website.git"
+  },
   "engines": {
     "node": ">=22.12.0"
   },
