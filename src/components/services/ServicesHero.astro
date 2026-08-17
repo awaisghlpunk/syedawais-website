@@ -69,13 +69,13 @@
       linear-gradient(to bottom, rgba(46, 52, 80, 0.75) 1px, transparent 1px);
     background-size: 84px 84px;
     -webkit-mask-image: radial-gradient(
-      ellipse 82% 86% at 34% 44%,
+      ellipse 80% 84% at 50% 44%,
       #000 0%,
       rgba(0, 0, 0, 0.7) 50%,
       transparent 94%
     );
     mask-image: radial-gradient(
-      ellipse 82% 86% at 34% 44%,
+      ellipse 80% 84% at 50% 44%,
       #000 0%,
       rgba(0, 0, 0, 0.7) 50%,
       transparent 94%
@@ -86,7 +86,7 @@
     position: absolute;
     inset: 0;
     background: radial-gradient(
-      ellipse 66% 60% at 32% 48%,
+      ellipse 62% 58% at 50% 48%,
       #0b0d1a 0%,
       rgba(11, 13, 26, 0.86) 42%,
       transparent 78%
@@ -96,7 +96,7 @@
   .shero__glow {
     position: absolute;
     top: 42%;
-    left: 26%;
+    left: 50%;
     transform: translate(-50%, -50%);
     width: 620px;
     height: 340px;
@@ -123,10 +123,11 @@
     position: relative;
   }
 
-  /* Top padding clears the fixed header. */
+  /* Centred, matching the Home hero. Top padding clears the fixed header. */
   .shero__body {
     padding-top: 172px;
     padding-bottom: 108px;
+    text-align: center;
   }
 
   h1 {
@@ -137,7 +138,7 @@
     letter-spacing: -0.01em;
     color: var(--ink);
     max-width: 17ch;
-    margin: 0 0 26px;
+    margin: 0 auto 26px;
   }
 
   .shero__sub {
@@ -145,25 +146,30 @@
     line-height: 1.74;
     color: var(--ink-body);
     max-width: 64ch;
-    margin: 0 0 24px;
+    margin: 0 auto 26px;
   }
 
+  /*
+    Bordered on all sides rather than only the left: a single left rule
+    against centred text reads as a mistake.
+  */
   .shero__through {
     position: relative;
-    padding: 18px 22px;
-    border-left: 2px solid var(--accent);
-    background: linear-gradient(90deg, rgba(198, 255, 61, 0.06), transparent 72%);
-    border-radius: 0 10px 10px 0;
+    padding: 18px 26px;
+    border: 1px solid rgba(198, 255, 61, 0.28);
+    background: rgba(198, 255, 61, 0.05);
+    border-radius: 12px;
     font-size: 16px;
     line-height: 1.7;
     color: var(--ink-soft);
-    max-width: 66ch;
-    margin: 0;
+    max-width: 62ch;
+    margin: 0 auto;
   }
 
   .shero__cta {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 14px;
     margin-top: 38px;
   }

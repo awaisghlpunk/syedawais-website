@@ -1,5 +1,6 @@
 ---
 import SectionBg from "../SectionBg.astro";
+import SectionWatermark from "../SectionWatermark.astro";
 
 /*
   One of the three service groups. Each group varies its own layout so the
@@ -23,6 +24,8 @@ interface Props {
   pattern: "dots" | "diag" | "grid" | "rings";
   corner?: string;
   glow?: "lime" | "blue";
+  /* Vendor mark for this group, only where its copy names the tool. */
+  mark?: "ghl" | "meta" | "n8n" | "gbp";
 }
 
 const {
@@ -37,6 +40,7 @@ const {
   pattern,
   corner = "100% 6%",
   glow = "lime",
+  mark,
 } = Astro.props;
 ---
 
@@ -50,6 +54,8 @@ const {
     glowW="680px"
     glowH="500px"
   />
+
+  {mark && <SectionWatermark id={mark} side="left" />}
 
   <div class="shell">
     <p class="kicker" data-reveal>{kicker}</p>
