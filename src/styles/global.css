@@ -474,7 +474,10 @@ svg {
   );
 }
 
+/* Lime on the pale ground is close to invisible, so the dot takes the
+   darker accent used for text in light sections. */
 .section--light .kicker::before {
+  background: var(--accent-text);
   box-shadow: none;
 }
 

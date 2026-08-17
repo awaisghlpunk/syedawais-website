@@ -122,17 +122,6 @@ const promises = [
   }
 
   /* The lime seal needs a solid fill to read against white. */
-  .promise__seal {
-    background: var(--accent);
-    border-color: rgba(11, 13, 26, 0.14);
-    color: var(--accent-ink);
-  }
-
-  .promise:hover .promise__seal {
-    transform: scale(1.1);
-    background: var(--accent);
-  }
-
   .promise:hover::before {
     opacity: 1;
   }
@@ -158,15 +147,19 @@ const promises = [
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: rgba(198, 255, 61, 0.1);
-    border: 1px solid rgba(198, 255, 61, 0.25);
-    color: var(--accent);
-    transition: transform 0.4s var(--ease), background 0.4s var(--ease);
+    /*
+      Solid fill with a dark tick. A 10% lime wash with a lime tick is
+      effectively invisible on the pale ground this section now uses.
+    */
+    background: var(--accent);
+    border: 1px solid rgba(15, 20, 8, 0.16);
+    color: var(--accent-ink);
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
   }
 
   .promise:hover .promise__seal {
     transform: scale(1.1);
-    background: rgba(198, 255, 61, 0.18);
+    box-shadow: 0 4px 14px -4px rgba(120, 160, 30, 0.7);
   }
 
   .promise__title {
