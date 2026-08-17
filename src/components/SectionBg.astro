@@ -67,11 +67,17 @@ const puffStyle = `--puff-x:${puffX};--puff-y:${puffY};--puff-w:${puffW};--puff-
   >
   </div>
   <div class="sbg__scrim" style={scrimStyle}></div>
-  <div class="sbg__feather"></div>
   <div
     class={`sbg__glow${glow === "blue" ? " sbg__glow--blue" : ""}`}
     style={glowStyle}
   >
   </div>
   <div class="sbg__puff" style={puffStyle}></div>
+  {/*
+    The feather paints last on purpose. The section clips its overflow, so a
+    glow or puff reaching the top or bottom edge gets cut off square and the
+    clip reads as a hard horizontal line. Painting the section colour over
+    those edges last turns the cut into a fade.
+  */}
+  <div class="sbg__feather"></div>
 </div>
