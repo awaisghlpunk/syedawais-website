@@ -19,8 +19,13 @@
   --line: rgba(255, 255, 255, 0.08);
   --accent: #c6ff3d;
   --accent-ink: #0b0c14;
-  --card: rgba(255, 255, 255, 0.035);
-  --card-line: rgba(255, 255, 255, 0.09);
+  /* Accent used for TEXT. Overridden in light sections, where lime is
+     unreadable on white. */
+  --accent-text: #c6ff3d;
+  /* Raised from 0.035 / 0.09: at those values cards read as faint ghosts
+     against the dark ground rather than as surfaces. */
+  --card: rgba(255, 255, 255, 0.055);
+  --card-line: rgba(255, 255, 255, 0.14);
 
   /* Body copy sits on --ink-body; --ink-mute is reserved for labels and
      captions, where smaller size and lower contrast are appropriate. */
@@ -32,7 +37,9 @@
 
   --shell: 1160px;
   --pad-x: 40px;
-  --pad-y: 130px;
+  /* 130px top and bottom stacked to 260px of empty between every section,
+     which read as dead space rather than breathing room. */
+  --pad-y: 104px;
 
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
@@ -101,14 +108,54 @@ svg {
   background: linear-gradient(
     180deg,
     rgb(var(--section-rgb)) 0%,
-    rgb(var(--section-rgb)) 84%,
+    rgb(var(--section-rgb)) var(--handoff, 84%),
     rgb(var(--neighbor-rgb)) 100%
   );
+}
+
+/*
+  Boundaries touching a light section. Melting navy into white across 16% of
+  a tall section reads as fog rather than contrast, so these hand off in the
+  last sliver instead, keeping the edge crisp.
+*/
+.section--to-light {
+  --neighbor-rgb: 244, 245, 248;
+  --handoff: 98.5%;
+}
+
+.section--light {
+  --handoff: 98.5%;
 }
 
 .section--alt {
   --section-rgb: 15, 18, 32;
   --neighbor-rgb: 11, 13, 26;
+}
+
+/*
+  Light sections. The design document specifies an all-dark site, but two
+  light bands were requested to break up the dark run and give the page
+  contrast. Every token the components read is re-pointed here, so the
+  section's children re-theme without any component-level branching.
+
+  --accent stays lime for fills (buttons, dots, seals), but lime text is
+  invisible on white, so text-level accents use --accent-text instead.
+*/
+.section--light {
+  --section-rgb: 244, 245, 248;
+  --neighbor-rgb: 11, 13, 26;
+
+  --ink: #0b0d1a;
+  --ink-soft: #33364a;
+  --ink-body: #4b4f63;
+  --ink-mute: #5f6377;
+  --ink-faint: #74788c;
+  --line: rgba(11, 13, 26, 0.11);
+  --card: #ffffff;
+  --card-line: rgba(11, 13, 26, 0.1);
+  --accent-text: #4a6b00;
+
+  color: var(--ink-body);
 }
 
 .shell {
@@ -212,6 +259,19 @@ svg {
   );
 }
 
+/* With a crisp hand-off the feather must not drag the neighbour colour up
+   through the content; fade to the section's own colour instead. */
+.section--to-light .sbg__feather,
+.section--light .sbg__feather {
+  background: linear-gradient(
+    180deg,
+    rgb(var(--section-rgb)) 0%,
+    rgba(var(--section-rgb), 0) 15%,
+    rgba(var(--section-rgb), 0) 88%,
+    rgb(var(--section-rgb)) 100%
+  );
+}
+
 /*
   Accent glow. Positioned to straddle a section edge so the colour bleeds
   across the seam into the neighbouring section — this is what carries the
@@ -251,7 +311,7 @@ svg {
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-text);
   margin-bottom: 22px;
 }
 
@@ -312,7 +372,66 @@ svg {
 
 .accent-em {
   font-style: italic;
-  color: var(--accent);
+  color: var(--accent-text);
+}
+
+/* --------------------------------------------------------------------------
+   Light section adjustments
+   -------------------------------------------------------------------------- */
+
+/* Patterns invert: dark lines on a light ground. */
+.section--light .sbg__pattern--grid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2244%22 height=%2244%22%3E%3Cpath d=%22M44 0H0V44%22 fill=%22none%22 stroke=%22rgba(11,13,26,0.08)%22 stroke-width=%221%22/%3E%3C/svg%3E");
+}
+
+.section--light .sbg__pattern--dots {
+  background-image: radial-gradient(
+    circle,
+    rgba(11, 13, 26, 0.13) 1px,
+    transparent 1px
+  );
+}
+
+.section--light .sbg__pattern--diag,
+.section--light .sbg__pattern--rings {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(11, 13, 26, 0.05) 0px,
+    rgba(11, 13, 26, 0.05) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+
+/* A lime glow reads as a dirty smear on white; use a cool neutral instead. */
+.section--light .sbg__glow,
+.section--light .sbg__glow--blue {
+  background: radial-gradient(
+    circle,
+    rgba(88, 120, 255, 0.09) 0%,
+    rgba(88, 120, 255, 0.03) 45%,
+    transparent 74%
+  );
+}
+
+.section--light .kicker::before {
+  box-shadow: none;
+}
+
+.section--light .transition-note {
+  background: linear-gradient(90deg, rgba(11, 13, 26, 0.05), transparent 70%);
+  color: var(--ink-soft);
+}
+
+/*
+  Cards on white need a shadow rather than a lighter fill to separate from
+  the ground, since "slightly lighter than the background" is not available.
+*/
+.section--light .promise,
+.section--light .quote,
+.section--light .case__panel {
+  box-shadow: 0 1px 2px rgba(11, 13, 26, 0.05),
+    0 12px 28px -18px rgba(11, 13, 26, 0.28);
 }
 
 .mono {
@@ -433,7 +552,7 @@ a:hover > .arrow {
 
 @media (max-width: 900px) {
   :root {
-    --pad-y: 88px;
+    --pad-y: 76px;
     --pad-x: 32px;
   }
 
@@ -455,7 +574,7 @@ a:hover > .arrow {
 
 @media (max-width: 640px) {
   :root {
-    --pad-y: 64px;
+    --pad-y: 56px;
     --pad-x: 24px;
   }
 

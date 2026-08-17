@@ -46,7 +46,7 @@ import SectionBg from "./SectionBg.astro";
         <p class="kicker" data-reveal>Who's actually building this</p>
 
         <p class="owner__para" data-reveal style="--d: 60ms">
-          Every system on this site was built by one person — not handed off
+          Every system on this site was built by one person, not handed off
           between five people you'll never meet. The background's in mechanical
           engineering, and it shows up in how these get built: an engineer
           doesn't ship a part that works on the bench and hope it holds up in
@@ -83,12 +83,12 @@ import SectionBg from "./SectionBg.astro";
     background:
       repeating-linear-gradient(
         45deg,
-        rgba(255, 255, 255, 0.022) 0px,
-        rgba(255, 255, 255, 0.022) 12px,
+        rgba(255, 255, 255, 0.04) 0px,
+        rgba(255, 255, 255, 0.04) 12px,
         transparent 12px,
         transparent 24px
       ),
-      #191c29;
+      linear-gradient(150deg, #262b3d 0%, #1a1e2c 100%);
     border: 1px solid var(--card-line);
     display: flex;
     align-items: center;
@@ -138,11 +138,11 @@ import SectionBg from "./SectionBg.astro";
   }
 
   .owner__credit {
-    margin-top: 20px;
-    font-size: 11.5px;
-    letter-spacing: 0.06em;
-    line-height: 1.6;
-    color: var(--ink-faint);
+    margin-top: 18px;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+    color: var(--ink-mute);
   }
 
   .owner__para {

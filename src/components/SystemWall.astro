@@ -71,10 +71,15 @@ const paths: Record<string, string> = {
 };
 ---
 
-<section class="section" id="system-wall">
+{/* The Owner section below is --bg-alt, not --bg, so the hand-off colour
+    differs from the light-section default. */}
+<section
+  class="section section--light"
+  id="system-wall"
+  style="--neighbor-rgb: 15, 18, 32;"
+>
   <SectionBg
     pattern="grid"
-    glow="lime"
     glowX="82%"
     glowY="102%"
     glowW="700px"
@@ -136,12 +141,12 @@ const paths: Record<string, string> = {
     position: relative;
     display: block;
     padding: 34px 30px 38px;
-    background: var(--bg-alt2);
+    background: #ffffff;
     border-right: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     text-decoration: none;
     overflow: hidden;
-    transition: background 0.4s var(--ease);
+    transition: background 0.4s var(--ease), box-shadow 0.4s var(--ease);
   }
 
   .cell::before {
@@ -151,7 +156,7 @@ const paths: Record<string, string> = {
     inset: 0;
     background: linear-gradient(
       0deg,
-      rgba(198, 255, 61, 0.09),
+      rgba(198, 255, 61, 0.28),
       transparent 60%
     );
     opacity: 0;
@@ -160,7 +165,8 @@ const paths: Record<string, string> = {
   }
 
   .cell:hover {
-    background: #141827;
+    background: #fdfdfb;
+    box-shadow: 0 18px 40px -26px rgba(11, 13, 26, 0.4);
   }
 
   .cell:hover::before {
@@ -175,18 +181,18 @@ const paths: Record<string, string> = {
     width: 42px;
     height: 42px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(11, 13, 26, 0.045);
     border: 1px solid var(--card-line);
-    color: var(--ink-mute);
+    color: var(--ink-soft);
     margin-bottom: 22px;
     transition: color 0.4s var(--ease), border-color 0.4s var(--ease),
       background 0.4s var(--ease), transform 0.4s var(--ease);
   }
 
   .cell:hover .cell__icon {
-    color: var(--accent);
-    border-color: rgba(198, 255, 61, 0.35);
-    background: rgba(198, 255, 61, 0.1);
+    color: var(--accent-ink);
+    border-color: rgba(11, 13, 26, 0.16);
+    background: var(--accent);
     transform: translateY(-3px);
   }
 
@@ -212,7 +218,7 @@ const paths: Record<string, string> = {
     right: 26px;
     bottom: 26px;
     font-size: 15px;
-    color: var(--accent);
+    color: var(--accent-text);
     opacity: 0;
     transform: translateX(-6px);
     transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);

@@ -3,14 +3,15 @@
 import SectionBg from "./SectionBg.astro";
 
 const points = [
-  "Tested against real, messy data before you ever see it — not a clean demo that only works once, on purpose.",
-  "Error handling on every automation. If something fails, you get an alert — it doesn't just fail silently into a lead you'll never know you lost.",
-  "AI built into the system itself, answering and qualifying leads — not a chatbot bubble in the corner that nobody clicks.",
+  "Tested against real, messy data before you ever see it, not a clean demo that only works once, on purpose.",
+  "Error handling on every automation. If something fails, you get an alert. It doesn't just fail silently into a lead you'll never know you lost.",
+  "AI built into the system itself, answering and qualifying leads, not a chatbot bubble in the corner that nobody clicks.",
   "Everything written down, so the system doesn't live only in one person's memory.",
 ];
 ---
 
-<section class="section section--alt" id="different">
+{/* Hands off to the light System Wall section below. */}
+<section class="section section--alt section--to-light" id="different">
   <SectionBg
     pattern="dots"
     glow="blue"
@@ -26,14 +27,14 @@ const points = [
     <div class="different">
       <div class="different__intro">
         <p class="kicker" data-reveal>What makes this different</p>
-        <h2 class="h2" data-reveal style="--d: 60ms">
+        <h2 class="h2 h2--wide" data-reveal style="--d: 60ms">
           Most GHL builds are the same template with your logo swapped on top.
         </h2>
 
         <p class="lede" data-reveal style="--d: 120ms">
           It looks finished in the demo. Then your business does something the
-          template never accounted for — a lead who reschedules twice, a form
-          submitted in two languages — and it quietly stops working, with nobody
+          template never accounted for (a lead who reschedules twice, a form
+          submitted in two languages), and it quietly stops working, with nobody
           watching closely enough to notice for weeks.
         </p>
       </div>

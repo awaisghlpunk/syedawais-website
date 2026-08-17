@@ -8,29 +8,28 @@ import SectionBg from "./SectionBg.astro";
 const promises = [
   {
     title: "If it breaks, we fix it fast.",
-    body: "Something stops working within 30 days, and you didn't touch it — it's fixed free. Within 4 hours. Not “we'll get to it Monday.”",
+    body: "Something stops working within 30 days, and you didn't touch it: it's fixed free. Within 4 hours. Not “we'll get to it Monday.”",
     stat: "4h",
     statLabel: "Response window",
   },
   {
     title: "You get the full instructions.",
-    body: "Every system ships with written instructions and video walkthroughs. You could explain your own system to a stranger in plain English — because you'll actually understand it.",
+    body: "Every system ships with written instructions and video walkthroughs. You could explain your own system to a stranger in plain English, because you'll actually understand it.",
     stat: "100%",
     statLabel: "Documented",
   },
   {
     title: "It has to save you real time.",
-    body: "Not saving 10+ hours a week within 30 days? We keep refining it until it does — at no extra cost, because “close enough” isn't the deal we made.",
+    body: "Not saving 10+ hours a week within 30 days? We keep refining it until it does, at no extra cost, because “close enough” isn't the deal we made.",
     stat: "10+",
     statLabel: "Hours a week",
   },
 ];
 ---
 
-<section class="section section--alt" id="guarantees">
+<section class="section section--light" id="guarantees">
   <SectionBg
     pattern="grid"
-    glow="lime"
     glowX="86%"
     glowY="103%"
     glowW="680px"
@@ -106,7 +105,7 @@ const promises = [
     height: 100%;
     background: linear-gradient(
       0deg,
-      rgba(198, 255, 61, 0.07),
+      rgba(198, 255, 61, 0.22),
       transparent 55%
     );
     opacity: 0;
@@ -116,9 +115,21 @@ const promises = [
 
   .promise:hover {
     transform: translateY(-5px);
-    border-color: rgba(198, 255, 61, 0.32);
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 22px 44px -26px rgba(0, 0, 0, 0.9);
+    border-color: rgba(140, 180, 40, 0.55);
+    box-shadow: 0 2px 4px rgba(11, 13, 26, 0.06),
+      0 26px 50px -24px rgba(11, 13, 26, 0.34);
+  }
+
+  /* The lime seal needs a solid fill to read against white. */
+  .promise__seal {
+    background: var(--accent);
+    border-color: rgba(11, 13, 26, 0.14);
+    color: var(--accent-ink);
+  }
+
+  .promise:hover .promise__seal {
+    transform: scale(1.1);
+    background: var(--accent);
   }
 
   .promise:hover::before {
@@ -187,7 +198,7 @@ const promises = [
 
   .promise__num {
     font-size: 24px;
-    color: var(--accent);
+    color: var(--accent-text);
     line-height: 1;
   }
 
