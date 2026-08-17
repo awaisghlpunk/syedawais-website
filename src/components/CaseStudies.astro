@@ -86,31 +86,33 @@ const studies = [
       {
         studies.map((study, i) => (
           <article class="case" id={study.id}>
-            <div class="case__text" data-reveal={i % 2 === 0 ? "left" : "right"}>
-              <p class="case__tag mono">{study.tag}</p>
-              <h3 class="case__name">{study.name}</h3>
-              <p class="case__body">{study.body}</p>
+            <p class="case__tag mono" data-reveal>
+              {study.tag}
+            </p>
+            <h3 class="case__name" data-reveal style="--d: 60ms">
+              {study.name}
+            </h3>
+            <p class="case__body" data-reveal style="--d: 100ms">
+              {study.body}
+            </p>
 
-              <p class="case__result">
-                <span class="case__result-label">Result</span>
-                {study.result}
-              </p>
-            </div>
+            <p class="case__result" data-reveal style="--d: 140ms">
+              <span class="case__result-label">Result</span>
+              {study.result}
+            </p>
 
-            <div
-              class="case__panel"
-              data-reveal={i % 2 === 0 ? "right" : "left"}
-              style="--d: 100ms"
+            <ul
+              class="stat-row"
+              data-reveal
+              style={`--d: 180ms; --cols: ${study.stats.length}`}
             >
-              <ul class="stat-row">
-                {study.stats.map((s) => (
-                  <li class="stat">
-                    <span class="stat__num mono">{s.num}</span>
-                    <span class="stat__label">{s.label}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+              {study.stats.map((s) => (
+                <li class="stat">
+                  <span class="stat__num mono">{s.num}</span>
+                  <span class="stat__label">{s.label}</span>
+                </li>
+              ))}
+            </ul>
           </article>
         ))
       }
@@ -119,34 +121,31 @@ const studies = [
 </section>
 
 <style>
+  /*
+    Full-width block per case study, with the numbers in a divided strip
+    underneath. The previous layout floated a stat card beside the copy: the
+    card was vertically centred against a much taller text column, and the
+    stats sat in a fixed two-column grid that orphaned the third value and
+    crowded the five-stat case. A strip tiles evenly at any count.
+  */
   .cases {
-    margin-top: 72px;
+    margin-top: 64px;
     display: flex;
     flex-direction: column;
-    gap: 26px;
   }
 
   .case {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    align-items: center;
-    gap: 56px;
-    padding: 44px 0;
+    padding: 52px 0;
     border-top: 1px solid var(--line);
   }
 
   .case:first-child {
     border-top: none;
-    padding-top: 8px;
+    padding-top: 4px;
   }
 
-  /* Flip the column order on every other row. */
-  .case:nth-child(even) .case__text {
-    order: 2;
-  }
-
-  .case:nth-child(even) .case__panel {
-    order: 1;
+  .case:last-child {
+    padding-bottom: 4px;
   }
 
   .case__tag {
@@ -202,33 +201,34 @@ const studies = [
     margin-bottom: 7px;
   }
 
-  /* Stat panel ------------------------------------------------------------ */
-
-  .case__panel {
-    padding: 30px 28px;
-    border-radius: 14px;
-    background: var(--card);
-    border: 1px solid var(--card-line);
-    transition: border-color 0.4s var(--ease), background 0.4s var(--ease);
-  }
-
-  .case__panel:hover {
-    border-color: rgba(198, 255, 61, 0.24);
-    background: rgba(255, 255, 255, 0.05);
-  }
+  /* Stat strip ------------------------------------------------------------ */
 
   .stat-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 26px 34px;
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 3), 1fr);
     list-style: none;
-    margin: 0;
+    margin: 30px 0 0;
     padding: 0;
+    border-top: 1px solid var(--card-line);
+    border-bottom: 1px solid var(--card-line);
   }
 
   .stat {
-    min-width: 104px;
-    flex: 1 1 104px;
+    padding: 20px 22px 18px;
+    border-right: 1px solid var(--card-line);
+    transition: background 0.35s var(--ease);
+  }
+
+  .stat:first-child {
+    padding-left: 0;
+  }
+
+  .stat:last-child {
+    border-right: none;
+  }
+
+  .stat:hover {
+    background: rgba(255, 255, 255, 0.03);
   }
 
   .stat__num {
@@ -254,20 +254,26 @@ const studies = [
 
   @media (max-width: 900px) {
     .cases {
-      margin-top: 48px;
-      gap: 8px;
+      margin-top: 44px;
     }
 
     .case {
-      grid-template-columns: 1fr;
-      gap: 28px;
-      padding: 36px 0;
+      padding: 40px 0;
     }
 
-    /* Text always leads once the row stacks. */
-    .case:nth-child(even) .case__text,
-    .case:nth-child(even) .case__panel {
-      order: initial;
+    /* Five columns is too many once the shell narrows; wrap to three and
+       let the row borders carry the grid. */
+    .stat-row {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stat {
+      border-bottom: 1px solid var(--card-line);
+    }
+
+    .stat:last-child,
+    .stat:nth-child(3n) {
+      border-right: none;
     }
   }
 
@@ -281,17 +287,21 @@ const studies = [
       font-size: 15px;
     }
 
-    .case__panel {
-      padding: 24px 20px;
-    }
-
     .stat-row {
-      gap: 22px 24px;
+      grid-template-columns: repeat(2, 1fr);
     }
 
     .stat {
-      min-width: 92px;
-      flex: 1 1 92px;
+      padding: 16px 14px 14px;
+    }
+
+    .stat:nth-child(3n) {
+      border-right: 1px solid var(--card-line);
+    }
+
+    .stat:nth-child(2n),
+    .stat:last-child {
+      border-right: none;
     }
 
     .stat__num {
