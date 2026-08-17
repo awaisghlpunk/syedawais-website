@@ -3,11 +3,15 @@
    back into the page and the credit line already used in the Owner section. */
 const year = new Date().getFullYear();
 
+/*
+  Absolute, not bare fragments: this footer renders on Services too, where
+  the Home section anchors do not exist and a bare "#how" would dead-end.
+*/
 const links = [
-  { label: "The system", href: "#how" },
-  { label: "Guarantees", href: "#guarantees" },
-  { label: "Case studies", href: "#case-studies" },
-  { label: "System wall", href: "#system-wall" },
+  { label: "The system", href: "/#how" },
+  { label: "Guarantees", href: "/#guarantees" },
+  { label: "Case studies", href: "/#case-studies" },
+  { label: "Services", href: "/services" },
 ];
 ---
 

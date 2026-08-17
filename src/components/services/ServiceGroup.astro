@@ -1,0 +1,243 @@
+---
+import SectionBg from "../SectionBg.astro";
+
+/*
+  One of the three service groups. Each group varies its own layout so the
+  page does not read as the same card grid three times: the foundation is a
+  numbered stack, the AI group a two-column grid, growth a compact row.
+*/
+interface Item {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  id: string;
+  kicker: string;
+  heading: string;
+  items: Item[];
+  layout: "stack" | "grid" | "row";
+  transition?: string;
+  cta?: { label: string; href: string };
+  alt?: boolean;
+  pattern: "dots" | "diag" | "grid" | "rings";
+  corner?: string;
+  glow?: "lime" | "blue";
+}
+
+const {
+  id,
+  kicker,
+  heading,
+  items,
+  layout,
+  transition,
+  cta,
+  alt = false,
+  pattern,
+  corner = "100% 6%",
+  glow = "lime",
+} = Astro.props;
+---
+
+<section class={`section${alt ? " section--alt" : ""}`} id={id}>
+  <SectionBg
+    pattern={pattern}
+    corner={corner}
+    glow={glow}
+    glowX={alt ? "16%" : "84%"}
+    glowY="102%"
+    glowW="680px"
+    glowH="500px"
+  />
+
+  <div class="shell">
+    <p class="kicker" data-reveal>{kicker}</p>
+    <h2 class="h2 h2--wide" data-reveal style="--d: 60ms">{heading}</h2>
+
+    <div class={`items items--${layout}`}>
+      {
+        items.map((item, i) => (
+          <article class="item" data-reveal style={`--d: ${100 + i * 70}ms`}>
+            <span class="item__num mono">{String(i + 1).padStart(2, "0")}</span>
+            <div class="item__text">
+              <h3 class="item__title">{item.title}</h3>
+              <p class="item__body">{item.body}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    {transition && <p class="transition-note" data-reveal>{transition}</p>}
+
+    {
+      cta && (
+        <div class="section-cta" data-reveal>
+          <a class="btn btn--outline" href={cta.href}>
+            {cta.label} <span class="arrow">→</span>
+          </a>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .items {
+    margin-top: 56px;
+  }
+
+  .item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 46px 1fr;
+    gap: 0 18px;
+    transition: background 0.35s var(--ease), padding-left 0.35s var(--ease);
+  }
+
+  .item::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s var(--ease);
+  }
+
+  .item:hover::after {
+    transform: scaleY(1);
+  }
+
+  .item__num {
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    padding-top: 6px;
+    transition: color 0.3s var(--ease);
+  }
+
+  .item:hover .item__num {
+    color: var(--accent);
+  }
+
+  .item__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.32;
+    color: var(--ink);
+    margin-bottom: 9px;
+  }
+
+  .item__body {
+    font-size: 16px;
+    line-height: 1.72;
+    color: var(--ink-body);
+    max-width: 66ch;
+  }
+
+  /* Stack: full-width rows divided by hairlines. */
+  .items--stack {
+    border-top: 1px solid var(--line);
+  }
+
+  .items--stack .item {
+    padding: 28px 8px 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .items--stack .item:hover {
+    background: rgba(255, 255, 255, 0.02);
+    padding-left: 18px;
+  }
+
+  /* Grid: two columns of boxed cards. */
+  .items--grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .items--grid .item {
+    padding: 24px 24px 26px;
+    border: 1px solid var(--card-line);
+    border-radius: 14px;
+    background: var(--card);
+    align-content: start;
+  }
+
+  .items--grid .item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(198, 255, 61, 0.3);
+  }
+
+  .items--grid .item::after {
+    left: -1px;
+    border-radius: 2px 0 0 2px;
+  }
+
+  /* Row: three compact columns. */
+  .items--row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .items--row .item {
+    padding: 24px 22px 26px;
+    border: 1px solid var(--card-line);
+    border-radius: 14px;
+    background: var(--card);
+    align-content: start;
+  }
+
+  .items--row .item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(198, 255, 61, 0.3);
+  }
+
+  .items--row .item::after {
+    left: -1px;
+    border-radius: 2px 0 0 2px;
+  }
+
+  @media (max-width: 900px) {
+    .items {
+      margin-top: 40px;
+    }
+
+    .items--grid,
+    .items--row {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .item {
+      grid-template-columns: 34px 1fr;
+      gap: 0 12px;
+    }
+
+    .items--stack .item {
+      padding: 22px 0;
+    }
+
+    .items--stack .item:hover {
+      padding-left: 0;
+    }
+
+    .item__title {
+      font-size: 17.5px;
+    }
+
+    .item__body {
+      font-size: 15px;
+    }
+  }
+</style>

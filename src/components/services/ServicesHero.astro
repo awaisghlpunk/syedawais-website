@@ -1,0 +1,304 @@
+---
+/*
+  Services hero. Shares the Home hero's gradient, grid and glow so the two
+  pages read as one site, but the layout is left-aligned rather than centred
+  so the page does not look like a second copy of Home.
+*/
+---
+
+<section class="shero">
+  <div class="shero__grid"></div>
+  <div class="shero__fade"></div>
+  <div class="shero__glow"></div>
+
+  <div class="shero__content">
+    <div class="topbar">
+      <a class="topbar__brand" href="/">The Break-Proof Build System</a>
+      <div class="topbar__right">
+        <nav class="topbar__nav">
+          <a href="/">Home</a>
+          <a href="/services" aria-current="page">Services</a>
+        </nav>
+        <a href="#book" class="btn-ghost">Book a call →</a>
+      </div>
+    </div>
+
+    <div class="shell shero__body">
+      <p class="kicker" data-reveal>What we build</p>
+
+      <h1 data-reveal style="--d: 60ms">
+        This isn't a menu. It's one system, in pieces.
+      </h1>
+
+      <p class="shero__sub" data-reveal style="--d: 120ms">
+        Most agencies hand you a services page like a restaurant menu, pick
+        three, pay per item, hope they work together. Ours don't get built that
+        way. The AI agent that qualifies your lead reads the same data as the
+        CRM that tagged it and the ad that sent it. Pull one piece out and the
+        others still work, but they work better together, because that's how
+        they were built.
+      </p>
+
+      <p class="shero__through" data-reveal style="--d: 180ms">
+        Every system starts the same place every business does: leads have to
+        actually land somewhere and get tracked. That's the foundation
+        everything else gets built on.
+      </p>
+
+      <div class="shero__cta" data-reveal style="--d: 240ms">
+        <a class="btn btn--accent" href="#packages">
+          See the packages <span class="arrow">→</span>
+        </a>
+        <a class="btn btn--outline" href="#foundation">
+          Start with the foundation <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .shero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+      115deg,
+      #060608 0%,
+      #0b0d1a 45%,
+      #131a3a 88%,
+      #0f1220 100%
+    );
+  }
+
+  .shero__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(46, 52, 80, 0.75) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(46, 52, 80, 0.75) 1px, transparent 1px);
+    background-size: 84px 84px;
+    -webkit-mask-image: radial-gradient(
+      ellipse 82% 86% at 34% 44%,
+      #000 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      transparent 94%
+    );
+    mask-image: radial-gradient(
+      ellipse 82% 86% at 34% 44%,
+      #000 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      transparent 94%
+    );
+  }
+
+  .shero__fade {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 66% 60% at 32% 48%,
+      #0b0d1a 0%,
+      rgba(11, 13, 26, 0.86) 42%,
+      transparent 78%
+    );
+  }
+
+  .shero__glow {
+    position: absolute;
+    top: 42%;
+    left: 26%;
+    transform: translate(-50%, -50%);
+    width: 620px;
+    height: 340px;
+    background: radial-gradient(
+      circle,
+      rgba(198, 255, 61, 0.18) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    animation: sheroGlow 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes sheroGlow {
+    from {
+      opacity: 0.7;
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.07);
+    }
+  }
+
+  .shero__content {
+    position: relative;
+  }
+
+  /* Top bar, matching the Home hero with page nav added. */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 20px 48px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .topbar__brand {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: #9a9cac;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.25s var(--ease);
+  }
+
+  .topbar__brand:hover {
+    color: var(--ink);
+  }
+
+  .topbar__right {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+
+  .topbar__nav {
+    display: flex;
+    gap: 20px;
+  }
+
+  .topbar__nav a {
+    font-size: 13.5px;
+    color: var(--ink-mute);
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+  }
+
+  .topbar__nav a:hover {
+    color: var(--ink);
+  }
+
+  .topbar__nav a[aria-current="page"] {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    transition: background 0.25s var(--ease), border-color 0.25s var(--ease),
+      transform 0.25s var(--ease);
+  }
+
+  .btn-ghost:hover {
+    border-color: rgba(198, 255, 61, 0.5);
+    background: rgba(198, 255, 61, 0.07);
+    transform: translateY(-2px);
+  }
+
+  .shero__body {
+    padding-top: 104px;
+    padding-bottom: 108px;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(34px, 5vw, 60px);
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    max-width: 17ch;
+    margin: 0 0 26px;
+  }
+
+  .shero__sub {
+    font-size: 18px;
+    line-height: 1.74;
+    color: var(--ink-body);
+    max-width: 64ch;
+    margin: 0 0 24px;
+  }
+
+  .shero__through {
+    position: relative;
+    padding: 18px 22px;
+    border-left: 2px solid var(--accent);
+    background: linear-gradient(90deg, rgba(198, 255, 61, 0.06), transparent 72%);
+    border-radius: 0 10px 10px 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 66ch;
+    margin: 0;
+  }
+
+  .shero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 38px;
+  }
+
+  @media (max-width: 900px) {
+    .shero__body {
+      padding-top: 72px;
+      padding-bottom: 76px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .topbar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px 24px;
+    }
+
+    .topbar__right {
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .shero__body {
+      padding-top: 52px;
+      padding-bottom: 56px;
+    }
+
+    h1 {
+      font-size: 32px;
+      max-width: none;
+    }
+
+    .shero__sub {
+      font-size: 15.5px;
+    }
+
+    .shero__through {
+      font-size: 15px;
+      padding: 16px 18px;
+    }
+
+    .shero__cta .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shero__glow {
+      animation: none;
+    }
+  }
+</style>

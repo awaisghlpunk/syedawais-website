@@ -433,6 +433,33 @@ svg {
   color: var(--accent-text);
 }
 
+/* Per-section call to action, pointing at the next step in the page. */
+.section-cta {
+  margin-top: 42px;
+}
+
+.section--light .btn--outline {
+  color: var(--ink);
+  border-color: rgba(15, 20, 8, 0.22);
+}
+
+.section--light .btn--outline:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+@media (max-width: 640px) {
+  .section-cta {
+    margin-top: 30px;
+  }
+
+  .section-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* --------------------------------------------------------------------------
    Light section adjustments
    -------------------------------------------------------------------------- */

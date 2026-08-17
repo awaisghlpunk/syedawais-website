@@ -1,0 +1,104 @@
+---
+import SectionBg from "../SectionBg.astro";
+---
+
+<section class="section closing" id="book">
+  <SectionBg
+    pattern="diag"
+    corner="100% 92%"
+    glow="lime"
+    glowX="50%"
+    glowY="50%"
+    glowW="880px"
+    glowH="540px"
+    glowA="0.1"
+    scrimPos="50% 50%"
+    scrimW="70%"
+    scrimH="64%"
+    puffX="50%"
+    puffY="34%"
+    puffA="0.18"
+  />
+
+  <div class="shell">
+    <div class="closing__inner">
+      <p class="kicker" data-reveal>Not sure yet</p>
+
+      <h2 class="h2 closing__h2" data-reveal style="--d: 60ms">
+        Not sure what you actually need?
+      </h2>
+
+      <p class="closing__body" data-reveal style="--d: 120ms">
+        Book a free 30-minute call and tell us what's actually going on. We'll
+        tell you honestly what fits, even if that's one piece of this, not all
+        of it.
+      </p>
+
+      <div class="closing__actions" data-reveal style="--d: 180ms">
+        <a class="btn btn--accent" href="#book">
+          Book Your Free Call <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .closing {
+    text-align: center;
+  }
+
+  .closing__inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .closing__h2 {
+    max-width: 20ch;
+    font-size: clamp(30px, 4.2vw, 50px);
+  }
+
+  .closing__body {
+    margin-top: 24px;
+    font-size: 17.5px;
+    line-height: 1.76;
+    color: var(--ink-body);
+    max-width: 58ch;
+  }
+
+  .closing__actions {
+    margin-top: 40px;
+  }
+
+  .closing__actions .btn {
+    padding: 18px 34px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 640px) {
+    .closing__h2 {
+      font-size: 28px;
+      max-width: none;
+    }
+
+    .closing__body {
+      font-size: 15.5px;
+      margin-top: 20px;
+    }
+
+    .closing__actions {
+      margin-top: 32px;
+      width: 100%;
+    }
+
+    .closing__actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

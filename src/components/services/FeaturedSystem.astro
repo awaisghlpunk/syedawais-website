@@ -1,0 +1,228 @@
+---
+import SectionBg from "../SectionBg.astro";
+
+/*
+  Spotlight moment on the page, so it gets treatment nothing else here has:
+  a bordered stage, a stronger glow, and a small self-running loop that
+  restates the point that the system updates itself.
+
+  The CTA target is not defined yet, so it points at a placeholder anchor
+  rather than being left broken or dropped.
+*/
+const loop = [
+  { label: "Date", value: "updates itself" },
+  { label: "Leads", value: "reports itself" },
+  { label: "Attendance", value: "tracked, not guessed" },
+];
+---
+
+<section class="section featured" id="webinar-system">
+  <SectionBg
+    pattern="rings"
+    corner="100% 94%"
+    glow="lime"
+    glowX="50%"
+    glowY="50%"
+    glowW="900px"
+    glowH="620px"
+    glowA="0.09"
+    scrimPos="46% 46%"
+    puffX="50%"
+    puffY="24%"
+    puffA="0.2"
+  />
+
+  <div class="shell">
+    <div class="featured__stage" data-reveal="scale">
+      <p class="kicker" data-reveal>The signature build</p>
+
+      <h2 class="h2 featured__h2" data-reveal style="--d: 60ms">
+        The Automated Webinar System
+      </h2>
+
+      <p class="featured__body" data-reveal style="--d: 120ms">
+        Most "webinar automation" is a replay video and a countdown timer
+        someone resets by hand every week. This one updates its own date. It
+        reports its own leads. It tracks who actually showed up versus who
+        registered and vanished, all without anyone opening a spreadsheet to
+        check. Once it's live, it runs the way a webinar is supposed to run:
+        without you.
+      </p>
+
+      <ul class="featured__loop" data-reveal style="--d: 180ms">
+        {
+          loop.map((l, i) => (
+            <li class="loopitem" style={`animation-delay:${i * 1.6}s`}>
+              <span class="loopitem__dot" aria-hidden="true" />
+              <span class="loopitem__label mono">{l.label}</span>
+              <span class="loopitem__value">{l.value}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="section-cta" data-reveal style="--d: 240ms">
+        <a class="btn btn--accent" href="#webinar-system-details">
+          See How This Works <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <p class="transition-note" data-reveal>
+      Foundation and automation get leads captured and worked. The last piece
+      is making sure they're found in the first place, and that everything they
+      see along the way actually converts.
+    </p>
+  </div>
+</section>
+
+<style>
+  .featured__stage {
+    position: relative;
+    padding: 52px 52px 48px;
+    border: 1px solid rgba(198, 255, 61, 0.28);
+    border-radius: 20px;
+    background: linear-gradient(
+      160deg,
+      rgba(198, 255, 61, 0.06),
+      rgba(255, 255, 255, 0.02) 46%,
+      transparent 100%
+    );
+    overflow: hidden;
+  }
+
+  .featured__stage::before {
+    /* Slow sweep across the stage, so the spotlight feels alive. */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      100deg,
+      transparent 30%,
+      rgba(198, 255, 61, 0.07) 48%,
+      transparent 66%
+    );
+    transform: translateX(-40%);
+    animation: sweep 9s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes sweep {
+    0%,
+    100% {
+      transform: translateX(-45%);
+      opacity: 0;
+    }
+    45% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(45%);
+    }
+  }
+
+  .featured__h2 {
+    position: relative;
+    max-width: 18ch;
+    font-size: clamp(30px, 4vw, 46px);
+  }
+
+  .featured__body {
+    position: relative;
+    margin-top: 22px;
+    font-size: 17px;
+    line-height: 1.76;
+    color: var(--ink-soft);
+    max-width: 68ch;
+  }
+
+  .featured__loop {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    list-style: none;
+    margin: 32px 0 0;
+    padding: 0;
+  }
+
+  .loopitem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border: 1px solid var(--card-line);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    animation: pulseItem 4.8s ease-in-out infinite;
+  }
+
+  @keyframes pulseItem {
+    0%,
+    100% {
+      border-color: var(--card-line);
+    }
+    12% {
+      border-color: rgba(198, 255, 61, 0.6);
+    }
+    34% {
+      border-color: var(--card-line);
+    }
+  }
+
+  .loopitem__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+  }
+
+  .loopitem__label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .loopitem__value {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-left: auto;
+    text-align: right;
+  }
+
+  @media (max-width: 900px) {
+    .featured__stage {
+      padding: 36px 28px 34px;
+    }
+
+    .featured__loop {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .featured__stage {
+      padding: 28px 20px 26px;
+      border-radius: 16px;
+    }
+
+    .featured__h2 {
+      font-size: 27px;
+      max-width: none;
+    }
+
+    .featured__body {
+      font-size: 15.5px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .featured__stage::before,
+    .loopitem {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,121 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Marquee from "../components/Marquee.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import ServicesHero from "../components/services/ServicesHero.astro";
+import ServiceGroup from "../components/services/ServiceGroup.astro";
+import FeaturedSystem from "../components/services/FeaturedSystem.astro";
+import Packages from "../components/services/Packages.astro";
+import ServicesClosing from "../components/services/ServicesClosing.astro";
+
+const title =
+  "GHL Systems, AI Agents & Automation | The Break-Proof Build System";
+const description =
+  "GoHighLevel systems, custom AI agents, and automation built to work together, not sold as a menu of separate services.";
+
+const foundation = [
+  {
+    title: "GoHighLevel Systems: The Backbone",
+    body: "Not a snapshot with your logo pasted over someone else's pipeline. Every field, every tag, every stage gets built around the actual questions your sales process asks, and then gets run against real leads, not a demo contact named “Test Test,” before it's called done.",
+  },
+  {
+    title: "Meta Ads Management: The Fuel",
+    body: "A lead clicks your ad, and by the time they've finished filling out the form, the CRM already knows which campaign sent them, which ad set, which creative. Not “tagged eventually,” tagged at the moment of arrival.",
+  },
+  {
+    title: "A2P 10DLC & Email Deliverability",
+    body: "The part almost nobody checks until it's already cost them leads. Your text goes out, GHL logs it as sent, and it dies quietly on T-Mobile's network because nobody registered the number. We register it, set up SPF/DKIM/DMARC, and check that the message actually landed, not just that it left.",
+  },
+];
+
+const aiGroup = [
+  {
+    title: "n8n & Workflow Automation",
+    body: "Built and tested against messy real data before you ever see it, a lead with a typo in their email, a duplicate submission, a form filled out at 2am from a phone with bad reception. If it survives that, it survives your actual customers.",
+  },
+  {
+    title: "Custom AI Agents",
+    body: "Not a chatbot widget bolted onto your website. An agent with API access into your actual systems, reading real data, making a real decision, taking a real action, the same way a team member would if you had one sitting there at midnight.",
+  },
+  {
+    title: "AI Lead Generation Portals",
+    body: "A portal that goes and finds leads matching your specific market, qualifies them against criteria you set, and hands you a list, instead of a generic scraper spitting out anyone with a pulse and a LinkedIn profile.",
+  },
+  {
+    title: "AI Media Buyer Agent",
+    body: "Opens your ad account, reads the spend and performance data a human media buyer would normally spend an hour digging through, and surfaces what's actually working, before your budget's already spent on what isn't.",
+  },
+  {
+    title: "AI-Automated Sales Briefing System",
+    body: "Before your sales call starts, the system's already pulled the lead's source, their history, every touchpoint, so you walk in already knowing them, instead of asking “so, remind me what you're looking for?”",
+  },
+  {
+    title: "AI Client Onboarding Portals",
+    body: "Replaces the ten-email back-and-forth of “did you get the contract,” “here's the intake form,” “did you upload your logo yet” with one portal that walks the client through it themselves.",
+  },
+];
+
+const growth = [
+  {
+    title: "Local SEO",
+    body: "Your business shows up when someone searches for it, and that search result is tied back to an actual booked call, not just a ranking number in a report nobody reads.",
+  },
+  {
+    title: "Sales Funnels & Landing Pages",
+    body: "Built to do one thing: move the visitor to the next step. Tested on the phone screen it'll actually be viewed on, not just a desktop preview.",
+  },
+  {
+    title: "Website Design",
+    body: "Fast enough that Google notices, and built for the search terms that actually bring in your customers, not a template with the logo swapped.",
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <ServicesHero />
+  <Marquee />
+
+  <ServiceGroup
+    id="foundation"
+    kicker="Group 1"
+    heading="The Foundation"
+    items={foundation}
+    layout="stack"
+    pattern="dots"
+    corner="94% 8%"
+    alt={true}
+    transition="A foundation that just captures leads isn't enough on its own, leads still need someone, or something, working them the second they arrive. That's where the AI layer comes in."
+    cta={{ label: "See the AI layer", href: "#ai-automation" }}
+  />
+
+  <ServiceGroup
+    id="ai-automation"
+    kicker="Group 2"
+    heading="AI Automation & Agents"
+    items={aiGroup}
+    layout="grid"
+    pattern="diag"
+    corner="100% 95%"
+    glow="blue"
+    transition="One build in this group deserves its own spotlight, because it's the clearest example of what “automated” is actually supposed to mean, not a nicer-looking manual process, a system that runs itself."
+    cta={{ label: "See the signature build", href: "#webinar-system" }}
+  />
+
+  <FeaturedSystem />
+
+  <ServiceGroup
+    id="growth"
+    kicker="Group 3"
+    heading="Growth & Visibility"
+    items={growth}
+    layout="row"
+    pattern="dots"
+    corner="98% 8%"
+    alt={true}
+    cta={{ label: "See the packages", href: "#packages" }}
+  />
+
+  <Packages />
+  <ServicesClosing />
+  <SiteFooter />
+</BaseLayout>
