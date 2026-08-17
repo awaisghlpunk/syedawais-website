@@ -4,12 +4,25 @@
   each row. Every figure below is drawn from the verified data set.
 */
 import SectionBg from "./SectionBg.astro";
+import ToolMark from "./ToolMark.astro";
 
+/*
+  `tools` lists only what each case study's own copy names. Every case
+  mentions pipelines, which is GoHighLevel, so it appears on all four.
+
+  Three of the four say "AI" without naming a vendor, so those carry a text
+  note rather than a Claude, OpenAI or n8n mark: putting a specific logo on
+  a client build would assert a tool the copy does not support.
+
+  Google Business Profile on the local SEO case is inferred from the work
+  described, not named in the copy.
+*/
 const studies = [
   {
     id: "hainan-corporate-services-group",
     name: "Hainan Corporate Services Group",
-    tag: "GHL · Meta Ads · AI Workflows",
+    tag: "AI Workflows · Qualification · Follow-Up",
+    tools: ["ghl", "meta"],
     body: "Every lead this company got came through a WhatsApp number one person checked when they remembered to. No CRM meant no way to know if a lead ever got a reply, or just quietly disappeared. We built 5 pipelines inside GoHighLevel, fed directly by Meta Ads, with AI-powered workflows moving leads through qualification and follow-up automatically.",
     result:
       "$1M in leads sitting in pipeline every month, at a 10% on-paper conversion rate, from Meta Ads alone.",
@@ -22,7 +35,8 @@ const studies = [
   {
     id: "hainan-apex-traders",
     name: "Hainan Apex Traders",
-    tag: "GHL · AI Chatbot · Follow-Up",
+    tag: "AI Chatbot · Automated Follow-Up",
+    tools: ["ghl"],
     body: "Leads came in through paid ads and cold outreach, but nothing guaranteed any of them actually got followed up on before they went cold. We built 3 pipelines, an AI chatbot handling qualification and booking, and automated follow-up so nothing sits untouched.",
     result:
       "$500K in pipeline from ads, $200K from cold outreach. 30% conversion rate from the funnel. 40% more bookings since the chatbot went live.",
@@ -37,7 +51,8 @@ const studies = [
   {
     id: "nationwide-rv",
     name: "Nationwide RV",
-    tag: "Funnels · Automation · Attribution",
+    tag: "Funnels · Automation · UTM Attribution",
+    tools: ["ghl", "gads", "ganalytics", "gtm"],
     body: "Leads were coming in through Google Ads with no automation system built around them and no reliable way to trace which campaigns actually worked. We built funnels and a full automation system, fully matched to their pipeline, with UTM tracking wired through Google Analytics and Tag Manager.",
     result:
       "Handles up to $70K in Google Ad spend leads, fully automated, with clean attribution from click to pipeline stage.",
@@ -50,6 +65,7 @@ const studies = [
     id: "local-seo-home-services",
     name: "Local SEO: Home Services",
     tag: "Local SEO · Lead Generation",
+    tools: ["ghl", "gbp"],
     body: "Searched for, and found nowhere. A customer looking for exactly what these businesses sold would scroll past them without knowing they existed. We built a repeatable local SEO system and ran it across 20+ businesses.",
     result:
       "20+ pipelines generating more than $10M in leads in pipeline, converting above industry-standard rates.",
@@ -76,6 +92,23 @@ const studies = [
     scrimH="76%"
   />
 
+  {/*
+    Section watermark. The System section already carries GoHighLevel, so
+    this takes the ad platform instead: it keeps the two headline channels
+    on separate sections, and the per-case rows below carry GoHighLevel on
+    every study anyway.
+  */}
+  <span class="cs-watermark" aria-hidden="true">
+    <svg viewBox="0 0 120 72" fill="none">
+      <path
+        d="M30 36C30 20 45 20 60 36S90 52 90 36 75 20 60 36 30 52 30 36Z"
+        stroke="#0081FB"
+        stroke-width="13"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
+  </span>
+
   <div class="shell">
     <p class="kicker" data-reveal>Real systems, real results</p>
     <h2 class="h2 h2--wide" data-reveal style="--d: 60ms">
@@ -86,9 +119,14 @@ const studies = [
       {
         studies.map((study, i) => (
           <article class="case" id={study.id}>
-            <p class="case__tag mono" data-reveal>
-              {study.tag}
-            </p>
+            <div class="case__stack" data-reveal>
+              <span class="case__marks">
+                {study.tools.map((t) => (
+                  <ToolMark id={t as any} size={22} />
+                ))}
+              </span>
+              <p class="case__tag mono">{study.tag}</p>
+            </div>
             <h3 class="case__name" data-reveal style="--d: 60ms">
               {study.name}
             </h3>
@@ -121,6 +159,54 @@ const studies = [
 </section>
 
 <style>
+  .cs-watermark {
+    position: absolute;
+    right: -120px;
+    bottom: 40px;
+    width: 760px;
+    z-index: 1;
+    opacity: 0.16;
+    pointer-events: none;
+    transform: rotate(-12deg);
+    transform-origin: 100% 100%;
+    /* Solid at the outer corner, gone before it reaches the copy. */
+    -webkit-mask-image: linear-gradient(
+      312deg,
+      #000 0%,
+      rgba(0, 0, 0, 0.5) 40%,
+      rgba(0, 0, 0, 0.12) 68%,
+      transparent 88%
+    );
+    mask-image: linear-gradient(
+      312deg,
+      #000 0%,
+      rgba(0, 0, 0, 0.5) 40%,
+      rgba(0, 0, 0, 0.12) 68%,
+      transparent 88%
+    );
+  }
+
+  .cs-watermark svg {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 900px) {
+    .cs-watermark {
+      width: 520px;
+      right: -80px;
+      bottom: 28px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .cs-watermark {
+      width: 360px;
+      right: -60px;
+      opacity: 0.13;
+    }
+  }
+
   /*
     Full-width block per case study, with the numbers in a divided strip
     underneath. The previous layout floated a stat card beside the copy: the
@@ -148,13 +234,38 @@ const studies = [
     padding-bottom: 4px;
   }
 
+  .case__stack {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  .case__marks {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 10px;
+    border: 1px solid var(--card-line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
   .case__tag {
     font-size: 11px;
     letter-spacing: 0.13em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 14px;
+    margin: 0;
   }
+
+  /*
+    The tag carries only what the marks do not: the vendor names moved into
+    logos, so repeating them here read as duplication. Anything left is a
+    capability rather than a product, including AI, which the copy names
+    without naming a vendor.
+  */
 
   .case__name {
     font-family: var(--font-display);

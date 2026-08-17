@@ -1,0 +1,126 @@
+---
+/*
+  Vendor marks, drawn here rather than taken from the vendors' asset files.
+  They are close approximations in the correct brand colours, not the
+  trademarks themselves; swap in official SVGs if you have licence to.
+
+  Only used for tools a given case study actually names in its copy.
+*/
+interface Props {
+  id: "ghl" | "meta" | "gads" | "ganalytics" | "gtm" | "gbp";
+  size?: number;
+  title?: string;
+}
+
+const { id, size = 22, title } = Astro.props;
+
+const labels: Record<string, string> = {
+  ghl: "GoHighLevel",
+  meta: "Meta Ads",
+  gads: "Google Ads",
+  ganalytics: "Google Analytics",
+  gtm: "Google Tag Manager",
+  gbp: "Google Business Profile",
+};
+
+const label = title ?? labels[id];
+---
+
+<span class="mark" style={`--m:${size}px`} title={label} aria-label={label} role="img">
+  {
+    id === "ghl" && (
+      <svg viewBox="0 0 120 84">
+        <path d="M32 26 47 44h-8v32H25V44h-8Z" fill="#FBBC05" />
+        <path d="M60 40 75 58h-8v18H53V58h-8Z" fill="#4285F4" />
+        <path d="M88 18l15 18h-8v40H81V36h-8Z" fill="#34A853" />
+      </svg>
+    )
+  }
+
+  {
+    id === "meta" && (
+      <svg viewBox="0 0 120 72" fill="none">
+        <path
+          d="M30 36C30 20 45 20 60 36S90 52 90 36 75 20 60 36 30 52 30 36Z"
+          stroke="#0081FB"
+          stroke-width="13"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    )
+  }
+
+  {
+    id === "gads" && (
+      <svg viewBox="0 0 100 100">
+        <rect
+          x="10"
+          y="18"
+          width="26"
+          height="72"
+          rx="13"
+          fill="#FBBC05"
+          transform="rotate(-30 23 54)"
+        />
+        <rect
+          x="52"
+          y="18"
+          width="26"
+          height="72"
+          rx="13"
+          fill="#4285F4"
+          transform="rotate(30 65 54)"
+        />
+        <circle cx="30" cy="78" r="14" fill="#34A853" />
+      </svg>
+    )
+  }
+
+  {
+    id === "ganalytics" && (
+      <svg viewBox="0 0 100 100">
+        <rect x="66" y="10" width="24" height="80" rx="12" fill="#F9AB00" />
+        <rect x="38" y="38" width="24" height="52" rx="12" fill="#E37400" />
+        <circle cx="22" cy="78" r="13" fill="#E37400" />
+      </svg>
+    )
+  }
+
+  {
+    id === "gtm" && (
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M50 6 94 50 50 94 6 50Z" stroke="#8AB4F8" stroke-width="11" />
+        <path d="M50 30 70 50 50 70 30 50Z" fill="#4285F4" />
+      </svg>
+    )
+  }
+
+  {
+    id === "gbp" && (
+      <svg viewBox="0 0 100 100" fill="none">
+        <path
+          d="M50 8c-16 0-29 13-29 29 0 22 29 55 29 55s29-33 29-55c0-16-13-29-29-29Z"
+          stroke="#34A853"
+          stroke-width="10"
+        />
+        <circle cx="50" cy="37" r="11" fill="#34A853" />
+      </svg>
+    )
+  }
+</span>
+
+<style>
+  .mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--m);
+    flex: none;
+  }
+
+  .mark svg {
+    width: 100%;
+    height: auto;
+  }
+</style>
