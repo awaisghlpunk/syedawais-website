@@ -27,9 +27,17 @@ const stages = [
   { label: "Won", values: ["4", "4", "4", "4", "4", "4"], at: 9.4, accent: true },
 ];
 
+/*
+  Five contacts, each offset a fifth of the loop from the next. A stage
+  window is under 20% of the cycle wide, so a 20% spacing guarantees no two
+  cards ever occupy the same stage and overlap each other.
+*/
 const contacts = [
   { initials: "RC", name: "Ryan Carter", delay: 0 },
-  { initials: "MB", name: "Megan Brooks", delay: -6 },
+  { initials: "MB", name: "Megan Brooks", delay: -2.4 },
+  { initials: "DE", name: "Derek Ellis", delay: -4.8 },
+  { initials: "NT", name: "Nicole Turner", delay: -7.2 },
+  { initials: "BH", name: "Brandon Hayes", delay: -9.6 },
 ];
 
 /*
@@ -79,13 +87,13 @@ const messages = [
     </div>
 
     <div class="lp__headright">
-      <span class="lp__brand mono" aria-label="GoHighLevel">
+      <span class="lp__brand">
         <svg viewBox="0 0 120 84" width="17" height="12" aria-hidden="true">
           <path d="M32 26 47 44h-8v32H25V44h-8Z" fill="#FBBC05"></path>
           <path d="M60 40 75 58h-8v18H53V58h-8Z" fill="#4285F4"></path>
           <path d="M88 18l15 18h-8v40H81V36h-8Z" fill="#34A853"></path>
         </svg>
-        GHL
+        GoHighLevel
       </span>
       <span class="lp__note mono">Illustrative</span>
     </div>
@@ -280,8 +288,12 @@ const messages = [
     border-radius: 7px;
     background: rgba(198, 255, 61, 0.1);
     color: var(--accent);
-    font-size: 12px;
-    letter-spacing: 0.1em;
+    /* Body font, not mono: a mixed-case brand name reads badly with the
+       mono face and wide tracking used elsewhere on the panel. */
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
   }
 
   .lp__eyebrow {
