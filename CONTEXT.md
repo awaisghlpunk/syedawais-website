@@ -167,7 +167,22 @@ the template for how the rest should look.
 
 ---
 
-## 7. SEO and crawling
+## 7. Contact details
+
+Defined once in `src/data/contact.ts` and imported by the Contact page, the
+footer and the JSON-LD. Changing a number or address is one edit.
+
+| | |
+|---|---|
+| Email | `info@syedawais.com`, linked as `mailto:` |
+| WhatsApp | `+1 (276) 301-9673`, linked as `https://wa.me/12763019673` |
+
+`wa.me` requires the number as digits only, so the URL is derived from the
+E.164 form rather than typed separately: the two cannot drift apart.
+
+---
+
+## 8. SEO and crawling
 
 `site` in `astro.config.mjs` is the production origin. Canonical URLs, Open
 Graph URLs and the sitemap are all derived from it, so **changing domain
@@ -193,7 +208,7 @@ Known trade-offs, not oversights:
 - **`placehold.co` serves the Case Studies images.** That page depends on a
   third party to render until real screenshots land.
 
-## 8. Verification
+## 9. Verification
 
 Each page has a checker that reads the built HTML and asserts the copy
 matches the brief, no em dashes survive, and no fabricated figures appear.
@@ -204,7 +219,7 @@ instead of shipping.
 
 ---
 
-## 9. Open items
+## 10. Open items
 
 - **Ignition Sprint ($350) inclusions are unconfirmed**, pulled from an
   internal data pack rather than verified like the other two tiers. The card
@@ -220,12 +235,11 @@ instead of shipping.
 - **Contact form cannot submit.** No CF7 form ID, so an inline script tells
   the visitor it is not connected instead of failing silently. Delete that
   script once CF7 is wired.
-- **Email and WhatsApp are placeholders**, rendered as visible bracketed
-  chips on the Contact page and in the footer on every page.
 - **Calendly is not wired.** Every booking CTA points at the contact form.
 
 ### Blocking launch
 
-The first three above, plus the placeholder images and testimonials, are
-visible to any real visitor. A prospect landing on a contact page with a
-dead form and a bracketed email address is worse than no page.
+The dead form, plus the placeholder images and testimonials, are visible to
+any real visitor. Email and WhatsApp are now live, so a prospect can at
+least reach someone, but a contact page whose form silently does nothing is
+still worse than no form.

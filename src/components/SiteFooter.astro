@@ -3,10 +3,12 @@
   Shared site footer.
 
   Everything here is either navigation or text that already appears in the
-  copy documents. No invented tagline, no invented credentials. The email
-  and WhatsApp match the Contact page: visible placeholders, not filled in
-  with plausible-looking values.
+  copy documents. No invented tagline, no invented credentials. Email and
+  WhatsApp come from src/data/contact.ts, the single source shared with the
+  Contact page and the structured data.
 */
+import { EMAIL, MAILTO, PHONE_DISPLAY, WHATSAPP_URL } from "../data/contact";
+
 const year = new Date().getFullYear();
 
 const columns = [
@@ -40,8 +42,6 @@ const columns = [
   },
 ];
 
-const EMAIL_PLACEHOLDER = "[EMAIL PLACEHOLDER]";
-const WHATSAPP_PLACEHOLDER = "[WHATSAPP PLACEHOLDER]";
 ---
 
 <footer class="ft">
@@ -97,11 +97,16 @@ const WHATSAPP_PLACEHOLDER = "[WHATSAPP PLACEHOLDER]";
         <ul class="ft__list">
           <li>
             <span class="ft__label">Email</span>
-            <span class="ft__ph mono">{EMAIL_PLACEHOLDER}</span>
+            <a class="ft__contact-link" href={MAILTO}>{EMAIL}</a>
           </li>
           <li>
             <span class="ft__label">WhatsApp</span>
-            <span class="ft__ph mono">{WHATSAPP_PLACEHOLDER}</span>
+            <a
+              class="ft__contact-link"
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer">{PHONE_DISPLAY}</a
+            >
           </li>
         </ul>
 
@@ -269,14 +274,18 @@ const WHATSAPP_PLACEHOLDER = "[WHATSAPP PLACEHOLDER]";
     margin-bottom: 5px;
   }
 
-  /* Marked so a placeholder cannot pass as a real contact detail. */
-  .ft__ph {
-    display: inline-block;
-    padding: 3px 8px;
-    border: 1px dashed rgba(198, 255, 61, 0.35);
-    border-radius: 6px;
-    font-size: 11.5px;
+  .ft__contact-link {
+    font-size: 14px;
     color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(198, 255, 61, 0.28);
+    padding-bottom: 1px;
+    transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+  }
+
+  .ft__contact-link:hover {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
   }
 
   .ft__cta {

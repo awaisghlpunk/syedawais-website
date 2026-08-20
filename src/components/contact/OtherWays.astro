@@ -1,13 +1,6 @@
 ---
 import SectionBg from "../SectionBg.astro";
-
-/*
-  Email and WhatsApp are placeholders. They are rendered as visible
-  bracketed text rather than fake values, so nobody mistakes them for real
-  contact details or ships them by accident.
-*/
-const EMAIL_PLACEHOLDER = "[EMAIL PLACEHOLDER]";
-const WHATSAPP_PLACEHOLDER = "[WHATSAPP PLACEHOLDER]";
+import { EMAIL, MAILTO, PHONE_DISPLAY, WHATSAPP_URL } from "../../data/contact";
 ---
 
 <section class="section" id="other-ways">
@@ -42,7 +35,7 @@ const WHATSAPP_PLACEHOLDER = "[WHATSAPP PLACEHOLDER]";
         </span>
         <span class="way__text">
           <span class="way__label mono">Email</span>
-          <span class="way__value is-placeholder">{EMAIL_PLACEHOLDER}</span>
+          <a class="way__value way__link" href={MAILTO}>{EMAIL}</a>
         </span>
       </li>
 
@@ -61,7 +54,14 @@ const WHATSAPP_PLACEHOLDER = "[WHATSAPP PLACEHOLDER]";
         </span>
         <span class="way__text">
           <span class="way__label mono">WhatsApp</span>
-          <span class="way__value is-placeholder">{WHATSAPP_PLACEHOLDER}</span>
+          <a
+            class="way__value way__link"
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {PHONE_DISPLAY}
+          </a>
         </span>
       </li>
 
@@ -145,15 +145,18 @@ const WHATSAPP_PLACEHOLDER = "[WHATSAPP PLACEHOLDER]";
     color: var(--ink-soft);
   }
 
-  /* Marked visually so a placeholder cannot be mistaken for a real detail. */
-  .way__value.is-placeholder {
-    display: inline-block;
-    padding: 3px 8px;
-    border: 1px dashed rgba(198, 255, 61, 0.4);
-    border-radius: 6px;
-    font-family: var(--font-mono);
-    font-size: 12.5px;
+  .way__link {
     color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(198, 255, 61, 0.3);
+    padding-bottom: 1px;
+    align-self: flex-start;
+    transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+  }
+
+  .way__link:hover {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
   }
 
   @media (max-width: 900px) {

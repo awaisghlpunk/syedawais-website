@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import SiteHeader from "../components/SiteHeader.astro";
+import { EMAIL, PHONE_E164 } from "../data/contact";
 
 interface Props {
   title: string;
@@ -33,8 +34,8 @@ const ogImage = new URL(image, Astro.site).href;
 
 /*
   Organization + Person, plus WebSite. Only facts that appear in the copy
-  documents: no invented founding date, address, phone or rating. Contact
-  details are still placeholders, so none are emitted.
+  documents or in src/data/contact.ts: no invented founding date, address
+  or rating.
 */
 const structuredData = {
   "@context": "https://schema.org",
@@ -53,6 +54,15 @@ const structuredData = {
       url: new URL("/", Astro.site).href,
       description:
         "GoHighLevel systems, Meta Ads and AI automation, built and tested against real data before handoff.",
+      email: EMAIL,
+      telephone: PHONE_E164,
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        email: EMAIL,
+        telephone: PHONE_E164,
+        availableLanguage: "English",
+      },
       founder: { "@id": new URL("/#person", Astro.site).href },
     },
     {
