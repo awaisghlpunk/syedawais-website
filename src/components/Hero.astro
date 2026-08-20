@@ -99,20 +99,32 @@
     background-size: 84px 84px;
     /* Settle the grid away from the edges so it reads as depth rather than
        as a sheet laid over the whole section. */
-    -webkit-mask-image: radial-gradient(
-      ellipse 78% 82% at 50% 42%,
-      #000 0%,
-      rgba(0, 0, 0, 0.75) 48%,
-      rgba(0, 0, 0, 0.25) 74%,
-      transparent 94%
-    );
-    mask-image: radial-gradient(
-      ellipse 78% 82% at 50% 42%,
-      #000 0%,
-      rgba(0, 0, 0, 0.75) 48%,
-      rgba(0, 0, 0, 0.25) 74%,
-      transparent 94%
-    );
+    /*
+      Two masks intersected: the radial vignette, plus a vertical fade that
+      ends the grid before it reaches the proof strip. Without the second
+      one a grid line landed 8px above the proof strip's border and the two
+      read as a single doubled line.
+    */
+    -webkit-mask-image:
+      radial-gradient(
+        ellipse 78% 82% at 50% 42%,
+        #000 0%,
+        rgba(0, 0, 0, 0.75) 48%,
+        rgba(0, 0, 0, 0.25) 74%,
+        transparent 94%
+      ),
+      linear-gradient(180deg, #000 0%, #000 58%, transparent 80%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      radial-gradient(
+        ellipse 78% 82% at 50% 42%,
+        #000 0%,
+        rgba(0, 0, 0, 0.75) 48%,
+        rgba(0, 0, 0, 0.25) 74%,
+        transparent 94%
+      ),
+      linear-gradient(180deg, #000 0%, #000 58%, transparent 80%);
+    mask-composite: intersect;
   }
   .hero__fade {
     position: absolute;

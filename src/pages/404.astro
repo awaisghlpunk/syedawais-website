@@ -1,0 +1,151 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SectionBg from "../components/SectionBg.astro";
+
+const title = "Page not found | The Break-Proof Build System";
+const description = "That page doesn't exist. Here's where to go instead.";
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="section nf">
+    <SectionBg
+      pattern="grid"
+      corner="100% 92%"
+      glow="lime"
+      glowX="50%"
+      glowY="50%"
+      glowW="820px"
+      glowH="560px"
+      glowA="0.1"
+      scrimPos="50% 50%"
+      puffX="50%"
+      puffY="34%"
+      puffA="0.18"
+    />
+
+    <div class="shell">
+      <div class="nf__inner">
+        <p class="nf__code mono">404</p>
+
+        <h1 class="h2 nf__h1">This page doesn't exist.</h1>
+
+        <p class="nf__body">
+          The link may be old, or the address may have a typo in it. Everything
+          on the site is one click away below.
+        </p>
+
+        <div class="nf__links">
+          <a class="btn btn--accent" href="/">
+            Back to home <span class="arrow">&#8594;</span>
+          </a>
+          <a class="btn btn--outline" href="/contact#contact-form">
+            Get in touch <span class="arrow">&#8594;</span>
+          </a>
+        </div>
+
+        <nav class="nf__nav" aria-label="All pages">
+          <a href="/services">Services</a>
+          <a href="/case-studies">Case studies</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  /* Tall enough that the footer sits below the fold rather than jammed up
+     under a short block. */
+  .nf {
+    display: flex;
+    align-items: center;
+    min-height: 78vh;
+    text-align: center;
+    padding-top: 168px;
+  }
+
+  .nf__inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .nf__code {
+    font-size: 15px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .nf__h1 {
+    max-width: 16ch;
+    font-size: clamp(30px, 4.2vw, 48px);
+  }
+
+  .nf__body {
+    margin-top: 22px;
+    font-size: 17px;
+    line-height: 1.76;
+    color: var(--ink-body);
+    max-width: 52ch;
+  }
+
+  .nf__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 36px;
+  }
+
+  .nf__nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 26px;
+    margin-top: 40px;
+    padding-top: 26px;
+    border-top: 1px solid var(--line);
+    width: 100%;
+  }
+
+  .nf__nav a {
+    font-size: 14px;
+    color: var(--ink-mute);
+    text-decoration: none;
+    transition: color 0.25s var(--ease);
+  }
+
+  .nf__nav a:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .nf {
+      padding-top: 132px;
+      min-height: 0;
+    }
+
+    .nf__h1 {
+      font-size: 28px;
+      max-width: none;
+    }
+
+    .nf__body {
+      font-size: 15.5px;
+    }
+
+    .nf__links .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

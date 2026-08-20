@@ -1,0 +1,5 @@
+# syedawais.com
+User-agent: *
+Allow: /
+
+Sitemap: https://syedawais.com/sitemap-index.xml

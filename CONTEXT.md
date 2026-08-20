@@ -53,8 +53,15 @@ npm run build    # static output to dist/
 | Home | `/` | `01-home-page-build-prompt.md` |
 | Services | `/services` | `02-services-page-build-prompt.md` |
 | Case Studies | `/case-studies` | `03-case-studies-page-build-prompt.md` |
+| About | `/about` | `04-about-page-build-prompt.md` |
+| Contact | `/contact` | `05-contact-page-build-prompt.md` |
+| Not found | `/404` | n/a |
 
-All three share `BaseLayout`, `SiteHeader`, `SiteFooter` and `Marquee`.
+All share `BaseLayout`, `SiteHeader`, `SiteFooter` and `PageClosing`.
+
+Every booking CTA on the site routes to `/contact#contact-form`. There is no
+public calendar link, deliberately. If one is ever published, that is a
+sitewide change, not a single-page one.
 
 ---
 
@@ -160,7 +167,33 @@ the template for how the rest should look.
 
 ---
 
-## 7. Verification
+## 7. SEO and crawling
+
+`site` in `astro.config.mjs` is the production origin. Canonical URLs, Open
+Graph URLs and the sitemap are all derived from it, so **changing domain
+means changing that one line and nothing else**.
+
+- Canonical on every page, with a trailing slash to match the sitemap. The
+  two disagreeing on the same page is worse than either form alone.
+- Open Graph and Twitter card tags, pointing at `public/og.png` (1200x630).
+  Regenerate that card with `scratchpad/ogimage.py` if the headline changes.
+- JSON-LD `@graph`: WebSite, Organization, Person, WebPage. Only facts that
+  appear in the copy documents. No invented founding date, address, phone or
+  rating, and no contact details while those are still placeholders.
+- `sitemap-index.xml` via `@astrojs/sitemap`, and `robots.txt` pointing at it.
+- A styled 404 that keeps the header, footer and full navigation.
+
+Known trade-offs, not oversights:
+
+- **Titles run long.** Three exceed the ~60 characters Google displays. They
+  are the copy documents' meta titles verbatim.
+- **H1s are hooks, not keywords.** The titles carry the search terms instead.
+- **Google Fonts is render-blocking** from two external hosts. Self-hosting
+  would improve LCP.
+- **`placehold.co` serves the Case Studies images.** That page depends on a
+  third party to render until real screenshots land.
+
+## 8. Verification
 
 Each page has a checker that reads the built HTML and asserts the copy
 matches the brief, no em dashes survive, and no fabricated figures appear.
@@ -171,7 +204,7 @@ instead of shipping.
 
 ---
 
-## 8. Open items
+## 9. Open items
 
 - **Ignition Sprint ($350) inclusions are unconfirmed**, pulled from an
   internal data pack rather than verified like the other two tiers. The card
@@ -184,5 +217,15 @@ instead of shipping.
   from the work described, not named in copy.
 - **Featured System CTA** points at `#webinar-system-details`, a placeholder
   anchor. No target defined yet.
-- **Calendly is not wired.** Every `#book` is an anchor, not a booking link.
-- **Contact Form 7 / form handling** not built.
+- **Contact form cannot submit.** No CF7 form ID, so an inline script tells
+  the visitor it is not connected instead of failing silently. Delete that
+  script once CF7 is wired.
+- **Email and WhatsApp are placeholders**, rendered as visible bracketed
+  chips on the Contact page and in the footer on every page.
+- **Calendly is not wired.** Every booking CTA points at the contact form.
+
+### Blocking launch
+
+The first three above, plus the placeholder images and testimonials, are
+visible to any real visitor. A prospect landing on a contact page with a
+dead form and a bracketed email address is worse than no page.
